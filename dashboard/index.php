@@ -1,3 +1,9 @@
+<?php
+require_once 'functions.php';
+handleLogin();
+handleLogout();
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +17,7 @@
     <!--bootstrap-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -21,6 +27,16 @@
             <img src="img/gparap_logo.png" width="128px" height="64px" alt="logo">
         </div>
     </div>
+
+    <!-- Logout -->
+    <div class="container">
+        <div class="col-md-12">
+            <form method="POST" action="index.php">
+                <button type="submit" class="btn btn-primary" name="logoutButton">Logout</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 
 </html>

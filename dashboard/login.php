@@ -24,17 +24,17 @@
 
     <!--Login Form-->
     <div class="container col-md-4">
-            <form method="POST" action="#">
-                <div class="mb-3">
-                    <label for="loginInputEmail" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="loginInputEmail" aria-describedby="emailHelp">
-                </div>
-                <div class="mb-3">
-                    <label for="loginInputPassword" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="loginInputPassword">
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+        <form method="POST" action="index.php">
+            <div class="mb-3">
+                <label for="loginInputEmail" class="form-label">Email address</label>
+                <input type="email" class="form-control" name="loginInputEmail" id="loginInputEmail" aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="loginInputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" name="loginInputPassword" id="loginInputPassword">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div>
 
     <script src="" async defer></script>
