@@ -1,0 +1,11 @@
+body {
+    background-color: aliceblue;
+}
+
+#dashboard-categories {
+    margin-top: 16px;
+}
+
+.col-sm-2 {
+    background-color: darkgrey;
+}

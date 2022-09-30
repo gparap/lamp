@@ -1,2 +1,4 @@
 
 *.lnk
+authentication/css/bootstrap.min.css
+authentication/js/bootstrap.min.js
