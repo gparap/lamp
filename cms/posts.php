@@ -1,11 +1,11 @@
 <?php
-    session_start();
+session_start();
 
-    //if user is not signed-ing go to login page
-    if (empty($_SESSION['user_id'])) {
-        header("Location: http://localhost/cms/login.php");
-        exit;
-    } 
+//if user is not signed-ing go to login page
+if (empty($_SESSION['user_id'])) {
+    header("Location: http://localhost/cms/login.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -25,7 +25,7 @@
                 <div class="position-sticky pt-3 sidebar-sticky">
                     <ul class="nav flex-column">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">
+                            <a class="nav-link active" aria-current="page" href="index.php">
                                 <span data-feather="home" class="align-text-bottom"></span>
                                 Home
                             </a>
@@ -37,7 +37,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="posts.php">
+                            <a class="nav-link" href="#">
                                 <span data-feather="posts" class="align-text-bottom"></span>
                                 Posts
                             </a>
@@ -50,7 +50,7 @@
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div
                     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Please, select a category...</h1>
+                    <h1 class="h2">Posts</h1>
                     <h6>
                         <?php if (!empty($_SESSION['user_id'])) {
                             echo "UserID: " . $_SESSION['user_id'];
