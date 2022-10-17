@@ -3,7 +3,7 @@ session_start();
 
 //if user is not signed-ing go to login page
 if (empty($_SESSION['user_id'])) {
-    header("Location: http://localhost/cms/login.php");
+    header("Location: https://localhost/cms/login.php");
     exit;
 }
 ?>

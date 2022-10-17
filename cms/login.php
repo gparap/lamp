@@ -67,7 +67,7 @@
                         $_SESSION['user_id'] = $row['id'];
                     }
                     //go to home page
-                    header("Location: http://localhost/cms/index.php");
+                    header("Location: https://localhost/cms/index.php");
                     exit(); 
                 }
             }
