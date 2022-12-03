@@ -50,7 +50,7 @@
             echo "<script>alert('Empty Fields!')</script>";
             exit();
         }
-
+echo "HERE";
         //query database
         $query = "SELECT * FROM `users` WHERE email='$email' AND password='$password'";
         $query_results = mysqli_query($db_connection, $query);
@@ -65,7 +65,7 @@
             echo $_SESSION['id'];
 
             //redirect to home page
-            header("Location: https://localhost/authentication/index.php");
+            //header("Location: https://localhost/authentication/index.php");
             exit();
         } else {
             echo "<script>alert('Check your credentials!')</script>";

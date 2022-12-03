@@ -5,7 +5,7 @@
 function checkUserAuthentication()
 {
     // connect to the database
-    require_once 'connection.php';
+    require_once 'src/connection.php';
 
     // get user session id
     $id = mysqli_real_escape_string($db_connection, $_SESSION['id']);

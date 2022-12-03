@@ -1,7 +1,7 @@
 <?php
 require_once 'src/functions.php';
 session_start();
-checkUserAuthentication();
+//checkUserAuthentication();
 handleLogout();
 ?>
 
