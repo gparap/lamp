@@ -7,12 +7,19 @@
                     Home
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="users.php">
-                    <span data-feather="users" class="align-text-bottom"></span>
-                    Users
-                </a>
-            </li>
+            <!-- Display only for admin -->
+            <?php 
+                if ($_SESSION['user_role'] == 'admin') {
+                    echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="users.php">
+                            <span data-feather="users" class="align-text-bottom"></span>
+                            Users
+                        </a>
+                    </li>
+                    ';
+                } 
+            ?>
             <li class="nav-item">
                 <a class="nav-link" href="posts.php">
                     <span data-feather="posts" class="align-text-bottom"></span>

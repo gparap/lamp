@@ -65,6 +65,7 @@
                         session_destroy();
                         session_start();
                         $_SESSION['user_id'] = $row['id'];
+                        $_SESSION['user_role'] = $row['role'];
                     }
                     //go to home page
                     header("Location: https://localhost/cms/index.php");
