@@ -115,7 +115,7 @@ if (empty($_SESSION['user_id'])) {
                         $keywords = $_POST['keywords'];
                         
                         //execute update query
-                        $query = "UPDATE `posts` SET `title`='$title',`author`='$author',`content`='$content',`image`=NULL,`date`=NULL,`keywords`='$keywords' WHERE id='$id'";
+                        $query = "UPDATE `posts` SET `title`='$title',`author`='$author',`content`='$content',`image`=NULL,`date`='$date',`keywords`='$keywords' WHERE id='$id'";
                         $results = mysqli_query($connection, $query);
                         
                         //TODO: validate results
