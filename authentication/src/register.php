@@ -1,11 +1,10 @@
-<?php session_start(); ?>
 <!DOCTYPE html>
 <html>
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Login Form</title>
+    <title>Registration Form</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <div class="container">
@@ -21,10 +20,15 @@
 
     <!--Login Form-->
     <div class="container col-md-4">
-        <form method="POST" action="login.php">
+        <form method="POST" action="register.php">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input type="email" class="form-control" name="email" id="email" aria-describedby="emailHelp">
+            </div>
+
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" id="username">
             </div>
 
             <div class="mb-3">
@@ -32,45 +36,54 @@
                 <input type="password" class="form-control" name="password" id="password">
             </div>
 
-            <button type="submit" name="submit" class="w-100 btn btn-lg btn-primary">Login</button>
+            <div class="mb-3">
+                <label for="password-confirm" class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" name="password-confirm" id="password-confirm">
+            </div>
 
-            <a href="https://localhost/authentication/src/register.php">Not registered yet?</a>
+            <button type="submit" name="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>
 
-    <!--Login-->
+    <!--Register-->
     <?php
+
     if (isset($_POST['submit'])) {
-    	
+
         // connect to the database
         require_once('connection.php');
 
+        //check if passwords match
+        $password = mysqli_real_escape_string($db_connection, $_POST['password']);
+        $confirm = mysqli_real_escape_string($db_connection, $_POST['password-confirm']);
+        if ($password != $confirm) {
+            echo "<script>alert('Passwords do not match!')</script>";
+            exit();
+        }
+    	
         //validate input fields
+        $username = mysqli_real_escape_string($db_connection, $_POST['username']);
         $email = mysqli_real_escape_string($db_connection, $_POST['email']);
         $password = mysqli_real_escape_string($db_connection, $_POST['password']);
-        if (empty($email) || empty($password)) {
+        if (empty($username) || empty($email) || empty($password)) {
             echo "<script>alert('Empty Fields!')</script>";
             exit();
         }
 
-        //query database
-        $query = "SELECT * FROM `users` WHERE email='$email' AND password='$password'";
+        //query database to check if user exists already
+        $query = "SELECT * FROM `users` WHERE email='$email'";
         $query_results = mysqli_query($db_connection, $query);
-
-        //check query results validity
         $query_results_rows = mysqli_num_rows($query_results);
         if ($query_results_rows == 1) {
-            while ($row = mysqli_fetch_assoc($query_results)) {
-                //give the user a session id
-                $_SESSION['id'] = $row['id'];
-            }
-            echo $_SESSION['id'];
-
-            //redirect to home page
-            header("Location: https://localhost/authentication/index.php");
+            echo "<script>alert('User is already registered...')</script>";
             exit();
-        } else {
-            echo "<script>alert('Check your credentials!')</script>";
+        }
+
+        //register user & redirect to home page   
+        $query = "INSERT INTO `users`(`email`, `username`, `password`) VALUES('$email', '$username', '$password')";
+        $query_results = mysqli_query($db_connection, $query);
+        if ($query_results == TRUE) {
+            header("Location: https://localhost/authentication/index.php");
             exit();
         }
     }
