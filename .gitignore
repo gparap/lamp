@@ -2,3 +2,6 @@
 *.lnk
 authentication/css/bootstrap.min.css
 authentication/js/bootstrap.min.js
+/file-manager/nbproject/private/
+file-manager/nbproject/project.properties
+file-manager/nbproject/project.xml
