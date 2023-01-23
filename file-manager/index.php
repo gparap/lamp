@@ -23,15 +23,11 @@ Copyright © 2023 gparap
                 <div class="col"><button>New Folder</button></div>
             </div>
             <hr>
-            <!--TODO: dynamic content-->
-            <div class="row row-cols-6 text-center">
-                <div class="col">null</div>
-                <div class="col">0</div>
-                <div class="col"><button>Add File</button></div>
-                <div class="col"><button>Delete File</button></div>
-                <div class="col"><button>View Files</button></div>
-                <div class="col"><button>Edit Folder</button></div>
-            </div>
+            <!--List all existing folders-->
+            <?php
+            require_once './functions.php';
+            getFolderList();
+            ?>
         </div>
         <script src="js/bootstrap.bundle.min.js"></script>
     </body>
