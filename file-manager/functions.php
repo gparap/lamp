@@ -28,7 +28,7 @@ function getFolderList() {
             echo '
                 <div class="row row-cols-6 text-center">
                     <div class="col">' . $folder_name . '</div>
-                    <div class="col">0</div>
+                    <div class="col">' . getFilesCount($folder_name) . '</div>
                     <div class="col"><button>Add File</button></div>
                     <div class="col"><button>Delete File</button></div>
                     <div class="col"><button>View Files</button></div>
@@ -48,4 +48,10 @@ function createNewFolder() {
     } else {
         echo '<script>alert("Error. File not created.");</script>';
     }
+}
+
+//get the number of files inside a folder (-2: filepaths "." and "..")
+function getFilesCount($folder) {
+    $iterator = new DirectoryIterator("./$folder");
+    return iterator_count($iterator) - 2;
 }
