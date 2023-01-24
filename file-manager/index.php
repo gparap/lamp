@@ -20,13 +20,24 @@ Copyright © 2023 gparap
                 <div class="col"></div>
                 <div class="col"></div>
                 <div class="col"></div>
-                <div class="col"><button>New Folder</button></div>
+                <div class="col">
+                    <form method="post" action="index.php">
+                        <button name="button_create_folder" type="submit">New Folder</button>
+                    </form>
+                </div>
             </div>
             <hr>
-            <!--List all existing folders-->
             <?php
             require_once './functions.php';
+            
+            //list all existing folders
             getFolderList();
+
+            //create a new folder
+            if (isset($_POST['button_create_folder'])) {
+                createNewFolder();
+            }
+            
             ?>
         </div>
         <script src="js/bootstrap.bundle.min.js"></script>

@@ -38,3 +38,14 @@ function getFolderList() {
         }
     }
 }
+
+/** Create a new folder into the current path. */
+function createNewFolder() {
+    $result = mkdir("./new_folder");
+    if ($result == true) {
+        echo '<script>alert("File created successfully. Please, reload the page... '
+        . '\n\n(rename the new_folder if you want to create another one)");</script>';
+    } else {
+        echo '<script>alert("Error. File not created.");</script>';
+    }
+}
