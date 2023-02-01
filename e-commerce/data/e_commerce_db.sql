@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 26, 2023 at 11:06 AM
+-- Generation Time: Feb 01, 2023 at 01:47 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -31,7 +31,7 @@ CREATE TABLE `users` (
   `id` int(4) NOT NULL,
   `email` varchar(64) NOT NULL,
   `username` varchar(16) NOT NULL,
-  `password` int(64) NOT NULL,
+  `password` varchar(64) NOT NULL,
   `address` varchar(64) NOT NULL,
   `postal_code` varchar(16) NOT NULL,
   `phone` varchar(16) NOT NULL
@@ -42,7 +42,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `address`, `postal_code`, `phone`) VALUES
-(1, 'test_user@dot.com', 'test_user', 123456, '', 0, 0);
+(1, 'test_user@dot.com', 'test_user', '4297f44b13955235245b2497399d7a93', '', '', '');
 
 --
 -- Indexes for dumped tables
