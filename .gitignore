@@ -5,3 +5,17 @@ authentication/js/bootstrap.min.js
 /file-manager/nbproject/private/
 file-manager/nbproject/project.properties
 file-manager/nbproject/project.xml
+cms/composer.json
+cms/composer.lock
+cms/composer.phar
+cms/vendor/autoload.php
+cms/vendor/composer/autoload_classmap.php
+cms/vendor/composer/autoload_namespaces.php
+cms/vendor/composer/autoload_psr4.php
+cms/vendor/composer/autoload_real.php
+cms/vendor/composer/autoload_static.php
+cms/vendor/composer/ClassLoader.php
+cms/vendor/composer/installed.json
+cms/vendor/composer/installed.php
+cms/vendor/composer/InstalledVersions.php
+cms/vendor/composer/LICENSE

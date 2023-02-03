@@ -3,7 +3,7 @@ session_start();
 
 //if user is not signed-ing go to login page
 if (empty($_SESSION['user_id'])) {
-    header("Location: https://localhost/cms/login.php");
+    header("Location: https://localhost/cms/src/login.php");
     exit;
 }
 ?>
@@ -11,17 +11,17 @@ if (empty($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html>
 
-<?php include_once('head.php'); ?>
+<?php include_once('utils/head.php'); ?>
 
 <body>
 
-    <?php include_once 'header.php'; ?>
+    <?php include_once 'utils/header.php'; ?>
 
      <!-- Container -->
     <div class="container-fluid">
         <div class="row">
             <!--Sidebar Navigation-->
-            <?php include_once 'sidebar.php'; ?>
+            <?php include_once 'utils/sidebar.php'; ?>
 
             <!--Content Area-->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -101,7 +101,7 @@ if (empty($_SESSION['user_id'])) {
                         //TODO: validate results
 
                         //redirect to posts
-                        echo "<script>window.location.href='https://localhost/cms/posts.php'</script>";
+                        echo "<script>window.location.href='https://localhost/cms/src/posts.php'</script>";
                         exit();
                     }
                     ?>

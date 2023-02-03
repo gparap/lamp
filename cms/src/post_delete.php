@@ -13,5 +13,5 @@ $sql = "DELETE FROM posts WHERE id='$id'";
 mysqli_query($connection, $sql);
 
 //redirect to posts
-echo '<script>window.location.href="https://localhost/cms/posts.php"</script>';
+echo '<script>window.location.href="https://localhost/cms/src/posts.php"</script>';
 ?>

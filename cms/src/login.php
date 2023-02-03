@@ -15,7 +15,7 @@
         <!--Logo-->
         <div class="container text-center">
             <div class="col-md-12">
-                <img src="img/logo.png" width="128px" height="64px" alt="logo">
+                <img src="../img/logo.png" width="128px" height="64px" alt="logo">
             </div>
         </div>
 
@@ -74,7 +74,7 @@
             }
             
             //close database connection
-            $connect-->close();
+            $connection-->close();
         }    
         ?>
 

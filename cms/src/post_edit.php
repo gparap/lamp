@@ -11,17 +11,17 @@ if (empty($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html>
 
-<?php include_once('head.php'); ?>
+<?php include_once('utils/head.php'); ?>
 
 <body>
 
-    <?php include_once 'header.php'; ?>
+    <?php include_once 'utils/header.php'; ?>
 
      <!-- Container -->
     <div class="container-fluid">
         <div class="row">
             <!--Sidebar Navigation-->
-            <?php include_once 'sidebar.php'; ?>
+            <?php include_once 'utils/sidebar.php'; ?>
 
             <?php
                 //get post id
@@ -115,7 +115,7 @@ if (empty($_SESSION['user_id'])) {
                         $keywords = $_POST['keywords'];
                         
                         //execute update query
-                        $query = "UPDATE `posts` SET `title`='$title',`author`='$author',`content`='$content',`image`=NULL,`date`='$date',`keywords`='$keywords' WHERE id='$id'";
+                        $query = "UPDATE `posts` SET `title`='$title',`author`='$author',`content`='$content',`image`=NULL,`date`=NULL,`keywords`='$keywords' WHERE id='$id'";
                         $results = mysqli_query($connection, $query);
                         
                         //TODO: validate results
@@ -124,7 +124,7 @@ if (empty($_SESSION['user_id'])) {
                         $connection->close();
 
                         //redirect to posts
-                        echo "<script>window.location.href='https://localhost/cms/posts.php'</script>";
+                        echo "<script>window.location.href='https://localhost/cms/src/posts.php'</script>";
                         exit();
                     }
                     ?>
