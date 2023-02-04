@@ -17,7 +17,7 @@
                 if(isset($_POST['logout'])) {
                     session_unset();
                     session_destroy();
-                    header("Location: https://localhost/cms/src/login.php");
+                    header("Location: https://localhost/cms/src/auth/login.php");
                     exit(); 
                 }
             ?>

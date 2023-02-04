@@ -15,7 +15,7 @@
         <!--Logo-->
         <div class="container text-center">
             <div class="col-md-12">
-                <img src="../img/logo.png" width="128px" height="64px" alt="logo">
+                <img src="../../img/logo.png" width="128px" height="64px" alt="logo">
             </div>
         </div>
 
@@ -29,7 +29,8 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" name="password">
             </div>
-            <button type="submit" class="btn btn-primary" name="button-login">Login</button>
+                <button type="submit" class="btn btn-primary" name="button-login">Login</button>
+            	<a href="https://localhost/cms/src/auth/register.php">Not registered yet?</a> 
         </form>
 
         <!--Login-->
