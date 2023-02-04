@@ -19,3 +19,8 @@ cms/vendor/composer/installed.json
 cms/vendor/composer/installed.php
 cms/vendor/composer/InstalledVersions.php
 cms/vendor/composer/LICENSE
+cms/.buildpath
+cms/.project
+cms/.settings/org.eclipse.core.resources.prefs
+cms/.settings/org.eclipse.wst.common.project.facet.core.xml
+cms/.settings/org.eclipse.wst.validation.prefs

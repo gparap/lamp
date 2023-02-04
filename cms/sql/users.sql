@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 04, 2023 at 10:18 AM
+-- Generation Time: Feb 04, 2023 at 11:28 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -41,8 +41,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `role`, `status`) VALUES
-(1, 'admin', 'admin@dot.com', '123123', 'admin', 'approved'),
-(2, 'author', 'author@dot.com', '123123', 'author', 'approved');
+(1, 'admin', 'admin@dot.com', '4297f44b13955235245b2497399d7a93', 'admin', 'approved'),
+(2, 'author', 'author@dot.com', '4297f44b13955235245b2497399d7a93', 'author', 'approved');
 
 --
 -- Indexes for dumped tables

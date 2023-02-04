@@ -29,8 +29,8 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" name="password">
             </div>
-                <button type="submit" class="btn btn-primary" name="button-login">Login</button>
-            	<a href="https://localhost/cms/src/auth/register.php">Not registered yet?</a> 
+            <button type="submit" class="btn btn-primary" name="button-login">Login</button>
+            <a href="https://localhost/cms/src/auth/register.php">Not registered yet?</a>
         </form>
 
         <!--Login-->
@@ -45,7 +45,7 @@
             if (isset($_POST['email']) && isset($_POST['password'])) {
                 //get user credentials
                 $email = mysqli_real_escape_string($connection, $_POST['email']);
-                $password = mysqli_real_escape_string($connection, $_POST['password']);
+                $password = hash('md5', mysqli_real_escape_string($connection, $_POST['password']));
                 
                 //validate user credentials
                 if (empty($email) OR empty($password)) {
@@ -60,17 +60,24 @@
                     echo '<script>alert("User does not exist!")</script>';
                     exit();
                 }else{
-                    //give user a session var
                     while ($row = mysqli_fetch_assoc($query_results)) {
+                        //make sure user status is approved
+                        if ($row['status'] == 'pending') {
+                            echo '<script>alert("Your are not authorized yet. \nPlease, wait for approval or contact admin...")</script>';
+                            exit();
+                        }
+                        
+                        //give user a session var
                         session_start();
                         session_destroy();
                         session_start();
                         $_SESSION['user_id'] = $row['id'];
                         $_SESSION['user_role'] = $row['role'];
-                    }
-                    //go to home page
-                    header("Location: https://localhost/cms/index.php");
-                    exit(); 
+                    
+                        //go to home page
+                        header("Location: https://localhost/cms/index.php");
+                        exit();
+                    } 
                 }
             }
             

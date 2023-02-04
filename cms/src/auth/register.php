@@ -55,12 +55,18 @@
                 // get user info
                 $email = mysqli_real_escape_string($connection, $_POST['email']);
                 $username = mysqli_real_escape_string($connection, $_POST['username']);
-                $password = mysqli_real_escape_string($connection, $_POST['password']);
-                $password_confirm = mysqli_real_escape_string($connection, $_POST['password-confirm']);
+                $password = hash('md5', mysqli_real_escape_string($connection, $_POST['password']));
+                $password_confirm = hash('md5', mysqli_real_escape_string($connection, $_POST['password-confirm']));
 
                 // validate user credentials
                 if (empty($email) or empty($username) or empty($password) or empty($password_confirm)) {
                     echo '<script>alert("Please, fill in input field(s)!")</script>';
+                    exit();
+                }
+                
+                // validate password
+                if ($password !== $password_confirm) {
+                    echo '<script>alert("Passwords do not match!")</script>';
                     exit();
                 }
                 
