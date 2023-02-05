@@ -12,6 +12,19 @@
 </head>
 
 <body>
+    <!-- Display alert messages to user -->
+    <div class="container">
+    	<?php
+    	if (isset($_GET['msg'])) {
+            echo '
+            <div class="alert alert-dark alert-dismissible fade show" role="alert">' . $_GET['msg'] . '
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            ';
+        }
+        ?>
+    </div>
+    
 	<div class="container col-md-3">
 
 		<!--Logo-->
@@ -60,13 +73,15 @@
 
                 // validate user credentials
                 if (empty($email) or empty($username) or empty($password) or empty($password_confirm)) {
-                    echo '<script>alert("Please, fill in input field(s)!")</script>';
+//                     echo '<script>alert("Please, fill in input field(s)!")</script>';
+                    header("Location: https://localhost/cms/src/auth/register.php?msg=Please, fill in input fields!");
                     exit();
                 }
                 
                 // validate password
                 if ($password !== $password_confirm) {
-                    echo '<script>alert("Passwords do not match!")</script>';
+//                     echo '<script>alert("Passwords do not match!")</script>';
+                    header("Location: https://localhost/cms/src/auth/register.php?msg=Passwords do not match!");
                     exit();
                 }
                 
@@ -74,7 +89,8 @@
                 $query = "SELECT * FROM `users` WHERE email='$email'";
                 $query_results = mysqli_query($connection, $query);
                 if ($query_results->num_rows == TRUE) {
-                    echo '<script>alert("User already registered!")</script>';
+//                     echo '<script>alert("User already registered!")</script>';
+                    header("Location: https://localhost/cms/src/auth/register.php?msg=User already registered!");
                     exit();
                 }
 
@@ -84,22 +100,34 @@
                                 VALUES ('$username','$email','$password','author','pending')";
                 $query_results = mysqli_query($connection, $query);
                 if ($query_results == FALSE) {
-                    echo '<script>alert("User registration failed!")</script>';
+//                     echo '<script>alert("User registration failed!")</script>';
+                    header("Location: https://localhost/cms/src/auth/register.php?msg=User registration failed!");
                     exit();
                 } else {
-                    echo '<script>alert("Registration successful!\nPlease, wait 24 hours (max) for approval...")</script>';
+                    header("Location: https://localhost/cms/src/auth/login.php?msg=Registration successful!");
+                    exit();
+//                     echo '<script>alert("Registration successful!\nPlease, wait 24 hours (max) for approval...")</script>';
                     
                     // add a link for the home page
-                    echo '<a href="https://localhost/cms/index.php">Home</a>';
+//                     echo '<a href="https://localhost/cms/auth/login.php">Home</a>';
                 }
             }
 
             // close database connection
             $connection->close();
         }
+        
+        // display alert messages to user
+        if (isset($_GET['msg'])) {
+            echo '
+            <div class="alert alert-dark alert-dismissible fade show" role="alert">' . $_GET['msg'] . '
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            ';
+        }
         ?>
-
     </div>
+    <script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

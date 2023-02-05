@@ -10,83 +10,98 @@
 </head>
 
 <body>
-    <div class="container col-md-3">
-
-        <!--Logo-->
-        <div class="container text-center">
-            <div class="col-md-12">
-                <img src="../../img/logo.png" width="128px" height="64px" alt="logo">
+    <!-- Display alert messages to user -->
+    <div class="container">
+    	<?php
+    	if (isset($_GET['msg'])) {
+            echo '
+            <div class="alert alert-dark alert-dismissible fade show" role="alert">' . $_GET['msg'] . '
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
-        </div>
+            ';
+        }
+        ?>
+    </div>
+        
+	<div class="container col-md-3">
+		<!--Logo-->
+		<div class="container text-center">
+			<div class="col-md-12">
+				<img src="../../img/logo.png" width="128px" height="64px" alt="logo">
+			</div>
+		</div>
 
-        <!--Login Form-->
-        <form method="post">
-            <div class="col-mb-3">
-                <label for="email" class="form-label">Email address</label>
-                <input type="email" class="form-control" name="email">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" name="password">
-            </div>
-            <button type="submit" class="btn btn-primary" name="button-login">Login</button>
-            <a href="https://localhost/cms/src/auth/register.php">Not registered yet?</a>
-        </form>
+		<!--Login Form-->
+		<form method="post">
+			<div class="col-mb-3">
+				<label for="email" class="form-label">Email address</label> <input
+					type="email" class="form-control" name="email">
+			</div>
+			<div class="mb-3">
+				<label for="password" class="form-label">Password</label> <input
+					type="password" class="form-control" name="password">
+			</div>
+			<button type="submit" class="btn btn-primary" name="button-login">Login</button>
+			<a href="https://localhost/cms/src/auth/register.php">Not registered
+				yet?</a>
+		</form>
 
-        <!--Login-->
+		<!--Login-->
         <?php
         if (isset($_POST['button-login'])) {
-            //connect to database
+            // connect to database
             $connection = mysqli_connect('localhost', 'root', '', 'test_db');
-            if (!$connection) {
+            if (! $connection) {
                 die(mysqli_connect_error);
             }
-            
+
             if (isset($_POST['email']) && isset($_POST['password'])) {
-                //get user credentials
+                // get user credentials
                 $email = mysqli_real_escape_string($connection, $_POST['email']);
                 $password = hash('md5', mysqli_real_escape_string($connection, $_POST['password']));
-                
-                //validate user credentials
-                if (empty($email) OR empty($password)) {
-                    echo '<script>alert("Please, fill in input field(s)!")</script>';
+
+                // validate user credentials
+                if (empty($email) or empty($password)) {
+//                     echo '<script>alert("Please, fill in input field(s)!")</script>';
+                    header("Location: https://localhost/cms/src/auth/login.php?msg=Please, fill in input fields!");
                     exit();
                 }
-                
-                //authenticate user
+
+                // authenticate user
                 $query = "SELECT * FROM `users` WHERE email='$email' AND password='$password'";
                 $query_results = mysqli_query($connection, $query);
                 if ($query_results->num_rows != 1) {
-                    echo '<script>alert("User does not exist!")</script>';
+//                     echo '<script>alert("User does not exist!")</script>';
+                    header("Location: https://localhost/cms/src/auth/login.php?msg=User does not exist!");
                     exit();
-                }else{
+                } else {
                     while ($row = mysqli_fetch_assoc($query_results)) {
-                        //make sure user status is approved
+                        // make sure user status is approved
                         if ($row['status'] == 'pending') {
-                            echo '<script>alert("Your are not authorized yet. \nPlease, wait for approval or contact admin...")</script>';
+                            header("Location: https://localhost/cms/src/auth/login.php?msg=You are not authorized yet. <br />Please, wait for approval or contact admin...");
                             exit();
                         }
-                        
-                        //give user a session var
+
+                        // give user a session var
                         session_start();
                         session_destroy();
                         session_start();
                         $_SESSION['user_id'] = $row['id'];
                         $_SESSION['user_role'] = $row['role'];
-                    
-                        //go to home page
+
+                        // go to home page
                         header("Location: https://localhost/cms/index.php");
                         exit();
-                    } 
+                    }
                 }
             }
-            
-            //close database connection
-            $connection-->close();
-        }    
-        ?>
 
+            // close database connection
+            $connection -- > close();
+        }
+        ?>
     </div>
+	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
