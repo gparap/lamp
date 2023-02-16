@@ -24,3 +24,8 @@ cms/.project
 cms/.settings/org.eclipse.core.resources.prefs
 cms/.settings/org.eclipse.wst.common.project.facet.core.xml
 cms/.settings/org.eclipse.wst.validation.prefs
+recipes/.buildpath
+recipes/.project
+recipes/.settings/org.eclipse.core.resources.prefs
+recipes/.settings/org.eclipse.php.core.prefs
+recipes/.settings/org.eclipse.wst.common.project.facet.core.xml

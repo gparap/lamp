@@ -1,0 +1,17 @@
+@charset "UTF-8";
+/* 
+https://mit-license.org
+Copyright © 2023 gparap 
+*/
+body
+{
+    background-color: olive !important;
+}
+
+.container {
+	margin: 0 auto;
+}
+
+.card {
+	width: 18rem; margin: auto;
+}
