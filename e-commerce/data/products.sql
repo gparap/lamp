@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Feb 22, 2023 at 04:13 PM
+-- Generation Time: Mar 09, 2023 at 08:22 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.1.12
 
@@ -32,6 +32,8 @@ CREATE TABLE `products` (
   `category_id` int(4) NOT NULL,
   `name` varchar(32) NOT NULL,
   `description` text NOT NULL,
+  `item_cost` decimal(8,2) NOT NULL,
+  `items_left` int(4) NOT NULL DEFAULT 0,
   `image_url` varchar(64) NOT NULL,
   `keywords` varchar(32) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -40,31 +42,31 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `category_id`, `name`, `description`, `image_url`, `keywords`) VALUES
-(1, 1, 'auto_01', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'car-g391e22a16_640.png', 'auto,car,vehicle'),
-(2, 1, 'auto_02', 'Mauris commodo quis imperdiet massa tincidunt nunc pulvinar.', 'passenger-car-g22eec9eb5_640.png', 'auto,car,vehicle'),
-(3, 1, 'auto_03', 'Est lorem ipsum dolor sit amet consectetur.', 'auto-gfbe3aff37_640.jpg', 'auto,car,vehicle'),
-(4, 1, 'auto_04', 'Erat velit scelerisque in dictum non consectetur a erat nam.', 'car-ge7b4774c7_640.jpg', 'auto,car,vehicle'),
-(5, 2, 'bike_01', 'Aliquam sem fringilla ut morbi tincidunt augue.', 'bicycle-g9c9671453_640.jpg', 'bike,bicycle,sport'),
-(6, 2, 'bike_02', 'Sed enim ut sem viverra aliquet eget sit amet.', 'bicycle-gd875b6b36_640.png', 'bike,bicycle,sport'),
-(7, 2, 'bike_03', 'Aliquet nec ullamcorper sit amet risus.', 'bike-g243be8424_640.jpg', 'bike,bicycle,sport'),
-(8, 2, 'bike_04', 'Ac turpis egestas sed tempus urna et pharetra pharetra massa.', 'racing-bicycle-g61b49f5c6_640.png', 'bike,bicycle,sport'),
-(9, 3, 'drink_01', 'Netus et malesuada fames ac turpis egestas maecenas pharetra.', 'cup-gb68c2b37d_640.jpg', 'coffe,drink,tea'),
-(10, 3, 'drink_02', 'Etiam tempor orci eu lobortis elementum nibh tellus.', 'drink-gbb46f3646_640.jpg', 'coffe,drink,tea'),
-(11, 3, 'drink_03', 'Donec enim diam vulputate ut pharetra sit amet.', 'hd-wallpaper-g6d69d158c_640.jpg', 'coffe,drink,tea'),
-(12, 3, 'drink_04', 'Netus et malesuada fames ac turpis egestas maecenas pharetra. Etiam tempor orci eu lobortis elementum nibh tellus. Donec enim diam vulputate ut pharetra sit amet. Amet consectetur adipiscing elit ut aliquam purus sit.', 'lime-gb9554dbf9_640.jpg', 'coffe,drink,tea'),
-(13, 4, 'garden_01', 'Eu consequat ac felis donec et odio.', 'chrysanthemum-g07f5f145e_640.jpg', 'garden,home,plant'),
-(14, 4, 'garden_02', 'Velit scelerisque in dictum non consectetur.', 'flowers-g8524d017a_640.jpg', 'garden,home,plant'),
-(15, 4, 'garden_03', 'Faucibus in ornare quam viverra orci sagittis eu.', 'lavenders-g419766c35_640.jpg', 'garden,home,plant'),
-(16, 4, 'garden_04', 'Sed augue lacus viverra vitae congue eu consequat.', 'summer-gec69af7d8_640.jpg', 'garden,home,plant'),
-(17, 5, 'gym_01', 'Congue nisi vitae suscipit tellus mauris a diam.', 'black-ga8d5276ef_640.png', 'athletics,gym,sports'),
-(18, 5, 'gym_02', 'In ornare quam viverra orci sagittis eu volutpat.', 'fitness-g5b41011b5_640.jpg', 'athletics,gym,sports'),
-(19, 5, 'gym_03', 'Amet est placerat in egestas.', 'gym-g324d13c1a_640.jpg', 'athletics,gym,sports'),
-(20, 5, 'gym_04', 'Euismod lacinia at quis risus sed vulputate odio ut.', 'kettlebell-gfacd6bdbb_640.jpg', 'athletics,gym,sports'),
-(21, 6, 'tech_01', 'Ac tortor dignissim convallis aenean et.', 'background-gdba917afc_640.png', 'computer,mobile,technology'),
-(22, 6, 'tech_02', 'Non nisi est sit amet.', 'computer-gcd1bc3704_640.jpg', 'computer,mobile,technology'),
-(23, 6, 'tech_03', 'Sit amet dictum sit amet justo donec enim diam vulputate.', 'lcd-g84275a465_640.png', 'computer,mobile,technology'),
-(24, 6, 'tech_04', 'Id velit ut tortor pretium viverra suspendisse.', 'server-gb9ea7e210_640.jpg', 'computer,mobile,technology');
+INSERT INTO `products` (`id`, `category_id`, `name`, `description`, `item_cost`, `items_left`, `image_url`, `keywords`) VALUES
+(1, 1, 'jumper cables', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', '19.99', 50, 'jumper-cables.jpg', 'auto,battery,cables,car'),
+(2, 1, 'car battery', 'Mauris commodo quis imperdiet massa tincidunt nunc pulvinar.', '49.99', 50, 'lead-accumulator.png', 'auto,battery,car,lead'),
+(3, 1, 'car battery rechargeable', 'Est lorem ipsum dolor sit amet consectetur.', '54.99', 25, 'rechargeable-battery.png', 'auto,battery,car,rechargeable'),
+(4, 1, 'car battery electric', 'Erat velit scelerisque in dictum non consectetur a erat nam.', '59.99', 10, 'battery-electric.jpg', 'auto,battery,car,electric'),
+(5, 2, 'racing bicycle blue', 'Aliquam sem fringilla ut morbi tincidunt augue.', '499.99', 25, 'racing-bicycle-blue.png', 'bicycle,bike,blue,racing,sport'),
+(6, 2, 'bicycle vintage black', 'Sed enim ut sem viverra aliquet eget sit amet.', '449.99', 0, 'bicycle-vintage-black.png', 'bicycle,bike,black,cycling,sport'),
+(7, 2, 'bicycle with basket', 'Aliquet nec ullamcorper sit amet risus.', '174.99', 25, 'bicycle-basket-green.png', 'bicycle,bike,basket,green'),
+(8, 2, 'bicycle with basket', 'Ac turpis egestas sed tempus urna et pharetra pharetra massa.', '149.99', 25, 'bicycle-basket-black.jpg', 'bicycle,bike,basket,black'),
+(9, 3, 'tea', 'Netus et malesuada fames ac turpis egestas maecenas pharetra.', '1.49', 100, 'drink-tea.jpg', 'diet,drink,tea'),
+(10, 3, 'cocktail', 'Etiam tempor orci eu lobortis elementum nibh tellus.', '4.99', 50, 'drink-cocktail.jpg', 'cocktail,drink,summer'),
+(11, 3, 'coffe', 'Donec enim diam vulputate ut pharetra sit amet.', '2.99', 100, 'drink-coffe.jpg', 'coffe,drink,summer'),
+(12, 3, 'lime', 'Netus et malesuada fames ac turpis egestas maecenas pharetra. Etiam tempor orci eu lobortis elementum nibh tellus. Donec enim diam vulputate ut pharetra sit amet. Amet consectetur adipiscing elit ut aliquam purus sit.', '1.99', 50, 'drink-lime.jpg', 'diet,drink,lime,summer'),
+(13, 4, 'chrysanthemum', 'Eu consequat ac felis donec et odio.', '4.99', 50, 'chrysanthemum.jpg', 'chrysanthemum,garden,home,plant'),
+(14, 4, 'marguerite', 'Velit scelerisque in dictum non consectetur.', '4.49', 50, 'marguerite.jpg', 'garden,home,marguerite,plant'),
+(15, 4, 'lavender', 'Faucibus in ornare quam viverra orci sagittis eu.', '9.99', 25, 'lavender.jpg', 'lavender,garden,home,plant'),
+(16, 4, 'roses', 'Sed augue lacus viverra vitae congue eu consequat.', '7.49', 100, 'roses.png', 'garden,home,plant,roses'),
+(17, 5, 'dumbbell black', 'Congue nisi vitae suscipit tellus mauris a diam.', '15.49', 50, 'dumbbell.jpg', 'athletics,dumbbell,gym,sports'),
+(18, 5, 'pilates-ball', 'In ornare quam viverra orci sagittis eu volutpat.', '34.99', 10, 'pilates-ball.jpg', 'athletics,ball,gym,pilates'),
+(19, 5, 'treadmill', 'Amet est placerat in egestas.', '399.99', 0, 'treadmill.jpg', 'athletics,gym,sports,treadmill'),
+(20, 5, 'kettlebell', 'Euismod lacinia at quis risus sed vulputate odio ut.', '19.49', 10, 'kettlebell.jpg', 'athletics,gym,kettlebell,sports'),
+(21, 6, 'camera', 'Ac tortor dignissim convallis aenean et.', '59.99', 10, 'camera.png', 'camera,technology'),
+(22, 6, 'laptop', 'Non nisi est sit amet.', '499.99', 25, 'laptop.jpg', 'computer,laptop,technology'),
+(23, 6, 'computer screen', 'Sit amet dictum sit amet justo donec enim diam vulputate.', '99.99', 5, 'lcd.png', 'computer,LCD,screen,technology'),
+(24, 6, 'desktop server', 'Id velit ut tortor pretium viverra suspendisse.', '599.99', 5, 'desktop-server.jpg', 'computer,desktop,technology');
 
 --
 -- Indexes for dumped tables
@@ -84,7 +86,7 @@ ALTER TABLE `products`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
