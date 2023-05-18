@@ -40,34 +40,40 @@ Copyright © 2023 gparap
       <div class="row mx-auto d-flex justify-content-center justify-items-center col-12">
 
         <?php
-        require_once('../config/config.php');
         require_once('functions.php');
 
-        //get recipes categories
-        $categories_json = perform_url_session(CATEGORIES_ENDPOINT);
-        $categories_array = decode_json_to_array($categories_json);
-        foreach ($categories_array['categories'] as $category) {
-          //get category details
-          $category_name = $category['name'];
+        //open connection
+        $db_connection = connect_to_database();
+
+        //get categories
+        $db_query = "SELECT * FROM `categories`";
+        $db_query_result = mysqli_query($db_connection, $db_query);
+
+        //display categories 
+        while ($category = mysqli_fetch_assoc($db_query_result)) {
+          $category_name = $category['title'];
           $category_description = $category['desc'];
           $category_image = $category['img'];
           $category_image_attribution = $category['atrib'];
 
           //display category
           echo '
-        <div class="col-lg-3 col-md-9 col-sm-12 mb-5">
-          <div class="card">
-            <img src="'.$category_image.'" class="card-img-top" alt="...">
-            <p class="card-footer text-muted">'.$category_image_attribution.'</p>
-            <div class="card-body">
-              <h5 class="card-title">'.$category_name.'</h5>
-              <p class="card-text">'.$category_description.'</p>
-              <a href="#" class="btn btn-primary">Go somewhere</a>
+          <div class="col-lg-3 col-md-9 col-sm-12 mb-5">
+            <div class="card">
+              <img src="' . $category_image . '" class="card-img-top" alt="...">
+              <p class="card-footer text-muted">' . $category_image_attribution . '</p>
+              <div class="card-body">
+                <h5 class="card-title">' . $category_name . '</h5>
+                <p class="card-text">' . $category_description . '</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>
+              </div>
             </div>
           </div>
-        </div>
         ';
         }
+
+        //close connection
+        $db_connection->close();
         ?>
 
       </div>
