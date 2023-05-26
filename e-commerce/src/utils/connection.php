@@ -6,7 +6,7 @@
  * Connect to database.
  */
 
-require_once('../../config/config.php');
+ require_once($_SERVER['DOCUMENT_ROOT'].'/e-commerce/config/config.php');
 
 $db_connection = mysqli_connect(HOST, USER, PASSWORD, DATABASE);
 

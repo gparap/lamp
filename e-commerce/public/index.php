@@ -18,15 +18,64 @@
                     <p class="text-muted">We hope you have a nice shopping experience.&nbsp;</p>
                 </div>
             </div>
-            <div class="row mx-auto">
-                <div class="col">
-                    <div><!-- TODO:Products --></div>
-                </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                <?php
+
+                require_once('../src/utils/connection.php');
+                require_once('../src/utils/functions.php');
+
+                //query the database for products
+                $query_products = "SELECT * FROM `products`";
+                $query_products_results = mysqli_query($db_connection, $query_products);
+                if (!$query_products_results) {
+                    exit("Cannot connect to database.");
+                }
+
+                //display all products
+                while ($product = mysqli_fetch_assoc($query_products_results)) {
+                    //get product details
+                    $product_name = $product['name'];
+                    $product_description = $product['description'];
+                    $product_cost = $product['item_cost'];
+                    $products_left = $product['items_left'];
+                    $product_image = $product['image_url'];
+                    $product_category_id = $product['category_id'];
+
+                    //get the product category name based on its category id
+                    $product_category_name = get_category_name($product_category_id);
+
+                    //get the product image path
+                    $product_image_path = "https://localhost/e-commerce/public/img/products/"
+                        . $product_category_name . "/" . $product_image;
+
+                    echo '
+                    <div class="col">
+                        <div style="padding: 32px;">
+                            <a href="">
+                                <img class="img img-fluid" src="' . $product_image_path . '" loading="lazy" />
+                                <div>
+                                    <h5>' . $product_name . '</h5>
+                                    <p>' . $product_description . '</p>
+                                </div>
+                                <strong>€' . $product_cost . '</strong>
+
+                                <div class="py-2">
+                                    <a type="button" class="btn btn-primary" href="#">Add to Cart</a>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    ';
+                }
+
+                //close database connection
+                $db_connection->close();
+
+                ?>
             </div>
         </div>
     </section>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/bs-init.js"></script>
 </body>
 
 </html>
