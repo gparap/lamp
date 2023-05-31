@@ -40,10 +40,8 @@ Copyright © 2023 gparap
       <div class="row mx-auto d-flex justify-content-center justify-items-center col-12">
 
         <?php
-        require_once('functions.php');
-
         //open connection
-        $db_connection = connect_to_database();
+        require_once('../src/utils/connection.php');
 
         //get categories
         $db_query = "SELECT * FROM `categories`";
