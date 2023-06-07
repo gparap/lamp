@@ -30,7 +30,9 @@ if (empty($_SESSION['user_id'])) {
                     <h1 class="h2">Users</h1>
                     <h6>
                         <?php if (!empty($_SESSION['user_id'])) {
-                            echo "UserID: " . $_SESSION['user_id'];
+                            //display user details on the edge of the screen
+                            require_once 'utils/functions.php';
+                            display_user_details($_SESSION['user_id']);
                         } ?>
                     </h6>
                 </div>

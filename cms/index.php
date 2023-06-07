@@ -15,7 +15,7 @@
 
 <body>
 
-	<?php include_once 'src/utils//header.php'; ?>
+	<?php include_once 'src/utils/header.php'; ?>
     
     <!-- Container -->
     <div class="container-fluid">
@@ -60,7 +60,9 @@
                     <h1 class="h2">Please, select a category...</h1>
                     <h6>
                         <?php if (!empty($_SESSION['user_id'])) {
-                            echo "UserID: " . $_SESSION['user_id'];
+                            //display user details on the edge of the screen
+                            require_once 'src/utils/functions.php';
+                            display_user_details($_SESSION['user_id']);
                         } ?>
                     </h6>
                 </div>
