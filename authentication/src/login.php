@@ -8,19 +8,17 @@
     <title>Login Form</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <div class="container">
     <link rel="stylesheet" href="../resources/css/bootstrap.min.css">
     <link rel="stylesheet" href="../resources/css/style.css" />
-  </head>
+</head>
 
 <body>
-    <!--Logo-->
-	<div class="col-md-12">
-            <img src="../resources/img/gparap_logo.png" width="128px" height="64px" alt="logo">
-    </div>
-
-    <!--Login Form-->
     <div class="container col-md-4">
+        <!--Logo-->
+        <div class="py-4">
+            <img src="../resources/img/gparap_logo.png" width="128px" height="64px" alt="logo">
+        </div>
+        <!--Login Form-->
         <form method="POST" action="login.php">
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
@@ -31,17 +29,18 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" name="password" id="password">
             </div>
-
             <button type="submit" name="submit" class="w-100 btn btn-lg btn-primary">Login</button>
+            <div class="py-2">
+                <a href="https://localhost/authentication/src/register.php">Not registered yet?</a>
+            </div>
 
-            <a href="https://localhost/authentication/src/register.php">Not registered yet?</a>
         </form>
     </div>
 
     <!--Login-->
     <?php
     if (isset($_POST['submit'])) {
-    	
+
         // connect to the database
         require_once('connection.php');
 
@@ -75,7 +74,7 @@
         }
     }
     ?>
-	<script src="../resources/js/bootstrap.min.js"></script>
+    <script src="../resources/js/bootstrap.min.js"></script>
 </body>
 
 </html>
