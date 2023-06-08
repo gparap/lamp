@@ -16,6 +16,17 @@ if (empty($_SESSION['user_id'])) {
 <body>
 
 	<?php include_once 'utils/header.php'; ?>
+	
+	<?php 
+	//display any existing message to the user
+	if (isset($_GET['msg'])){
+        echo '
+        <div class="alert alert-dark alert-dismissible fade show" role="alert">'.$_GET['msg'].'
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        ';
+	}
+	?>
     
     <!-- Container -->
     <div class="container-fluid">
@@ -83,7 +94,6 @@ if (empty($_SESSION['user_id'])) {
             </main>
         </div>
     </div>
-    
 </body>
 
 </html>
