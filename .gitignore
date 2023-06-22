@@ -29,3 +29,5 @@ recipes/.project
 recipes/.settings/org.eclipse.core.resources.prefs
 recipes/.settings/org.eclipse.php.core.prefs
 recipes/.settings/org.eclipse.wst.common.project.facet.core.xml
+movies/public/css/bootstrap.min.css
+movies/public/js/bootstrap.min.js
