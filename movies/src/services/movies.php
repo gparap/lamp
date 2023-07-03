@@ -3,14 +3,32 @@
 /*
  * https://mit-license.org
  * Copyright © 2023 gparap
- * Web service to fetch all movies from the database as JSON.
+ * Web service to query movies from the database as JSON.
  */
+
+//initialize variables to avoid server warnings
+$query = "";
+$title = "";
+$genre = "";
+
+//get the movie title
+if (isset($_GET['title'])){
+    $title = trim($_GET['title']);
+    $query = "SELECT * from `movies` WHERE title LIKE '%$title%'";
+}
+//get the movie genre
+elseif (isset($_GET['genre'])){
+    $genre = trim($_GET['genre']);
+    $query = "SELECT * from `movies` WHERE genre LIKE '%$genre%'";
+}
+else{
+    $query = "SELECT * from `movies`";
+}
 
 //connect the to database
 require_once('../utils/connection.php');
 
 //fetch all movies & their articles from the database
-$query = "SELECT * from `movies`";
 $query_result = mysqli_query($db_connection, $query);
 if (!$query_result) {
     echo "Cannot connect to the movies database.";
