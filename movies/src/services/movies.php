@@ -10,6 +10,10 @@
 $query = "";
 $title = "";
 $genre = "";
+$actor = "";
+$director = "";
+$publisher = "";
+$year = "";
 
 //get the movie title
 if (isset($_GET['title'])){
@@ -20,6 +24,26 @@ if (isset($_GET['title'])){
 elseif (isset($_GET['genre'])){
     $genre = trim($_GET['genre']);
     $query = "SELECT * from `movies` WHERE genre LIKE '%$genre%'";
+}
+//get the movie actor
+elseif (isset($_GET['actor'])){
+    $actor = trim($_GET['actor']);
+    $query = "SELECT * from `movies` WHERE cast LIKE '%$actor%'";
+}
+//get the movie director
+elseif (isset($_GET['director'])){
+    $director = trim($_GET['director']);
+    $query = "SELECT * from `movies` WHERE director LIKE '%$director%'";
+}
+//get the movie publisher
+elseif (isset($_GET['publisher'])){
+    $publisher = trim($_GET['publisher']);
+    $query = "SELECT * from `movies` WHERE publisher LIKE '%$publisher%'";
+}
+//get the movie year
+elseif (isset($_GET['year'])){
+    $year = trim($_GET['year']);
+    $query = "SELECT * from `movies` WHERE year LIKE '%$year%'";
 }
 else{
     $query = "SELECT * from `movies`";
@@ -36,12 +60,11 @@ if (!$query_result) {
 }
 $movies = array();
 while ($row = mysqli_fetch_assoc($query_result)) {
-    //fetch the article for the current movie
+    //fetch the article for the current movie record
     $article_id = $row['article_id'];
     $query_articles = "SELECT * from `movies_articles` WHERE id='$article_id'";
     $query_articles_result = mysqli_query($db_connection, $query_articles);
 
-    //get the current article as an associative array
     $array_article = array();
     while ($row_article = mysqli_fetch_assoc($query_articles_result)) {
         $array_article[] = $row_article;
@@ -58,7 +81,7 @@ while ($row = mysqli_fetch_assoc($query_result)) {
         $article .= $key;
         $article .= '":"';
         $article .= $value;
-        $article .= '",';//remove the last comma
+        $article .= '",';
     }
     $article = substr($article, 0, -1);
     $article .= '}]';
@@ -76,6 +99,7 @@ while ($row = mysqli_fetch_assoc($query_result)) {
         'editor' => $row['editor'],
         'music' => $row['music'],
         'publisher' => $row['publisher'],
+        'year' => $row['year'],
         'duration' => $row['duration'],
         'country' => $row['country'],
         'lang' => $row['lang'],
@@ -85,11 +109,11 @@ while ($row = mysqli_fetch_assoc($query_result)) {
     array_push($movies, $movie);
 }
 
-//create the final json response
+//create the "movies" json object
 $jsonArray = json_encode($movies);
-$jsonResponse = array('movies' => json_decode($jsonArray));
+$jsonObject = array('movies' => json_decode($jsonArray));
 
 //generate json response
-echo json_encode($jsonResponse);
+echo json_encode($jsonObject);
 
 ?>
