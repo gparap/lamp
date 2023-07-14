@@ -14,9 +14,15 @@ $actor = "";
 $director = "";
 $publisher = "";
 $year = "";
-
+$new_movies = "";
+    
+//get the newest added movies
+if (isset($_GET['new'])){
+    $title = trim($_GET['new']);
+    $query = "SELECT * from `movies` WHERE is_new = '1'";
+}
 //get the movie title
-if (isset($_GET['title'])){
+elseif (isset($_GET['title'])){
     $title = trim($_GET['title']);
     $query = "SELECT * from `movies` WHERE title LIKE '%$title%'";
 }
