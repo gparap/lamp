@@ -1,4 +1,5 @@
-<?php require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
+<?php session_start();
+require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -85,9 +86,6 @@
                         }
 
                         // give user a session var
-                        session_start();
-                        session_destroy();
-                        session_start();
                         $_SESSION['user_id'] = $row['id'];
                         $_SESSION['user_role'] = $row['role'];
 

@@ -17,7 +17,8 @@
                 if(isset($_POST['logout'])) {
                     session_unset();
                     session_destroy();
-                    header("Location: https://localhost/blog/admin/src/auth/login.php");
+                    $location = ADMIN_URL . "/src/auth/login.php";
+                    echo '<script>window.location.href = "'.$location.'";</script>';
                     exit(); 
                 }
             ?>
