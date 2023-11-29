@@ -1,11 +1,13 @@
 <?php
     session_start();
+    require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php');
 
-    //if user is not signed-ing go to login page
+    //if user is not signed-in go to login page
     if (empty($_SESSION['user_id'])) {
-        header("Location: https://localhost/cms/src/auth/login.php");
+        $location = ADMIN_URL . "/src/auth/login.php";
+        echo '<script>window.location.href = "'.$location.'";</script>';
         exit;
-    } 
+    }
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +17,7 @@
 
 <body>
 
-	<?php include_once 'src/utils/header.php'; ?>
+	<?php include_once 'src/utils//header.php'; ?>
     
     <!-- Container -->
     <div class="container-fluid">
@@ -35,7 +37,7 @@
                         if ($_SESSION['user_role'] == 'admin') {
                             echo '
                             <li class="nav-item">
-                            <a class="nav-link" href="src/users.php">
+                            <a class="nav-link" href="src/users/users.php">
                                 <span data-feather="users" class="align-text-bottom"></span>
                                 Users
                             </a>
@@ -43,7 +45,7 @@
                             ';
                         } ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="src/posts.php">
+                            <a class="nav-link" href="src/posts/posts.php">
                                 <span data-feather="posts" class="align-text-bottom"></span>
                                 Posts
                             </a>
@@ -60,9 +62,7 @@
                     <h1 class="h2">Please, select a category...</h1>
                     <h6>
                         <?php if (!empty($_SESSION['user_id'])) {
-                            //display user details on the edge of the screen
-                            require_once 'src/utils/functions.php';
-                            display_user_details($_SESSION['user_id']);
+                            echo "UserID: " . $_SESSION['user_id'];
                         } ?>
                     </h6>
                 </div>

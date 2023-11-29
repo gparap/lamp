@@ -1,3 +1,4 @@
+<?php require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,7 +43,7 @@
 					type="password" class="form-control" name="password">
 			</div>
 			<button type="submit" class="btn btn-primary" name="button-login">Login</button>
-			<a href="https://localhost/cms/src/auth/register.php">Not registered
+			<a href="https://localhost/blog/admin/src/auth/register.php">Not registered
 				yet?</a>
 		</form>
 
@@ -50,7 +51,7 @@
         <?php
         if (isset($_POST['button-login'])) {
             // connect to database
-            $connection = mysqli_connect('localhost', 'root', '', 'test_db');
+            $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
             if (! $connection) {
                 die(mysqli_connect_error);
             }
@@ -62,8 +63,8 @@
 
                 // validate user credentials
                 if (empty($email) or empty($password)) {
-//                     echo '<script>alert("Please, fill in input field(s)!")</script>';
-                    header("Location: https://localhost/cms/src/auth/login.php?msg=Please, fill in input fields!");
+                    $location = ADMIN_URL . "/src/auth/login.php?msg=Please, fill in input fields!";
+                    echo '<script>window.location.href = "'.$location.'";</script>';
                     exit();
                 }
 
@@ -71,14 +72,15 @@
                 $query = "SELECT * FROM `users` WHERE email='$email' AND password='$password'";
                 $query_results = mysqli_query($connection, $query);
                 if ($query_results->num_rows != 1) {
-//                     echo '<script>alert("User does not exist!")</script>';
-                    header("Location: https://localhost/cms/src/auth/login.php?msg=User does not exist!");
+                    $location = ADMIN_URL . "/src/auth/login.php?msg=User does not exist!";
+                    echo '<script>window.location.href = "'.$location.'";</script>';
                     exit();
                 } else {
                     while ($row = mysqli_fetch_assoc($query_results)) {
                         // make sure user status is approved
                         if ($row['status'] == 'pending') {
-                            header("Location: https://localhost/cms/src/auth/login.php?msg=You are not authorized yet. <br />Please, wait for approval or contact admin...");
+                            $location = ADMIN_URL . "/src/auth/login.php?msg=You are not authorized yet. <br />Please, wait for approval or contact admin...";
+                            echo '<script>window.location.href = "'.$location.'";</script>';
                             exit();
                         }
 
@@ -90,7 +92,8 @@
                         $_SESSION['user_role'] = $row['role'];
 
                         // go to home page
-                        header("Location: https://localhost/cms/index.php");
+                        $location = ADMIN_URL . "/index.php";
+                        echo '<script>window.location.href = "'.$location.'";</script>';
                         exit();
                     }
                 }

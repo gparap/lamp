@@ -1,9 +1,11 @@
 <?php
 session_start();
+require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php');
 
-//if user is not signed-ing go to login page
+//if user is not signed-in go to login page
 if (empty($_SESSION['user_id'])) {
-    header("Location: https://localhost/cms/src/auth/login.php");
+    $location = ADMIN_URL . "/src/auth/login.php";
+    echo '<script>window.location.href = "'.$location.'";</script>';
     exit;
 }
 ?>
@@ -11,17 +13,17 @@ if (empty($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html>
 
-<?php include_once('utils/head.php'); ?>
+<?php include_once('../utils/head.php'); ?>
 
 <body>
 
-    <?php include_once 'utils/header.php'; ?>
+    <?php include_once '../utils/header.php'; ?>
 
      <!-- Container -->
     <div class="container-fluid">
         <div class="row">
             <!--Sidebar Navigation-->
-            <?php include_once 'utils/sidebar.php'; ?>
+            <?php include_once '../utils/sidebar.php'; ?>
 
             <!--Content Area-->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -80,7 +82,7 @@ if (empty($_SESSION['user_id'])) {
                     //add post
                     if (isset($_POST['button-add'])) {
                         //connect to database
-                        $connection = mysqli_connect('localhost', 'root', '', 'test_db');
+                        $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
                         if (!$connection) {
                             die(mysqli_connect_error);
                         }
@@ -101,8 +103,12 @@ if (empty($_SESSION['user_id'])) {
                         //TODO: validate results
 
                         //redirect to posts
-                        echo "<script>window.location.href='https://localhost/cms/src/posts.php'</script>";
+                        $location = ADMIN_URL . "/src/posts/posts.php";
+                        echo '<script>window.location.href = "'.$location.'";</script>';
                         exit();
+
+                        //!!! important
+                        $connection->close();
                     }
                     ?>
 

@@ -1,9 +1,11 @@
 <?php
 session_start();
+require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php');
 
-//if user is not signed-ing go to login page
+//if user is not signed-in go to login page
 if (empty($_SESSION['user_id'])) {
-    header("Location: https://localhost/cms/src/auth/login.php");
+    $location = ADMIN_URL . "/src/auth/login.php";
+    echo '<script>window.location.href = "'.$location.'";</script>';
     exit;
 }
 ?>
@@ -11,29 +13,22 @@ if (empty($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html lang="en">
 
-<?php include_once 'utils/head.php'; ?>
+<?php include_once '../utils/head.php'; ?>
 
 <body>
 
-	<?php include_once 'utils/header.php'; ?>
+	<?php include_once '../utils/header.php'; ?>
     
     <!-- Container -->
     <div class="container-fluid">
         <div class="row">
             <!--Sidebar Navigation-->
-            <?php include_once 'utils/sidebar.php'; ?>
+            <?php include_once '../utils/sidebar.php'; ?>
 
             <!--Content Area-->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h1 class="h2">Posts</h1>
-                    <h6>
-                        <?php if (!empty($_SESSION['user_id'])) {
-                            //display user details on the edge of the screen
-                            require_once 'utils/functions.php';
-                            display_user_details($_SESSION['user_id']);
-                        } ?>
-                    </h6>
                 </div>
                 <table class="table">
                     <thead>
@@ -48,7 +43,7 @@ if (empty($_SESSION['user_id'])) {
                     <tbody>
                         <?php
                         //connect to database
-                        $connection = mysqli_connect('localhost', 'root', '', 'test_db');
+                        $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
                         if (!$connection) {
                             die(mysqli_connect_error);
                         }

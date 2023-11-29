@@ -1,9 +1,11 @@
 <?php
 session_start();
+require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php');
 
-//if user is not signed-ing go to login page
+//if user is not signed-in go to login page
 if (empty($_SESSION['user_id'])) {
-    header("Location: https://localhost/cms/auth/login.php");
+    $location = ADMIN_URL . "/src/auth/login.php";
+    echo '<script>window.location.href = "'.$location.'";</script>';
     exit;
 }
 ?>
@@ -11,24 +13,24 @@ if (empty($_SESSION['user_id'])) {
 <!DOCTYPE html>
 <html>
 
-<?php include_once('utils/head.php'); ?>
+<?php include_once('../utils/head.php'); ?>
 
 <body>
 
-    <?php include_once 'utils/header.php'; ?>
+    <?php include_once '../utils/header.php'; ?>
 
      <!-- Container -->
     <div class="container-fluid">
         <div class="row">
             <!--Sidebar Navigation-->
-            <?php include_once 'utils/sidebar.php'; ?>
+            <?php include_once '../utils/sidebar.php'; ?>
 
             <?php
                 //get post id
                 $id = $_GET['id'];
 
                 //connect to database
-                $connection = mysqli_connect('localhost', 'root', '', 'test_db');
+                $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
                 if (!$connection) {
                     die(mysqli_connect_error);
                 }
@@ -91,7 +93,7 @@ if (empty($_SESSION['user_id'])) {
                         </div>
 
                         <!--Edit post button-->
-                        <button type="submit" class="btn btn-dark" name="button-edit">Edit</button>
+                        <button type="submit" class="btn btn-dark" name="button-edit">Update</button>
 
                         <!--Clear button post-->
                         <button onclick="clearAllText()" class="btn btn-dark" name="button-clear">Clear</button>
@@ -124,7 +126,8 @@ if (empty($_SESSION['user_id'])) {
                         $connection->close();
 
                         //redirect to posts
-                        echo "<script>window.location.href='https://localhost/cms/src/posts.php'</script>";
+                        $location = ADMIN_URL . "/src/posts/posts.php";
+                        echo '<script>window.location.href = "'.$location.'";</script>';
                         exit();
                     }
                     ?>
