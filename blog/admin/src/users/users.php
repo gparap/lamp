@@ -44,15 +44,11 @@ checkUserAuthentication();
                         <tbody>
                             <?php
                             //connect to database
-                            $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
-                            if (!$connection) {
-                                die(mysqli_connect_error());
-                            }
+                            $connection = connectToDatabase();
 
                             //get all users
                             $query = "SELECT * FROM users";
-                            $results = mysqli_query($connection, $query);
-
+                            $results = mysqli_query(connectToDatabase(), $query);
 
                             //display all users
                             while ($row = mysqli_fetch_assoc($results)) {

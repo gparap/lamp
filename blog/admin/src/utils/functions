@@ -9,4 +9,13 @@ function checkUserAuthentication() {
     }
 }
 
+function connectToDatabase() {
+    //connect to database or die
+    $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
+    if (! $connection) {
+        die(mysqli_connect_error());
+    }
+    return $connection;
+}
+
 ?>

@@ -52,10 +52,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
         <?php
         if (isset($_POST['button-login'])) {
             // connect to database
-            $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
-            if (! $connection) {
-                die(mysqli_connect_error);
-            }
+            require_once ('../utils/functions');
+            $connection = connectToDatabase();
 
             if (isset($_POST['email']) && isset($_POST['password'])) {
                 // get user credentials
@@ -98,7 +96,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
             }
 
             // close database connection
-            $connection -- > close();
+            $connection -> close();
         }
         ?>
     </div>

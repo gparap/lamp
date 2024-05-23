@@ -60,10 +60,8 @@
         <?php
         if (isset($_POST['button-register'])) {
             // connect to database
-            $connection = mysqli_connect('localhost', 'root', '', 'test_db');
-            if (! $connection) {
-                die(mysqli_connect_error);
-            }
+            require_once ('../utils/functions');
+            $connection = connectToDatabase();
 
             if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['password-confirm'])) {
                 // get user info

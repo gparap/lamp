@@ -1,13 +1,8 @@
 <?php
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php');
-
-//if user is not signed-in go to login page
-if (empty($_SESSION['user_id'])) {
-    $location = ADMIN_URL . "/src/auth/login.php";
-    echo '<script>window.location.href = "'.$location.'";</script>';
-    exit;
-}
+require_once('../utils/functions');
+checkUserAuthentication();
 ?>
 
 <!DOCTYPE html>
@@ -82,10 +77,7 @@ if (empty($_SESSION['user_id'])) {
                     //add post
                     if (isset($_POST['button-add'])) {
                         //connect to database
-                        $connection = mysqli_connect('localhost', 'root', '', 'blog_db');
-                        if (!$connection) {
-                            die(mysqli_connect_error);
-                        }
+                        $connection = connectToDatabase();
 
                         //get fields
                         $title = $_POST['title'];
