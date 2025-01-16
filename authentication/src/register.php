@@ -76,12 +76,21 @@
             echo "<script>alert('User is already registered...')</script>";
             exit();
         }
+        
+        //encrypt password
+        $password = password_hash($password, PASSWORD_DEFAULT);
 
-        //register user & redirect to home page   
+        //register user & redirect to home page
         $query = "INSERT INTO `users`(`email`, `username`, `password`) VALUES('$email', '$username', '$password')";
         $query_results = mysqli_query($db_connection, $query);
-        if ($query_results == TRUE) {
-            header("Location: https://localhost/authentication/index.php");
+        $query_results_rows = mysqli_affected_rows($db_connection);
+        if ($query_results_rows == 1) {
+            echo "<script>alert('User registration successful.')</script>";
+            echo "<script>window.location.href = 'https://localhost/authentication/index.php'</script>";
+            exit();
+        } else {
+            echo "<script>alert('User registration failed!')</script>";
+            echo "<script>window.location.href = 'https://localhost/authentication/src/register.php'</script>";
             exit();
         }
     }

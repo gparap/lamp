@@ -11,13 +11,20 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     	$result = array("status"=>"0", "msg"=>"Database connection failed.");
     }else {
     	//query database
-    	$query = "SELECT * FROM `users` WHERE email='$email' AND password='$password'";
+    	$query = "SELECT * FROM `users` WHERE email='$email'";
     	$query_results = mysqli_query($db_connection, $query);
    	
    		//check query results
    	    $query_results_rows = mysqli_num_rows($query_results);
     	if ($query_results_rows == 1) {
-			$result = array("status"=>"1", "msg"=>"User authentication succeeded.");
+    	    while ($row = mysqli_fetch_assoc($query_results)) {
+    	        //verify password & return result
+    	        if (password_verify($password, $row['password'])) {
+    	            $result = array("status"=>"1", "msg"=>"User authentication succeeded.");
+    	        }else {
+    	            $result = array("status"=>"0", "msg"=>"User authentication failed.");
+    	        }
+    	    }
     	}else {
 			$result = array("status"=>"0", "msg"=>"User authentication failed.");
     	}

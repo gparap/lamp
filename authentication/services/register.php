@@ -21,6 +21,9 @@ if (!empty($_POST['email']) && !empty($_POST['username']) && !empty($_POST['pass
             $result = array("status"=>"0", "msg"=>"User already registered.");
         }
         else{
+            //encrypt password
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            
             //register user
             $query = "INSERT INTO `users`(`email`, `username`, `password`) VALUES('$email', '$username', '$password')";
             $query_result = mysqli_query($db_connection, $query);

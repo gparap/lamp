@@ -53,17 +53,19 @@
         }
 
         //query database
-        $query = "SELECT * FROM `users` WHERE email='$email' AND password='$password'";
+        $query = "SELECT * FROM `users` WHERE email='$email'";
         $query_results = mysqli_query($db_connection, $query);
 
         //check query results validity
         $query_results_rows = mysqli_num_rows($query_results);
         if ($query_results_rows == 1) {
             while ($row = mysqli_fetch_assoc($query_results)) {
-                //give the user a session id
-                $_SESSION['id'] = $row['id'];
+                //verify user password
+                if (password_verify($password, $row['password'])) {
+                    //give the user a session id
+                    $_SESSION['id'] = $row['id'];
+                }
             }
-            echo $_SESSION['id'];
 
             //redirect to home page
             header("Location: https://localhost/authentication/index.php");
