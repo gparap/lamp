@@ -8,7 +8,10 @@ function checkUserAuthentication()
     require_once 'connection.php';
 
     // get user session id
-    $id = mysqli_real_escape_string($db_connection, $_SESSION['id']);
+    $id = -1;
+    if (isset($_SESSION['id'])) {
+        $id = mysqli_real_escape_string($db_connection, $_SESSION['id']);    
+    }
 
     // query database
     $query = "SELECT * FROM `users` WHERE id='$id'";
