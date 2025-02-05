@@ -69,7 +69,8 @@
             </main>
         </div>
     </div>
-    
+
+    <?php include_once 'src/utils/footer.php'; ?>
 </body>
 
 </html>

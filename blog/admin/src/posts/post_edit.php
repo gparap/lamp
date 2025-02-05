@@ -128,6 +128,8 @@ checkUserAuthentication();
             </main>
         </div>
     </div>
+
+    <?php include_once '../utils/footer.php'; ?>
 </body>
 
 </html>
