@@ -1,7 +1,7 @@
 <?php
 session_start();
 require_once($_SERVER['DOCUMENT_ROOT'] . '/blog/config/config.php');
-require_once('../utils/functions');
+require_once('../utils/functions.php');
 checkUserAuthentication();
 
 //connect to database

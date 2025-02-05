@@ -52,7 +52,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
         <?php
         if (isset($_POST['button-login'])) {
             // connect to database
-            require_once ('../utils/functions');
+            require_once ('../utils/functions.php');
             $connection = connectToDatabase();
 
             if (isset($_POST['email']) && isset($_POST['password'])) {

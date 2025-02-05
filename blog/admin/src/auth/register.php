@@ -60,7 +60,7 @@
         <?php
         if (isset($_POST['button-register'])) {
             // connect to database
-            require_once ('../utils/functions');
+            require_once ('../utils/functions.php');
             $connection = connectToDatabase();
 
             if (isset($_POST['email']) && isset($_POST['username']) && isset($_POST['password']) && isset($_POST['password-confirm'])) {
