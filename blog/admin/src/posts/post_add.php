@@ -83,24 +83,54 @@ checkUserAuthentication();
                         $title = $_POST['title'];
                         $author = $_POST['author'];
                         $content = $_POST['content'];
-                        //TODO: image file upload
+                        $image = ""; //init the final name of image to insert to the db
                         $date = $_POST['date'];
                         $keywords = $_POST['keywords'];
 
+                        //get the date string if it is not inserted                      
+                        if ($date === "") {
+                            $date = date("Y-m-d H:i:s");
+                        }
+
+                        //get image file attributes
+                        if (isset($_FILES['image'])) {
+                            $filename = $_FILES['image']['name'];
+                            $filetype = $_FILES['image']['type'];
+                            $file_tmp_name = $_FILES['image']['tmp_name'];
+                            $file_error = $_FILES['image']['error'];
+                            $filesize = $_FILES['image']['size'];
+
+                            //TODO: validate image file uploads
+                            
+                            //create the file path destination
+                            $file_dest = "../../../public/img/" . $filename;
+
+                            //upload file to blog images
+                            move_uploaded_file($file_tmp_name, $file_dest);
+
+                            //changes file mode
+                            chmod($file_dest, 0644);
+
+                            //update the final name of image to insert to the db
+                            $image = $filename;
+                        }
+
                         //execute query
                         $query = "INSERT INTO `posts` (`id`, `title`, `author`, `content`, `image`, `date`, `keywords`) 
-                            VALUES (NULL, '$title', '$author', '$content', NULL, '$date', '$keywords')";
+                            VALUES (NULL, '$title', '$author', '$content', '$image', '$date', '$keywords')";
                         $result = mysqli_query($connection, $query);
                         
                         //TODO: validate results
 
+                        //!!! important
+                        $connection->close();
+
+                        //give user info
+                        echo "<script>alert('Post added successfully.');</script>";
+
                         //redirect to posts
                         $location = ADMIN_URL . "/src/posts/posts.php";
                         echo '<script>window.location.href = "'.$location.'";</script>';
-                        exit();
-
-                        //!!! important
-                        $connection->close();
                     }
                     ?>
 
