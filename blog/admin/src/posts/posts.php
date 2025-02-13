@@ -32,7 +32,7 @@ checkUserAuthentication();
                             <th scope="col">Title</th>
                             <th scope="col">Author</th>
                             <th scope="col">Content</th>
-                            <th scope="col">&nbsp;<a href="post_add.php" class="btn btn-dark">&nbsp;ADD&nbsp;</a></th>
+                            <th scope="col">&nbsp;<a href="post_add.php" class="btn btn-dark" style="margin-left: 4px;  min-width: 5.25rem;">&nbsp;ADD&nbsp;</a></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,9 +53,10 @@ checkUserAuthentication();
                             echo '<td>' . $row['author'] . '</td>';
                             echo '<td>' . substr($row['content'], 0, 99) . '...' . '</td>';
                             echo '<td>';
-                            echo '<a href="post_view.php?id=' . $row["id"] . '"><button name="button-view" type="button" class="btn btn-dark" style="margin: 0px 8px;">VIEW</button></a>';
-                            echo '<a href="post_edit.php?id=' . $row["id"] . '"><button name="button-edit" type="button" class="btn btn-warning" style="margin: 0px 8px;">EDIT</button></a>';
-                            echo '<a href="post_delete.php?id=' . $row["id"] . '"><button name="button-delete" type="button" class="btn btn-danger">DELETE</button></a>';
+                            echo '<a href="post_view.php?id=' . $row["id"] . '"><button name="button-view" type="button" class="btn btn-dark" style="margin: 2px 8px; min-width: 5.25rem;">VIEW</button></a>';
+                            echo '<a href="' . BASE_URL . '/public/index.php?id=' . $row["id"] . '"><button name="button-view" type="button" class="btn btn-success" style="margin: 2px 8px; min-width: 5.25rem;">LIVE</button></a>';
+                            echo '<a href="post_edit.php?id=' . $row["id"] . '"><button name="button-edit" type="button" class="btn btn-warning" style="margin: 2px 8px; min-width: 5.25rem;">EDIT</button></a>';
+                            echo '<a href="post_delete.php?id=' . $row["id"] . '"><button name="button-delete" type="button" class="btn btn-danger" style="margin: 2px 8px; min-width: 5.25rem;">DELETE</button></a>';
                             echo '</td>';
                             echo '</tr>';
                         }
