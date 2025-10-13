@@ -40,23 +40,42 @@ checkUserAuthentication();
                         //connect to database
                         $connection = connectToDatabase();
 
-                        //get all posts
-                        $query = "SELECT * FROM posts";
-                        $results = mysqli_query($connection, $query);
+                        //create sql query based on user role
+                        $query = "";
+                        if ($_SESSION['user_role'] == "admin") {
+                            //admins have access to all posts
+                            $query = "SELECT * FROM posts";
+                        } elseif ($_SESSION['user_role'] == "author") {
+                            //authors have access to their posts only
+                            $user_id = $_SESSION['user_id'];
+                            $query = "SELECT posts.*, posts.id AS post_id FROM posts JOIN users ON posts.author = users.username WHERE users.id = '$user_id'";
+                        }
 
+                        //get all posts
+                        $results = mysqli_query($connection, $query);
 
                         //display all posts
                         while ($row = mysqli_fetch_assoc($results)) {
+                            
+                            //get the correct column id based on user role
+                            $post_id = "";
+                            if ($_SESSION['user_role'] == "admin") {
+                                $post_id = $row['id'];
+                            } elseif ($_SESSION['user_role'] == "author") {
+                                $post_id = $row['post_id'];
+                            }
+
+                            //display post details & links
                             echo '<tr>';
-                            echo '<th scope="row">' . $row['id'] . '</th>';
+                            echo '<th scope="row">' . $post_id . '</th>';
                             echo '<td>' . $row['title'] . '</td>';
                             echo '<td>' . $row['author'] . '</td>';
                             echo '<td>' . substr($row['content'], 0, 99) . '...' . '</td>';
                             echo '<td>';
-                            echo '<a href="post_view.php?id=' . $row["id"] . '"><button name="button-view" type="button" class="btn btn-dark" style="margin: 2px 8px; min-width: 5.25rem;">VIEW</button></a>';
-                            echo '<a href="' . BASE_URL . '/public/index.php?id=' . $row["id"] . '"><button name="button-view" type="button" class="btn btn-success" style="margin: 2px 8px; min-width: 5.25rem;">LIVE</button></a>';
-                            echo '<a href="post_edit.php?id=' . $row["id"] . '"><button name="button-edit" type="button" class="btn btn-warning" style="margin: 2px 8px; min-width: 5.25rem;">EDIT</button></a>';
-                            echo '<a href="post_delete.php?id=' . $row["id"] . '"><button name="button-delete" type="button" class="btn btn-danger" style="margin: 2px 8px; min-width: 5.25rem;">DELETE</button></a>';
+                            echo '<a href="post_view.php?id=' . $post_id . '"><button name="button-view" type="button" class="btn btn-dark" style="margin: 2px 8px; min-width: 5.25rem;">VIEW</button></a>';
+                            echo '<a href="' . BASE_URL . '/public/index.php?id=' . $post_id . '"><button name="button-view" type="button" class="btn btn-success" style="margin: 2px 8px; min-width: 5.25rem;">LIVE</button></a>';
+                            echo '<a href="post_edit.php?id=' . $post_id . '"><button name="button-edit" type="button" class="btn btn-warning" style="margin: 2px 8px; min-width: 5.25rem;">EDIT</button></a>';
+                            echo '<a href="post_delete.php?id=' . $post_id . '"><button name="button-delete" type="button" class="btn btn-danger" style="margin: 2px 8px; min-width: 5.25rem;">DELETE</button></a>';
                             echo '</td>';
                             echo '</tr>';
                         }
