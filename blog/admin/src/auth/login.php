@@ -86,6 +86,23 @@ require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
                         // give user a session var
                         $_SESSION['user_id'] = $row['id'];
                         $_SESSION['user_role'] = $row['role'];
+                        
+                        // get the logger file
+                        $file = "logger.txt";
+                        
+                        // open logger file for appending
+                        $file_handler  =fopen($file, 'a');
+                        if ($file_handler === false) {
+                            die("Error: Cannot open file for appending.");
+                        }
+                        // append the login info
+                        $id = $row['id'];
+                        $username = $row['username'];
+                        $login_date = date("Y-m-d H:i:s");
+                        fwrite($file_handler, "user: [$username] with id: [$id] logged-in at: [$login_date]\n");
+
+                        // close the file !!!important
+                        fclose($file_handler);
 
                         // go to home page
                         $location = ADMIN_URL . "/index.php";
@@ -100,8 +117,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
         }
         ?>
     </div>
-
-    <?php include_once '../utils/footer.php'; ?>
+	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
