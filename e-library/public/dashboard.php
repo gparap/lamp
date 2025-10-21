@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+require_once __DIR__ . '/../config/config.php';
+
+//get the session var(s), if any
+$name = $_SESSION['name'] ?? "";
+?>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,89 +38,28 @@
 			placeholder="Search" aria-label="Search">
 		<div class="navbar-nav">
 			<div class="nav-item text-nowrap">
-				<a class="nav-link px-3" href="#">Sign out</a>
+				<a class="nav-link px-3"
+					href="<?php echo URL_SOURCE; ?>/auth/logout.php">Sign out</a>
 			</div>
 		</div>
 	</header>
 
 	<div class="container-fluid">
 		<div class="row">
-			<nav id="sidebarMenu"
-				class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"
-				style="height: fit-content;">
-				<div class="position-sticky pt-3">
-					<ul class="nav flex-column">
-						<li class="nav-item"><a class="nav-link" href="#"> <span
-								data-feather="users"></span> Users
-						</a>
-							<ul style="margin-left: 1rem; list-style-type: circle;">
-								<li class="nav-item"><a class="nav-link" href="#">Administrators</a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Librarians </a></li>
-								<li class="nav-item"><a class="nav-link" href="#">Members </a></li>
-							</ul></li>
-						<hr>
-						<li class="nav-item"><a class="nav-link" href="#"> <span
-								data-feather="book"></span> Books
-						</a></li>
-					</ul>
-				</div>
-			</nav>
-
-			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-				<div class="d-flex justify-content-end">
-					<h2 class="mt-3">
-						Welcome back,&nbsp;TODO: username&nbsp;<img
-							src="assets/img/avatars/person-circle.svg" height="32" width="32">
-					</h2>
-				</div>
-				<h2 class="mt-3">Lorem Ipsum</h2>
-				<hr>
-				<div class="table-responsive">
-					<table class="table table-striped table-sm">
-						<thead>
-							<tr>
-								<th scope="col">#</th>
-								<th scope="col">TODO</th>
-								<th scope="col">TODO</th>
-								<th scope="col">...</th>
-								<th scope="col">TODO</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Lorem Ipsum</td>
-								<td>Lorem Ipsum</td>
-								<td>...</td>
-								<td>Lorem Ipsum</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Lorem Ipsum</td>
-								<td>Lorem Ipsum</td>
-								<td>...</td>
-								<td>Lorem Ipsum</td>
-							</tr>
-							<tr>
-								<td>...</td>
-								<td>Lorem Ipsum</td>
-								<td>Lorem Ipsum</td>
-								<td>...</td>
-								<td>Lorem Ipsum</td>
-							</tr>
-							<tr>
-								<td>n</td>
-								<td>Lorem Ipsum</td>
-								<td>Lorem Ipsum</td>
-								<td>...</td>
-								<td>Lorem Ipsum</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</main>
+			<!-- Navigation -->
+			<?php require_once APP_ROOT .'/src/includes/navigation.php'; ?>
+            
+            <!-- Welcome msg -->
+            <?php
+            echo '<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    					<div class="d-flex justify-content-end">
+    						<h2 class="mt-3">Welcome back,&nbsp;' . $name . '&nbsp;<img src="assets/img/avatars/person-circle.svg" height="32" width="32"></h2>
+    					</div>
+    				</main>';
+            ?>
 		</div>
 	</div>
+
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
