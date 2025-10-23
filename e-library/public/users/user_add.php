@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/../../config/config.php';
+require_once APP_ROOT . '/src/functions/users.php';
 
 //get the session var(s), if any
 $role = $_SESSION['role'] ?? "";
@@ -57,13 +58,13 @@ $user_to_add_role = $_GET['user'] ?? NULL;
 		<div class="row">
 			<!-- Navigation -->
             <?php require_once APP_ROOT . '/src/includes/navigation.php';?>
-            
+
             <!--Add User Form-->
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 				<h2 class="mt-3">Add User</h2>
 				<hr>
 
-				<form method="POST" action="" enctype="multipart/form-data">
+				<form method="POST" action="#" enctype="multipart/form-data">
 					<!--Name-->
 					<div class="mb-3">
 						<label class="form-label" for="name">Name</label><input
@@ -117,9 +118,35 @@ $user_to_add_role = $_GET['user'] ?? NULL;
 						User</button>
 				</form>
 			</main>
-
 		</div>
 	</div>
+	
+    <?php
+    //add new user
+    $is_user_added = NULL;
+    if (isset($_POST['button-add-user'])) {
+        //TODO: check if user already exists
+
+        //add user
+        $is_user_added = add_user($_POST, $role, $user_to_add_role);
+
+        //check if user was added
+        if ($is_user_added) {
+            //show success message
+            echo '<script>alert("User added successfully.")</script>';
+
+            //redirect to dashboard
+            $location = "https://localhost/e-library/public/dashboard.php";
+            echo '<script>window.location.href = "' . $location . '";</script>';
+        } else {
+            //if something went wrong, show message for failure
+            echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
+                            Cannot add new user. Please, try again.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>';
+        }
+    }
+    ?>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
@@ -130,6 +157,7 @@ $user_to_add_role = $_GET['user'] ?? NULL;
 		integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
 		crossorigin="anonymous"></script>
 	<script>
-		feather.replace();
+  		feather.replace();
 	</script>
+</body>
 </html>
