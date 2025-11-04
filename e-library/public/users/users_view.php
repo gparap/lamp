@@ -105,24 +105,34 @@ require_once APP_ROOT . '/src/functions/users.php';
 									<td>';
                     //display actions based on user roles
                     if ($user['role'] == "admin") {
-                        //actions to administrators
-                        echo '		<a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>
-								';
+                        //Actions to administrators
+                        //--------------------------
+                        echo '	<a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
                     } elseif ($user['role'] == "lib") {
-                        //actions to librarians
-                        echo '		<a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>		                                
-		                                <a href="TODO.php?id=' . $user["id"] . '"><button name="button-delete" type="button" class="btn btn-danger" style="margin: 0px 0px 0 4px;">DELETE</button></a>
-								';
+                        //Actions to librarians
+                        //---------------------
+                        echo '	<a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
+                        //delete user
+                        echo '<form method="post" style="display:inline;">
+                                <input type="hidden" name="delete-user-id" value="' . $user['id'] . '">
+                                <button name="button-delete-user" type="submit" class="btn btn-danger" style="margin: 0px 0px 0 4px;" 
+                                        onclick="return confirm(\'Are you sure you want to delete the user?\')">DELETE</button>
+                            </form>';
                     } elseif ($user['role'] == "user") {
-                        //actions to members
-                        echo '  	<a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>
-										<a href="TODO.php?id=' . $user["id"] . '"><button name="button-delete" type="button" class="btn btn-danger" style="margin: 0px 0px 0 4px;">DELETE</button></a>										
-										<a href="TODO.php?id=' . $user["id"] . '"><button name="button-revoke" type="button" class="btn btn-warning" style="margin: 0px 0px 0 4px;">REVOKE</button></a>
-										<a href="TODO.php?id=' . $user["id"] . '"><button name="button-approve" type="button" class="btn btn-success" style="margin: 0px 0px 0 4px;">APPROVE</button></a>
-								';
+                        //Actions to members
+                        //---------------------
+                        echo '  <a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>
+								<a href="TODO.php?id=' . $user["id"] . '"><button name="button-revoke" type="button" class="btn btn-warning" style="margin: 0px 0px 0 4px;">REVOKE</button></a>
+								<a href="TODO.php?id=' . $user["id"] . '"><button name="button-approve" type="button" class="btn btn-success" style="margin: 0px 0px 0 4px;">APPROVE</button></a>';
+                        //delete user
+                        echo '<form method="post" style="display:inline;">
+                                <input type="hidden" name="delete-user-id" value="' . $user['id'] . '">
+                                <button name="button-delete-user" type="submit" class="btn btn-danger" style="margin: 0px 0px 0 4px;"
+                                        onclick="return confirm(\'Are you sure you want to delete the user?\')">DELETE</button>
+                            </form>';
                     }
                     echo '</td>
-			            		</tr>';
+	            		</tr>';
                 }
                 echo '</tbody>
 						</table>
@@ -133,7 +143,29 @@ require_once APP_ROOT . '/src/functions/users.php';
 
 		</div>
 	</div>
+	
+    <?php
+    //Delete user from the database
+    if (isset($_POST['button-delete-user'])) {
+        $is_user_deleted = delete_user($_POST['delete-user-id']);
 
+        //check if the user was deleted
+        if ($is_user_deleted) {
+            //show success message
+            echo '<script>alert("User deleted successfully.")</script>';
+
+            //refresh page
+            $location = URL_PUBLIC . "/users/users_view.php";
+            echo '<script>window.location.href = "' . $location . '";</script>';
+        } else {
+            //if something went wrong, show message for failure
+            echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
+                    Cannot delete user. Please, try again.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>';
+        }
+    }
+    ?>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

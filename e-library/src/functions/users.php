@@ -113,6 +113,32 @@ function add_user($user, $role, $user_to_add_role): bool
     return $is_user_added;
 }
 
+/** Deletes a user from the database. */
+function delete_user($id) {
+    $is_user_deleted = FALSE;
+    
+    //connect to database
+    $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
+    if ($db_connection == false) {
+        error_log("Database connection failed." . $db_connection->error);
+    }
+    
+    //prepare database query
+    $query = "DELETE FROM `users` WHERE id=?";
+    $query_statement = mysqli_prepare($db_connection, $query);
+    $query_statement->bind_param("s", $id);
+    
+    //execute database query
+    $query_result = $query_statement->execute();
+    if ($query_result !== false) {
+        $is_user_deleted = TRUE;
+    } else {
+        $is_user_deleted = FALSE;
+    }
+    
+    return $is_user_deleted;
+}
+
 /** Maps query parameters to database user roles. */
 function map_param_to_user_role($param): string
 {
@@ -124,6 +150,22 @@ function map_param_to_user_role($param): string
     }
     if ($param == 'M') {
         $param = "user";
+    }
+    return $param;
+}
+
+/** Maps database user roles to query parameters. */
+function map_user_role_to_param($role): string
+{
+    $param = "";
+    if ($role == "administrator") {
+        $param = 'A';
+    }
+    if ($role == "librarian") {
+        $param = 'L';
+    }
+    if ($role == "member") {
+        $param = 'M';
     }
     return $param;
 }
