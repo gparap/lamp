@@ -118,12 +118,22 @@ require_once APP_ROOT . '/src/functions/users.php';
                                 <button name="button-delete-user" type="submit" class="btn btn-danger" style="margin: 0px 0px 0 4px;" 
                                         onclick="return confirm(\'Are you sure you want to delete the user?\')">DELETE</button>
                             </form>';
-                    } elseif ($user['role'] == "user") {
+                    } elseif ($user['role'] == "user" || $user['role'] == "pending") {
                         //Actions to members
                         //---------------------
-                        echo '  <a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>
-								<a href="TODO.php?id=' . $user["id"] . '"><button name="button-revoke" type="button" class="btn btn-warning" style="margin: 0px 0px 0 4px;">REVOKE</button></a>
-								<a href="TODO.php?id=' . $user["id"] . '"><button name="button-approve" type="button" class="btn btn-success" style="margin: 0px 0px 0 4px;">APPROVE</button></a>';
+                        echo '  <a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
+                        //approve or revoke user membership
+                        if ($user['status'] == "pending") {
+                            echo '<form method="post" style="display:inline;">
+                                    <input type="hidden" name="approve-user-id" value="' . $user['id'] . '">
+                                    <button name="button-approve-user" type="submit" class="btn btn-success" style="margin: 0px 0px 0 4px;">APPROVE</button>
+                                </form>';
+                        } else {
+                            echo '<form method="post" style="display:inline;">
+                                    <input type="hidden" name="revoke-user-id" value="' . $user['id'] . '">
+                                    <button name="button-revoke-user" type="submit" class="btn btn-warning" style="margin: 0px 0px 0 4px;">REVOKE</button>
+                                </form>';
+                        }
                         //delete user
                         echo '<form method="post" style="display:inline;">
                                 <input type="hidden" name="delete-user-id" value="' . $user['id'] . '">
@@ -155,12 +165,45 @@ require_once APP_ROOT . '/src/functions/users.php';
             echo '<script>alert("User deleted successfully.")</script>';
 
             //refresh page
-            $location = URL_PUBLIC . "/users/users_view.php";
+            $location = URL_PUBLIC . "/users/users_view.php?users=all";
             echo '<script>window.location.href = "' . $location . '";</script>';
         } else {
             //if something went wrong, show message for failure
             echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
                     Cannot delete user. Please, try again.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>';
+        }
+    }
+
+    //Update user membership
+    if (isset($_POST['button-approve-user']) || isset($_POST['button-revoke-user'])) {
+        //set user id & membership status
+        $user_id = NULL;
+        $user_status = NULL;
+        if (isset($_POST['button-approve-user'])) {
+            $user_id = $_POST['approve-user-id'];
+            $user_status = TRUE;
+        } else {
+            $user_id = $_POST['revoke-user-id'];
+            $user_status = FALSE;
+        }
+
+        //update user membership
+        $is_membership_updated = update_user_membership($user_id, $user_status);
+
+        //check if the user membership was updated
+        if ($is_membership_updated) {
+            //show success message
+            echo '<script>alert("User membership updated successfully.")</script>';
+
+            //refresh page
+            $location = URL_PUBLIC . "/users/users_view.php?users=all";
+            echo '<script>window.location.href = "' . $location . '";</script>';
+        } else {
+            //if something went wrong, show message for failure
+            echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
+                    Cannot update user membership. Please, try again.
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>';
         }

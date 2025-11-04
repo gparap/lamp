@@ -139,6 +139,40 @@ function delete_user($id) {
     return $is_user_deleted;
 }
 
+/** Updates user's membership in the database. */
+function update_user_membership($id, $status) {
+    $is_user_status_updated = FALSE;
+    
+    //set user membershipt status
+    //  TRUE => to approve, FALSE => to revoke
+    if ($status === TRUE) {
+        $status = "approved";
+    }else {
+        $status = "pending";
+    }
+    
+    //connect to database
+    $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
+    if ($db_connection == false) {
+        error_log("Database connection failed." . $db_connection->error);
+    }
+    
+    //prepare database query
+    $query = "UPDATE `users` SET `status` = ? WHERE id=?";
+    $query_statement = mysqli_prepare($db_connection, $query);
+    $query_statement->bind_param("ss", $status, $id);
+    
+    //execute database query
+    $query_result = $query_statement->execute();
+    if ($query_result !== false) {
+        $is_user_status_updated = TRUE;
+    } else {
+        $is_user_status_updated = FALSE;
+    }
+    
+    return $is_user_status_updated;
+}
+
 /** Maps query parameters to database user roles. */
 function map_param_to_user_role($param): string
 {
