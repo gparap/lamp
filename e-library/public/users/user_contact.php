@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/../../config/config.php';
+require_once APP_ROOT . '/src/functions/users.php';
 
 //get the session var(s), if any
 $id = $_GET['id'] ?? "";
@@ -50,43 +51,72 @@ $id = $_GET['id'] ?? "";
 			<?php require_once APP_ROOT .'/src/includes/navigation.php'; ?>
             
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
- 				<!-- Page Header -->
+				<!-- Page Header -->
 				<h2 class="mt-3">Contact User</h2>
 				<hr>
-				
+
 				<!-- Contact Form -->
 				<form method="POST" action="#">
- 					<!-- recipient id -->
+					<!-- recipient id -->
 					<input type="hidden" id="id" name="id" value="<?php echo $id; ?>">
-                    
-                     <!-- Sender Details -->
-                    <div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control" type="text" id="name" placeholder="Name" name="name">
-                            <label class="form-label" for="name">Name</label>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-floating mb-3">
-                            <input class="form-control" type="email" id="email" placeholder="Email" name="email">
-                            <label class="form-label">Email</label>
-                        </div>
-                    </div>
-                    <div>
-                        <div class="form-floating mb-3">
-                            <textarea class="form-control" id="message" placeholder="Message" name="message" style="height: 196px;"></textarea>
-                            <label class="form-label">Message</label>
-                        </div>
-                    </div>
-                    <div id="success"></div>
-                    <div class="mb-3"><button class="btn btn-primary" id="submit" type="submit" name="submit">Send</button>
-                    </div>
-                </form>
-				
+
+					<!-- Sender Details -->
+					<div>
+						<div class="form-floating mb-3">
+							<input class="form-control" type="text" id="name"
+								placeholder="Name" name="name"> <label class="form-label"
+								for="name">Name</label>
+						</div>
+					</div>
+					<div>
+						<div class="form-floating mb-3">
+							<input class="form-control" type="email" id="email"
+								placeholder="Email" name="email"> <label class="form-label">Email</label>
+						</div>
+					</div>
+					<div>
+						<div class="form-floating mb-3">
+							<textarea class="form-control" id="message" placeholder="Message"
+								name="message" style="height: 196px;"></textarea>
+							<label class="form-label">Message</label>
+						</div>
+					</div>
+					<div id="success"></div>
+					<div class="mb-3">
+						<button class="btn btn-primary" id="submit" type="submit"
+							name="submit">Send</button>
+					</div>
+				</form>
+
 			</main>
 		</div>
 	</div>
+	
+    <?php
+    //Contact user by sending a message
+    $is_user_contacted = NULL;
+    if (isset($_POST['submit'])) {
 
+        //contact user
+        $is_user_contacted = contact_user($_POST);
+
+        //check if user was contacted
+        if ($is_user_contacted) {
+            //show success message
+            echo '<script>alert("User contacted successfully.")</script>';
+            
+            //redirect to dashboard
+            $location = URL_PUBLIC .  "/dashboard.php";
+            echo '<script>window.location.href = "' . $location . '";</script>';
+        } else {
+            //if something went wrong, show message for failure
+            echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
+                    Cannot contact user. Please, try again.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>';
+        }
+    }
+    ?>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"

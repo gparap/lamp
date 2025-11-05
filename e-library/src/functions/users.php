@@ -139,7 +139,7 @@ function delete_user($id) {
     return $is_user_deleted;
 }
 
-/** Updates user's membership in the database. */
+/** Updates (approves) user's membership in the database. */
 function update_user_membership($id, $status) {
     $is_user_status_updated = FALSE;
     
@@ -171,6 +171,69 @@ function update_user_membership($id, $status) {
     }
     
     return $is_user_status_updated;
+}
+
+/** Updates (revokes) user's membership in the database. */
+function revoke_user($id) {
+    $is_user_revoked = FALSE;
+    
+    //connect to database
+    $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
+    if ($db_connection == false) {
+        error_log("Database connection failed." . $db_connection->error);
+    }
+    
+    //prepare database query
+    $query = "UPDATE `users` SET `status` = ? WHERE id=?";
+    $query_statement = mysqli_prepare($db_connection, $query);
+    $query_statement->bind_param("ss", "pending", $id);
+    
+    //execute database query
+    $query_result = $query_statement->execute();
+    if ($query_result !== false) {
+        $is_user_revoked = TRUE;
+    } else {
+        $is_user_revoked = FALSE;
+    }
+    
+    return $is_user_revoked;
+}
+
+/** Contacts user by sending them a message to their inbox. */
+function contact_user($form) {
+    $is_user_contacted = FALSE;
+    
+    //get recipient id
+    $id = $form['id'];
+    
+    //connect to database
+    $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
+    if ($db_connection == false) {
+        error_log("Database connection failed." . $db_connection->error);
+    }
+    
+    //prepare database query to get the recipient email
+    $query = "SELECT * FROM `users` WHERE id=?";
+    $query_statement = mysqli_prepare($db_connection, $query);
+    $query_statement->bind_param("s", $id);
+    
+    //execute database query
+    $query_statement->execute();
+    $query_result = $query_statement->get_result();
+    $recipient = $query_result->fetch_assoc();
+    $recipient_email = $recipient['email'];
+    
+    //create & send the message
+    $to = $recipient_email;
+    $name = $form['name'];
+    $email = $form['email'];
+    $subject = "e-library - You have a new message";
+    $message = $form['message'];
+    $message = $message . "\r\n\n Sender: $name";
+    $message = $message . "\r\n\n E-mail: $email";
+    $is_user_contacted = mail($to, $subject, $message);
+    
+    return $is_user_contacted;
 }
 
 /** Maps query parameters to database user roles. */
