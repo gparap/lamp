@@ -107,11 +107,13 @@ require_once APP_ROOT . '/src/functions/users.php';
                     if ($user['role'] == "admin") {
                         //Actions to administrators
                         //--------------------------
-                        echo '	<a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
+                        //contact user
+                        echo '	<a href="user_contact.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
                     } elseif ($user['role'] == "lib") {
                         //Actions to librarians
                         //---------------------
-                        echo '	<a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
+                        //contact user
+                        echo '	<a href="user_contact.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
                         //delete user
                         echo '<form method="post" style="display:inline;">
                                 <input type="hidden" name="delete-user-id" value="' . $user['id'] . '">
@@ -121,7 +123,8 @@ require_once APP_ROOT . '/src/functions/users.php';
                     } elseif ($user['role'] == "user" || $user['role'] == "pending") {
                         //Actions to members
                         //---------------------
-                        echo '  <a href="TODO.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
+                        //contact user
+                        echo '  <a href="user_contact.php?id=' . $user["id"] . '"><button name="button-contact" type="button" class="btn btn-info" style="margin: 0px 0px 0 4px;">CONTACT</button></a>';
                         //approve or revoke user membership
                         if ($user['status'] == "pending") {
                             echo '<form method="post" style="display:inline;">
