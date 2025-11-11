@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Oct 14, 2025 at 02:33 PM
+-- Generation Time: Nov 11, 2025 at 04:51 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -32,6 +32,7 @@ CREATE TABLE `books` (
   `title` varchar(64) NOT NULL,
   `author` varchar(32) NOT NULL,
   `image` varchar(64) NOT NULL,
+  `file` varchar(128) NOT NULL,
   `genre` varchar(32) NOT NULL,
   `pages` int(4) NOT NULL,
   `year` int(4) NOT NULL

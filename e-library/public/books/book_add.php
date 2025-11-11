@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/../../config/config.php';
+require_once APP_ROOT . '/src/functions/books.php';
 
 //get the session var(s), if any
 $role = $_SESSION['role'] ?? "";
@@ -44,7 +45,8 @@ if (empty($role)) {
 			placeholder="Search" aria-label="Search">
 		<div class="navbar-nav">
 			<div class="nav-item text-nowrap">
-				<a class="nav-link px-3" href="<?php echo URL_SOURCE; ?>/auth/logout.php">Sign out</a>
+				<a class="nav-link px-3"
+					href="<?php echo URL_SOURCE; ?>/auth/logout.php">Sign out</a>
 			</div>
 		</div>
 	</header>
@@ -59,7 +61,7 @@ if (empty($role)) {
 				<h2 class="mt-3">Add Book</h2>
 				<hr>
 
-				<form method="POST" action="#" enctype="multipart/form-data">
+				<form method="POST" action="" enctype="multipart/form-data">
 					<!--title-->
 					<div class="mb-3">
 						<label for="title" class="form-label">Title</label> <input
@@ -107,8 +109,36 @@ if (empty($role)) {
 						Book</button>
 				</form>
 			</main>
+
 		</div>
 	</div>
+	
+    <?php
+    //add new book
+    $is_book_added = NULL;
+    if (isset($_POST['button-add-book'])) {
+        //TODO: check if the book already exists
+
+        //add book
+        $is_book_added = add_book($_POST, $_FILES);
+
+        //check if book was added
+        if ($is_book_added) {
+            //show success message
+            echo '<script>alert("Book added successfully.")</script>';
+
+            //redirect to dashboard
+            $location = "https://localhost/e-library/public/dashboard.php";
+            echo '<script>window.location.href = "' . $location . '";</script>';
+        } else {
+            //if something went wrong, show message for failure
+            echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
+                            Cannot add book. Please, try again.
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                          </div>';
+        }
+    }
+    ?>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
