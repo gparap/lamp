@@ -46,7 +46,7 @@ elseif ($role == "librarian") {
     	style="height: fit-content;">
     	<div class="position-sticky pt-3">
     		<ul class="nav flex-column">
-    			<li class="nav-item"><a class="nav-link" href="' . URL_PUBLIC . '/users/users_view.php?users=all"> <span
+    			<li class="nav-item"><a class="nav-link" href="' . URL_PUBLIC . '/dashboard.php#"> <span
     					data-feather="users"></span> Users
     			</a>
     				<ul style="margin-left: 1rem; list-style-type: circle;">

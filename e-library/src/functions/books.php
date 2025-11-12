@@ -78,7 +78,8 @@ function add_book($book, $files): bool
     $query_statement->bind_param("sssssdd", $title, $author, $image, $book, $genre, $pages, $year);
 
     //execute database query
-    $query_result = $query_statement->execute();
+    $query_statement->execute();
+    $query_result = $query_statement->get_result();
     if ($query_result !== false) {
         $is_book_added = TRUE;
     } else {
@@ -91,4 +92,43 @@ function add_book($book, $files): bool
     return $is_book_added;
 }
 
+/** Returns e-lirary books based on query parameters criteria. */
+function get_books($param) : array {
+    //init vars
+    $books = NULL;
+    $role = NULL;
+    $query = NULL;
+    $query_statement = NULL;
+    
+    //handle the browser query
+    $allowed_user_types = ['A', 'L', 'M'];   //Administrators, Librarians, Members
+    if (! in_array($param, $allowed_user_types)) {
+        return NULL;
+    } else {
+        //get user role from query param
+        $role = map_param_to_user_role($param);
+    }
+    
+    //open database connection
+    $db_connection = mysqli_connect( "localhost", "root", "", "e_library_db" );
+    
+    //prepare database query based on user role
+    if ($param != "M") {
+        $query = "SELECT * FROM books";
+        $query_statement = mysqli_prepare($db_connection, $query);
+    } else {
+        //TODO: members will see only borrowed and/or downloaded books
+        $query = "SELECT * FROM books WHERE `id` = -1";
+        $query_statement = mysqli_prepare($db_connection, $query);
+    }
+    
+    //execute database query to get books
+    $query_result = $query_statement->execute();
+    $books = $query_result->fetch_all(MYSQLI_ASSOC);
+    
+    //close database connection
+    $db_connection->close();
+    
+    return $books;
+}
 ?>
