@@ -70,7 +70,7 @@ if (empty($role)) {
                 //init the image path
                 $image_path = URL_PUBLIC . "/assets/img/";
 
-                //Display page header info 
+                //Display page header info
                 $page_header_info = "Books";
                 echo $page_header_info;
 
@@ -113,7 +113,15 @@ if (empty($role)) {
                     //display actions based on user roles
                     if ($role == "administrator") {
                         //TODO: actions to administrators
-                        echo '<li><a class="dropdown-item" href="book_delete__TODO.php?id=' . $book['id'] . '">Delete</a></li>';
+                        //delete book
+                        echo '<li>
+                            <form method="post" style="display:inline;">
+                                <input type="hidden" name="delete-book-id" value="' . $book['id'] . '">
+                                <button type="submit" class="dropdown-item" name="button-delete-book" 
+                                        onclick="return confirm(\'Are you sure you want to delete the book?\')">Delete</button>
+                            </form>
+                        </li>';
+
                         echo '<li><a class="dropdown-item" href="book_edit__TODO.php?id=' . $book['id'] . '">Edit Details</a></li>';
                         echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">View Details</a></li>';
                         echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
@@ -142,6 +150,29 @@ if (empty($role)) {
 
 		</div>
 	</div>
+	
+    <?php
+    //Delete book from the database
+    if (isset($_POST['button-delete-book'])) {
+        $is_book_deleted = delete_book($_POST['delete-book-id']);
+
+        //check if the book was deleted
+        if ($is_book_deleted) {
+            //show success message
+            echo '<script>alert("Book deleted successfully.")</script>';
+
+            //refresh page
+            $location = URL_PUBLIC . "/books/books_view.php";
+            echo '<script>window.location.href = "' . $location . '";</script>';
+        } else {
+            //if something went wrong, show message for failure
+            echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
+                    Cannot delete book. Please, try again.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>';
+        }
+    }
+    ?>
 
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
@@ -152,7 +183,7 @@ if (empty($role)) {
 		integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE"
 		crossorigin="anonymous"></script>
 	<script>
-  feather.replace();
-</script>
+      feather.replace();
+    </script>
 </body>
 </html>
