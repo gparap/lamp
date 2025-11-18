@@ -121,22 +121,24 @@ if (empty($role)) {
                                         onclick="return confirm(\'Are you sure you want to delete the book?\')">Delete</button>
                             </form>
                         </li>';
-
-                        echo '<li><a class="dropdown-item" href="book_edit__TODO.php?id=' . $book['id'] . '">Edit Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">View Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">Download</a></li>';
+                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Edit Details</a></li>';
+                        //display book details
+                        echo '<li><a class="dropdown-item" href="book_view.php?id=' . $book['id'] . '">View Details</a></li>';
+                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
+                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
                     } elseif ($role == "librarian") {
                         //TODO: actions to librarians
                         echo '<li><a class="dropdown-item" href="book_edit__TODO.php?id=' . $book['id'] . '">Edit Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">View Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">Download</a></li>';
+                        //display book details
+                        echo '<li><a class="dropdown-item" href="book_view.php?id=' . $book['id'] . '">View Details</a></li>';
+                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
+                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
                     } elseif ($role == "member") {
                         //TODO: actions to members
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">View Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
-                        echo '<li><a class="dropdown-item" href="book_view__TODO.php?id=' . $book['id'] . '">Download</a></li>';
+                        //display book details
+                        echo '<li><a class="dropdown-item" href="book_view.php?id=' . $book['id'] . '">View Details</a></li>';
+                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
+                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
                     }
 
                     echo '</ul></div></td></tr>';

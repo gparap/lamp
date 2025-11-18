@@ -142,6 +142,32 @@ function get_books($param): array
 }
 
 /**
+ * Returns an e-lirary book based on its id.
+ */
+function get_book_by_id($id): array
+{
+    $book = NULL;
+    
+    //open database connection
+    $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
+    
+    //prepare database query
+    $query = "SELECT * FROM books WHERE `id` = ?";
+    $query_statement = mysqli_prepare($db_connection, $query);
+    $query_statement->bind_param("s", $id);
+    
+    //execute database query to get the book
+    $query_statement->execute();
+    $query_result = $query_statement->get_result();
+    $book = $query_result->fetch_all(MYSQLI_ASSOC);
+    
+    //close database connection
+    $db_connection->close();
+    
+    return $book;
+}
+
+/**
  * Deletes an existing book from the database.
  */
 function delete_book($id): bool
