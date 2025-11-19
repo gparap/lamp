@@ -2,6 +2,7 @@
 session_start();
 
 require_once __DIR__ . '/../../config/config.php';
+require_once APP_ROOT . '/src/functions/books.php';
 
 //get the session var(s), if any
 $role = $_SESSION['role'] ?? "";
@@ -58,6 +59,11 @@ $book_id = $_GET['id'] ?? NULL;
 		<div class="row">
 			<!-- Navigation -->
             <?php require_once APP_ROOT . '/src/includes/navigation.php';?>
+            
+            <?php
+            //get the book to edit
+            $book = get_book_by_id($book_id) ?? NULL;
+            ?>
             
             <!--Edit Book Form-->
 			<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -124,7 +130,31 @@ $book_id = $_GET['id'] ?? NULL;
 			</main>
 		</div>
 	</div>
-		
+	
+    <?php
+    //update book
+    $is_book_updated = NULL;
+    if (isset($_POST['button-update-book'])) {
+        $is_book_updated = update_book($_POST, $_FILES);
+
+		//check if book was updated
+        if ($is_book_updated) {
+            //show success message
+            echo '<script>alert("Book updated successfully.")</script>';
+
+            //redirect to books view
+            $location = URL_PUBLIC . "/books/books_view.php";
+            echo '<script>window.location.href = "' . $location . '";</script>';
+        } else {
+            //if something went wrong, show message for failure
+            echo '<div class="alert alert-danger alert-dismissible fade show mx-2" role="alert">
+					Cannot update book. Please, try again.
+					<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+				</div>';
+        }
+    }
+    ?>
+	
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
