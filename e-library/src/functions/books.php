@@ -283,4 +283,23 @@ function update_book($book, $files): bool
     return $is_book_updated;
 }
 
+/** Opens a book in a new web browser tab to read online. */
+function open_book($file) {
+    //create the full file path
+    $path = APP_ROOT . "/public/assets/books/" . $file;
+    
+    //detect MIME type dynamically or fallback
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->file($path) ?: 'application/octet-stream';
+
+    //setup headers to open book in new tab
+    header('Content-Type: ' . $mime);
+    header('Content-Disposition: inline; filename="' . basename($path) . '"');
+    header('Content-Length: ' . filesize($path));
+
+    //stream the book content to the browser
+    readfile($path);
+    exit;
+}
+
 ?>

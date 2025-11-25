@@ -125,7 +125,13 @@ if (empty($role)) {
                         echo '<li><a class="dropdown-item" href="book_edit.php?id=' . $book['id'] . '">Edit Details</a></li>';
                         //display book details
                         echo '<li><a class="dropdown-item" href="book_view.php?id=' . $book['id'] . '">View Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
+                        //open book to read online
+                        echo '<li>
+                            <form method="post" style="display:inline;" target="_blank" action="'.URL_SOURCE . "/interfaces/i_book_open.php" .'">
+                                <input type="hidden" name="open-book-filename" value="' . $book['file'] . '">
+                                <button type="submit" class="dropdown-item" name="button-open-book">Read Online</button>
+                            </form>
+                        </li>';
                         echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
                     } elseif ($role == "librarian") {
                         //TODO: actions to librarians
@@ -133,13 +139,25 @@ if (empty($role)) {
                         echo '<li><a class="dropdown-item" href="book_edit.php?id=' . $book['id'] . '">Edit Details</a></li>';
                         //display book details
                         echo '<li><a class="dropdown-item" href="book_view.php?id=' . $book['id'] . '">View Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
+                        //open book to read online
+                        echo '<li>
+                            <form method="post" style="display:inline;" target="_blank" action="'.URL_SOURCE . "/interfaces/i_book_open.php" .'">
+                                <input type="hidden" name="open-book-filename" value="' . $book['file'] . '">
+                                <button type="submit" class="dropdown-item" name="button-open-book">Read Online</button>
+                            </form>
+                        </li>';
                         echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
                     } elseif ($role == "member") {
                         //TODO: actions to members
                         //display book details
                         echo '<li><a class="dropdown-item" href="book_view.php?id=' . $book['id'] . '">View Details</a></li>';
-                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Read Online</a></li>';
+                        //open book to read online
+                        echo '<li>
+                            <form method="post" style="display:inline;" target="_blank" action="'.URL_SOURCE . "/interfaces/i_book_open.php" .'">
+                                <input type="hidden" name="open-book-filename" value="' . $book['file'] . '">
+                                <button type="submit" class="dropdown-item" name="button-open-book">Read Online</button>
+                            </form>
+                        </li>';
                         echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
                     }
 
