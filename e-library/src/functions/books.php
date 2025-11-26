@@ -302,4 +302,25 @@ function open_book($file) {
     exit;
 }
 
+/** Downloads a book from the database. */
+function download_book($file) {
+    //create the full file path
+    $path = APP_ROOT . "/public/assets/books/" . $file;
+    
+    //detect MIME type dynamically or fallback
+    $finfo = new finfo(FILEINFO_MIME_TYPE);
+    $mime = $finfo->file($path) ?: 'application/octet-stream';
+
+    //setup headers to download book
+    header('Content-Type: ' . $mime);
+    header('Content-Disposition: attachment; filename="' . basename($path) . '"');
+    header('Content-Length: ' . filesize($path));
+    header('Cache-Control: no-store, no-cache, must-revalidate');
+    header('Pragma: no-cache');
+
+    //stream the book content to the browser
+    readfile($path);
+    exit;
+}
+
 ?>

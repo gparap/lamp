@@ -112,7 +112,8 @@ if (empty($role)) {
 
                     //display actions based on user roles
                     if ($role == "administrator") {
-                        //TODO: actions to administrators
+                        //Actions for administrators
+                        //--------------------------
                         //delete book
                         echo '<li>
                             <form method="post" style="display:inline;">
@@ -132,9 +133,16 @@ if (empty($role)) {
                                 <button type="submit" class="dropdown-item" name="button-open-book">Read Online</button>
                             </form>
                         </li>';
-                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
+                        //download book
+                        echo '<li>
+                            <form method="post" style="display:inline;" action="'.URL_SOURCE . "/interfaces/i_book_download.php" .'">
+                                <input type="hidden" name="download-book-filename" value="' . $book['file'] . '">
+                                <button type="submit" class="dropdown-item" name="button-download-book">Download</button>
+                            </form>
+                        </li>';
                     } elseif ($role == "librarian") {
-                        //TODO: actions to librarians
+                        //Actions for librarians
+                        //----------------------
                         //edit book details
                         echo '<li><a class="dropdown-item" href="book_edit.php?id=' . $book['id'] . '">Edit Details</a></li>';
                         //display book details
@@ -146,9 +154,16 @@ if (empty($role)) {
                                 <button type="submit" class="dropdown-item" name="button-open-book">Read Online</button>
                             </form>
                         </li>';
-                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
+                        //download book
+                        echo '<li>
+                            <form method="post" style="display:inline;" action="'.URL_SOURCE . "/interfaces/i_book_download.php" .'">
+                                <input type="hidden" name="download-book-filename" value="' . $book['file'] . '">
+                                <button type="submit" class="dropdown-item" name="button-download-book">Download</button>
+                            </form>
+                        </li>';
                     } elseif ($role == "member") {
-                        //TODO: actions to members
+                        //Actions for members
+                        //-------------------
                         //display book details
                         echo '<li><a class="dropdown-item" href="book_view.php?id=' . $book['id'] . '">View Details</a></li>';
                         //open book to read online
@@ -158,9 +173,7 @@ if (empty($role)) {
                                 <button type="submit" class="dropdown-item" name="button-open-book">Read Online</button>
                             </form>
                         </li>';
-                        echo '<li><a class="dropdown-item" href="TODO.php?id=' . $book['id'] . '">Download</a></li>';
                     }
-
                     echo '</ul></div></td></tr>';
                 }
                 echo '</tbody>
