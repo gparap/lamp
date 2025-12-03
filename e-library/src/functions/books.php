@@ -106,14 +106,16 @@ function get_books($param): array
 
     //handle the browser query
     $allowed_user_types = [
-        'A',
-        'L',
-        'M'
+        'A',//administrator
+        'L',//librarian
+        'M',//member
+        'G' //guest
     ]; //Administrators, Librarians, Members
     if (! in_array($param, $allowed_user_types)) {
         return NULL;
     } else {
         //get user role from query param
+        require_once APP_ROOT . '/src/functions/users.php';
         $role = map_param_to_user_role($param);
     }
 
@@ -121,7 +123,7 @@ function get_books($param): array
     $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
 
     //prepare database query based on user role
-    if ($param != "M") {
+    if ($param != "M" || $param == "G") {
         $query = "SELECT * FROM books";
         $query_statement = mysqli_prepare($db_connection, $query);
     } else {
@@ -321,6 +323,27 @@ function download_book($file) {
     //stream the book content to the browser
     readfile($path);
     exit;
+}
+
+/** Displays books in the <<Books>> tab of the main website. */
+function display_books() {
+    //get all books
+    $books = get_books("G");
+    
+    foreach ($books as $book) {
+        echo '
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 p-5">
+    		<div class="card h-100">
+    			<img src="'. URL_PUBLIC. "/assets/img/books/". $book['genre'] . "/" . $book['image'] .'" class="card-img-top img-fluid" alt="TODO: image">
+    			<div class="card-body d-flex flex-column">
+    				<h5 class="card-title fw-bold">'. $book['title'] .'</h5>
+    				<p class="card-text">by '. $book['author'] .'</p>
+    				<a href="'. URL_PUBLIC .'/auth/login.php" class="btn btn-primary mt-auto">Get Book</a>
+    			</div>
+    		</div>
+    	</div>    
+        ';
+    } 
 }
 
 ?>
