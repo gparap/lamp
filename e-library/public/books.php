@@ -1,3 +1,20 @@
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+//get the session vars, if any
+$role = $_SESSION['role'] ?? "";
+$user_id = $_SESSION['u_id'] ?? 0;
+
+//if user is not signed-in give'em a guest role
+if (empty($role)) {
+    $_SESSION['role'] = "guest";
+}
+
+require_once __DIR__ . '/../config/config.php';
+require_once APP_ROOT . '/src/functions/books.php';			
+?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 
@@ -24,23 +41,18 @@
         </div>
     </nav>
 	<main class="page">
+        <div class="alert alert-danger alert-dismissible fade show m-2 d-none" role="alert" id="alert">
+        	Cannot borrow book. Please, check your borrowed books or try again.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
 		<section class="clean-block clean-hero" style="background-image:url(&quot;assets/img/bg.jpg&quot;);color:rgba(9, 162, 255, 0.85);">
 			<div class="row justify-content-center"	style="z-index: 1; padding: 1.5rem 1.5rem 0 1.5rem;">
 
- 				<!--TODO: Fetch books here -->
-				<div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-					<div class="card h-100">
-						<img src="..." class="card-img-top img-fluid" alt="TODO: image">
-						<div class="card-body d-flex flex-column">
-							<h5 class="card-title">Lorem ipsum</h5>
-							<p class="card-text">Lorem ipsum dolor sit amet, consectetur
-								adipiscing elit. Praesent justo augue, pretium quis sodales
-								quis, eleifend at nunc.</p>
-							<a href="#" class="btn btn-primary mt-auto">TODO: action</a>
-						</div>
-					</div>
-				</div>
-
+ 				<?php 
+                //fetch & display all books from the database
+ 				display_books(); 				
+ 				?>
+ 				
 			</div>
 		</section>
 	</main>
@@ -53,3 +65,19 @@
 </body>
 
 </html>
+<?php
+//handle the possible borrowing of books by members or not
+if (isset($_GET['action']) && $_GET['action'] === 'borrow') {
+    $book_id = (int) $_GET['bid']; //get the book to borrow id  
+    $is_book_borrowed = borrow_book($user_id, $book_id); //borrow the book
+    
+    //check if the book was borrowed by the user
+    if ($is_book_borrowed) {
+        //show success message
+        echo '<script>alert("Book borrowed successfully.")</script>';
+    } else {
+        //if something went wrong or user has already borrowed the book, show message for failure
+        echo "<script>document.getElementById('alert').classList.remove('d-none');</script>";
+    }
+}
+?>

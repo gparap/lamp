@@ -1,4 +1,8 @@
-<?php
+<?php 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
 require_once __DIR__ . '/../../config/config.php';
 
 //get the session vars, if any
@@ -338,12 +342,60 @@ function display_books() {
     			<div class="card-body d-flex flex-column">
     				<h5 class="card-title fw-bold">'. $book['title'] .'</h5>
     				<p class="card-text">by '. $book['author'] .'</p>
-    				<a href="'. URL_PUBLIC .'/auth/login.php" class="btn btn-primary mt-auto">Get Book</a>
+    				<a href="?action=borrow&bid='. $book['id'] .'" class="btn btn-primary mt-auto">Get Book</a>
     			</div>
     		</div>
     	</div>    
         ';
-    } 
+    } //<a href="'. URL_PUBLIC .'/auth/login.php" class="btn btn-primary mt-auto">Get Book</a>
+}
+
+/** Borrows the target book for a member. */
+function borrow_book($user_id, $book_id) {
+    global $role;
+    $is_book_borrowed = FALSE;
+    
+    //check the session and see if we have a member logged-in
+    //  !!! we care not about Administrators & Librarians as they can't borrow books
+    if ($role == "member") {
+        //Add this book to member's borrowed books
+        //----------------------------------------
+        //open database connection
+        $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
+        
+        //check if the user already borrowed the book
+        $query = "SELECT * FROM users_books WHERE user_id = ? AND book_id = ?";
+        $query_statement = $db_connection->prepare($query);
+        $query_statement->bind_param("ii", $user_id, $book_id);
+        $query_statement->execute();
+        $query_statement->store_result();
+        if ($query_statement->num_rows === 1) {
+            return FALSE;   //TODO: add some info to the user
+        }
+        
+        //prepare database query
+        $query = "INSERT INTO `users_books` (`user_id`, `book_id`) VALUES (?,?)";
+        $query_statement = mysqli_prepare($db_connection, $query);
+        $query_statement->bind_param("ii", $user_id, $book_id);
+        
+        //execute database query
+        $query_result = $query_statement->execute();
+        if ($query_result !== false) {
+            $is_book_borrowed = TRUE;
+        } else {
+            $is_book_borrowed = FALSE;
+        }
+        
+        //close database connection !!! important
+        $db_connection->close();
+        
+    } elseif ($role == "guest") {
+        //redirect to login page
+        $location = "https://localhost/e-library/public/auth/login.php";
+        echo '<script>window.location.href = "' . $location . '";</script>'; 
+    }
+    
+    return $is_book_borrowed;
 }
 
 ?>

@@ -62,6 +62,7 @@ function log_in_user($email, $password): bool
 
             //keep some user info in the session
             $_SESSION['name'] = $row['name'];
+            $_SESSION['u_id'] = $row['id'];
 
             //append the login info
             $id = $row['id'];
