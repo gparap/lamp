@@ -7,6 +7,8 @@ require_once __DIR__ . '/../../config/config.php';
 
 //get the session vars, if any
 $role = $_SESSION['role'] ?? "";
+$user_id = $_SESSION['u_id'] ?? "";
+
 
 //if user is not signed-in go to login page
 if (empty($role)) {
@@ -131,9 +133,11 @@ function get_books($param): array
         $query = "SELECT * FROM books";
         $query_statement = mysqli_prepare($db_connection, $query);
     } else {
-        //TODO: members will see only borrowed and/or downloaded books
-        $query = "SELECT * FROM books WHERE `id` = -1";
+        //members will see only borrowed books
+        global $user_id;
+        $query = "SELECT * FROM books JOIN users_books ON users_books.book_id = books.id WHERE `user_id` = ?";
         $query_statement = mysqli_prepare($db_connection, $query);
+        $query_statement->bind_param("s", $user_id);
     }
 
     //execute database query to get books
@@ -297,7 +301,7 @@ function open_book($file) {
     //detect MIME type dynamically or fallback
     $finfo = new finfo(FILEINFO_MIME_TYPE);
     $mime = $finfo->file($path) ?: 'application/octet-stream';
-
+    
     //setup headers to open book in new tab
     header('Content-Type: ' . $mime);
     header('Content-Disposition: inline; filename="' . basename($path) . '"');
