@@ -29,13 +29,14 @@ require_once APP_ROOT . '/src/functions/books.php';
 
 <body>
 	<nav class="navbar navbar-expand-lg fixed-top bg-body clean-navbar">
-        <div class="container"><a class="navbar-brand logo" href="#">e-library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+        <div class="container"><a class="navbar-brand logo" href="index.php">e-library</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link active" href="index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link active" href="books.php">Books</a></li>
                     <li class="nav-item"><a class="nav-link" href="auth/login.php">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="auth/registration.php">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
                 </ul>
             </div>
         </div>

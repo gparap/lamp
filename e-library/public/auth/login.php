@@ -16,7 +16,7 @@
 <body>
 	<nav class="navbar navbar-expand-lg fixed-top bg-body clean-navbar">
 		<div class="container">
-			<a class="navbar-brand logo" href="#">e-library</a>
+			<a class="navbar-brand logo" href="../index.php">e-library</a>
 			<button data-bs-toggle="collapse" class="navbar-toggler"
 				data-bs-target="#navcol-1">
 				<span class="visually-hidden">Toggle navigation</span><span

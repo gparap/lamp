@@ -19,6 +19,7 @@
                     <li class="nav-item"><a class="nav-link active" href="books.php">Books</a></li>
                     <li class="nav-item"><a class="nav-link" href="auth/login.php">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="auth/registration.php">Register</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
                 </ul>
             </div>
         </div>
