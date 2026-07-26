@@ -1,7 +1,11 @@
-<?php 
+<?php
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+//get the book search query
+$book_action = $_GET['action'] ?? "";
+$book_query = $_GET['q'] ?? "";
 
 //get the session vars, if any
 $role = $_SESSION['role'] ?? "";
@@ -13,7 +17,7 @@ if (empty($role)) {
 }
 
 require_once __DIR__ . '/../config/config.php';
-require_once APP_ROOT . '/src/functions/books.php';			
+require_once APP_ROOT . '/src/functions/books.php';
 ?>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
@@ -41,8 +45,7 @@ require_once APP_ROOT . '/src/functions/books.php';
                 </ul>
                               
                 <!--Book search-->
-                <form class="d-flex" role="search" action="search.php" method="GET" id="search-form">
-                    <input type="hidden" name="action" value="search" method="GET">
+                <form class="d-flex" role="search" action="book_search.php" method="GET" id="search-form">
                     <input class="form-control me-2" type="search" placeholder="Search Books" aria-label="Search" id="search-input" name="search-input"
                         style="min-width: 16.125em; text-align: start;">
                     <button class="btn btn-primary" type="submit" onclick="validateSearchInput();">
@@ -63,8 +66,11 @@ require_once APP_ROOT . '/src/functions/books.php';
 			<div class="row justify-content-center"	style="z-index: 1; padding: 1.5rem 1.5rem 0 1.5rem;">
 
  				<?php 
-                //fetch & display all books from the database
- 				display_books(); 				
+                //search & display books from the database
+ 				//TODO: display_books($book_query);
+ 				//DEBUG
+ 				error_log("book action: " . $book_action);
+ 				error_log("book search query: " . $book_query);
  				?>
  				
 			</div>
