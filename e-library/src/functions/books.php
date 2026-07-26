@@ -178,6 +178,36 @@ function get_book_by_id($id): array
 }
 
 /**
+ * Returns e-lirary books based on search query parameter.
+ */
+function search_books($param): array
+{
+    $books = NULL;
+    
+    //open database connection
+    $db_connection = mysqli_connect("localhost", "root", "", "e_library_db");
+    
+    //prepare search parameter
+    $param = trim($param);
+    $param = "%" . $param . "%";
+    
+    //prepare database query based search query
+    $query = "SELECT * FROM books WHERE `title` LIKE ? OR `author` LIKE ?;";
+    $query_statement = mysqli_prepare($db_connection, $query);
+    $query_statement->bind_param("ss", $param, $param);
+    
+    //execute database query to get books
+    $query_statement->execute();
+    $query_result = $query_statement->get_result();
+    $books = $query_result->fetch_all(MYSQLI_ASSOC);
+    
+    //close database connection
+    $db_connection->close();
+    
+    return $books;
+}
+
+/**
  * Deletes an existing book from the database.
  */
 function delete_book($id): bool
@@ -334,14 +364,21 @@ function download_book($file) {
 }
 
 /** Displays books in the <<Books>> tab of the main website. */
-function display_books() {
-    //get all books
-    $books = get_books("G");
+function display_books($query = null) {
+    $books = array();
     
+    //get books to display
+    if ($query !== null) {
+        $books = search_books($query); //search specific books
+    } else {
+        $books = get_books("G"); //get all books
+    }
+    
+    //display books
     foreach ($books as $book) {
         echo '
         <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 p-5">
-    		<div class="card h-100">
+    		<div class="card h-100" style="min-width: 256px;">
     			<img src="'. URL_PUBLIC. "/assets/img/books/". $book['genre'] . "/" . $book['image'] .'" class="card-img-top img-fluid" alt="TODO: image">
     			<div class="card-body d-flex flex-column">
     				<h5 class="card-title fw-bold">'. $book['title'] .'</h5>
@@ -351,7 +388,12 @@ function display_books() {
     		</div>
     	</div>    
         ';
-    } //<a href="'. URL_PUBLIC .'/auth/login.php" class="btn btn-primary mt-auto">Get Book</a>
+    }
+    
+    //search returned no books
+    if (empty($books)) {
+        echo '<div class="text"><h1>We cannot find that book.  <BR>Please try again.</h1></div>';
+    }
 }
 
 /** Borrows the target book for a member. */

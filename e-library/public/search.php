@@ -45,7 +45,7 @@ require_once APP_ROOT . '/src/functions/books.php';
                 </ul>
                               
                 <!--Book search-->
-                <form class="d-flex" role="search" action="book_search.php" method="GET" id="search-form">
+                <form class="d-flex" role="search" action="search.php" method="GET" id="search-form">
                     <input class="form-control me-2" type="search" placeholder="Search Books" aria-label="Search" id="search-input" name="search-input"
                         style="min-width: 16.125em; text-align: start;">
                     <button class="btn btn-primary" type="submit" onclick="validateSearchInput();">
@@ -67,10 +67,7 @@ require_once APP_ROOT . '/src/functions/books.php';
 
  				<?php 
                 //search & display books from the database
- 				//TODO: display_books($book_query);
- 				//DEBUG
- 				error_log("book action: " . $book_action);
- 				error_log("book search query: " . $book_query);
+ 				display_books($book_query);
  				?>
  				
 			</div>
@@ -93,8 +90,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'borrow') {
     
     //check if the book was borrowed by the user
     if ($is_book_borrowed) {
-        //show success message
+        //show success message & refresh
         echo '<script>alert("Book borrowed successfully.")</script>';
+        
     } else {
         //if something went wrong or user has already borrowed the book, show message for failure
         echo "<script>document.getElementById('alert').classList.remove('d-none');</script>";
