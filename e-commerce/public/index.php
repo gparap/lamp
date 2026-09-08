@@ -1,120 +1,211 @@
 <!DOCTYPE html>
-<html lang="en">
+<!--
+https://mit-license.org
+Copyright © 2026 gparap
+-->
+<html data-bs-theme="light" lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Products - E-Commerce</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>E-Commerce</title>
+<link rel="stylesheet" href="css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
 </head>
 
 <body>
-    <?php include_once('../src/utils/navigation.php'); ?>
-    <section class="py-5">
-        <div class="container py-5">
-            <!-- Header -->
-            <div class="row mb-4 mb-lg-5">
-                <div class="col-md-8 col-xl-6 text-center mx-auto">
-                    <h2 class="fw-bold">Products</h2>
-                    <p class="text-muted">We hope you have a nice shopping experience.&nbsp;</p>
-                </div>
-            </div>
+	<!-- Start: Navbar Centered Links -->
+	<nav class="navbar navbar-expand-md sticky-top py-3 navbar-shrink"
+		id="mainNav">
+		<div class="container">
+			<a class="navbar-brand d-flex align-items-center" href="index.php"><span
+				class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon">
+					<img src="img/logo.png"
+					class="img-fluid rounded-0 shadow-lg" alt="">
 
-            <?php
-            require_once('../src/utils/connection.php');
+			</span><span>e-commerce</span></a>
+			<button class="navbar-toggler" data-bs-toggle="collapse"
+				data-bs-target="#navcol-1">
+				<span class="visually-hidden">Toggle navigation</span><span
+					class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navcol-1">
+				<ul class="navbar-nav mx-auto">
+					<li class="nav-item"><a class="nav-link active"
+						href="index.php">Home</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Collection</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
+				</ul>
+				<a class="btn btn-primary shadow" role="button" href="auth/login.php">Sign
+					up</a>
+			</div>
+		</div>
+	</nav>
+	<!-- End: Navbar Centered Links -->
 
-            //query the database for the total number of products
-            $query_products_count = "SELECT COUNT(*) as count FROM `products`";
-            $products_count_result = mysqli_query($db_connection, $query_products_count);
-            $products_count_assoc = mysqli_fetch_assoc($products_count_result);
-            $products_count = $products_count_assoc['count'];
+	<!-- Start: Hero Clean Reverse -->
+	<header class="bg-primary-gradient">
+		<div class="container min-vh-100 d-flex align-items-center py-5">
+			<div class="row align-items-center w-100">
 
-            //get the current page
-            if (isset($_GET['page'])) {
-                $page = $_GET['page'];
-            } else {
-                $page = 1;
-            }
+				<!-- Left Content -->
+				<div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
+					<p class="text-uppercase fw-bold text-warning mb-2">New
+						Collection 2026</p>
 
-            //setup pagination limits
-            $page_limit = 6;
-            $pages = $products_count / $page_limit;
-            ?>
+					<h1 class="display-3 fw-bold mb-4">Premium Products For
+						Everyday Life</h1>
 
-            <!-- Pagination -->
-            <nav>
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled"><a class="page-link">Pages</a></li>
-                    <?php
-                    for ($i = 1; $i <= $pages; $i++) {
-                        echo '
-                            <li class="page-item"><a class="page-link" 
-                            href="https://localhost/e-commerce/public/index.php?page=' . $i . '">' . $i . '</a></li>
-                            ';
-                    }
-                    ?>
-                </ul>
-            </nav>
+					<p class="lead text-light opacity-75 mb-4">Discover curated
+						essentials with modern design, fast shipping, and unbeatable
+						quality.</p>
 
-            <!-- Display Products -->
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                <?php require_once('../src/utils/functions.php');
+					<div
+						class="d-flex gap-3 justify-content-center justify-content-lg-start">
+						<a href="#" class="btn btn-warning btn-lg px-4"> Shop Now </a> <a
+							href="#" class="btn btn-dark btn-lg px-4"> View Collection </a>
+					</div>
+				</div>
 
-                //get pagination limits
-                $pagination_start = ($page * $page_limit) - ($page_limit - 1);
-                $pagination_end = $page * $page_limit;
+				<!-- Right Images -->
+				<div class="col-lg-6">
+					<div class="position-relative d-flex justify-content-center">
 
-                //query the database for products
-                $query_products = "SELECT * FROM `products` WHERE id >= " . $pagination_start . " AND id <=" . $pagination_end;
-                $query_products_results = mysqli_query($db_connection, $query_products);
-                if (!$query_products_results) {
-                    exit("Cannot connect to database.");
-                }
+						<div 
+							style="width: 220px; transform: rotate(-8deg) translateX(40px); z-index: 1;">
+							<img src="img/hero/hero_1.jpg"
+								class="img-fluid rounded-4 shadow-lg" alt="">
+						</div>
 
-                //display all products
-                while ($product = mysqli_fetch_assoc($query_products_results)) {
-                    //get product details
-                    $product_name = $product['name'];
-                    $product_description = $product['description'];
-                    $product_cost = $product['item_cost'];
-                    $products_left = $product['items_left'];
-                    $product_image = $product['image_url'];
-                    $product_category_id = $product['category_id'];
+						<div style="width: 260px; z-index: 0;">
+							<img src="img/hero/hero_2.jpg"
+								class="img-fluid rounded-4 shadow-lg" alt="">
+						</div>
 
-                    //get the product category name based on its category id
-                    $product_category_name = get_category_name($product_category_id);
+						<div
+							style="width: 220px; transform: rotate(8deg) translateX(-40px); z-index: 1;">
+							<img src="img/hero/hero_3.png"
+								class="img-fluid rounded-4 shadow-lg" alt="">
+						</div>
 
-                    //get the product image path
-                    $product_image_path = "https://localhost/e-commerce/public/img/products/"
-                        . $product_category_name . "/" . $product_image;
+					</div>
+				</div>
 
-                    echo '
-                    <div class="col">
-                        <div style="padding: 32px;">
-                            <a href="">
-                                <img class="img img-fluid" src="' . $product_image_path . '" loading="lazy" />
-                                <div>
-                                    <h5>' . $product_name . '</h5>
-                                    <p>' . $product_description . '</p>
-                                </div>
-                                <strong>€' . $product_cost . '</strong>
+			</div>
+		</div>
+	</header>
+	<!-- End: Hero Clean Reverse -->
 
-                                <div class="py-2">
-                                    <a type="button" class="btn btn-primary" href="#">Add to Cart</a>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                    ';
-                }
+	<!-- Start: Newsletter Subscription Color -->
+	<section class="py-5 bg-info-subtle">
+		<div class="container">
+			<div
+				class="border rounded border-0 border-white d-flex flex-column justify-content-between align-items-center flex-lg-row p-4 p-lg-5 bg-primary-gradient">
+				<div class="text-center text-lg-start py-3 py-lg-1">
+					<h2 class="fw-bold mb-2">Subscribe to our newsletter</h2>
+					<p class="mb-0">Imperdiet consectetur dolor.</p>
+				</div>
+				<form class="d-flex justify-content-center flex-wrap flex-lg-nowrap"
+					method="post" data-bs-theme="light">
+					<div class="my-2">
+						<input class="border rounded-pill shadow-sm form-control"
+							type="email" name="email" placeholder="Your Email">
+					</div>
+					<div class="my-2">
+						<a class="btn btn-primary shadow ms-2" type="button">Subscribe
+						</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</section>
+	<!-- End: Newsletter Subscription Color -->
 
-                //close database connection
-                $db_connection->close();
-                ?>
-            </div>
-        </div>
-    </section>
-    <script src="js/bootstrap.min.js"></script>
+	<!-- Start: Footer Multi Column -->
+	<footer class="bg-primary-gradient">
+		<div class="container py-4 py-lg-5">
+			<div class="row justify-content-center">
+				<!-- Start: Services -->
+				<div
+					class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column">
+					<h3 class="fs-6 fw-bold">Get started</h3>
+					<ul class="list-unstyled">
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Sign up</a></li>
+						<li><a href="#">Products</a></li>
+					</ul>
+				</div>
+				<!-- End: Services -->
+				<!-- Start: About -->
+				<div
+					class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column">
+					<h3 class="fs-6 fw-bold">About</h3>
+					<ul class="list-unstyled">
+						<li><a href="#">Company</a></li>
+						<li><a href="#">Contact us</a></li>
+						<li><a href="#">Reviews</a></li>
+					</ul>
+				</div>
+				<!-- End: About -->
+				<!-- Start: Careers -->
+				<div
+					class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column">
+					<h3 class="fs-6 fw-bold">Support</h3>
+					<ul class="list-unstyled">
+						<li><a href="#">FAQ</a></li>
+						<li><a href="#">Terms</a></li>
+						<li><a href="#">Privacy Policy</a></li>
+					</ul>
+				</div>
+				<!-- End: Careers -->
+				<!-- Start: Social Icons -->
+				<div
+					class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last">
+					<div class="fw-bold d-flex align-items-center mb-2">
+						<span
+							class="bs-icon-sm bs-icon-circle bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
+							<img src="img/logo.png"
+					class="img-fluid rounded-0 shadow-lg" alt=""></span><span>Brand</span>
+					</div>
+					<p class="text-muted">Sem eleifend donec molestie, integer
+						quisque orci aliquam.</p>
+				</div>
+				<!-- End: Social Icons -->
+			</div>
+			<hr>
+			<div
+				class="text-muted d-flex justify-content-between align-items-center pt-3">
+				<p class="mb-0">Copyright © 2026 Brand</p>
+				<ul class="list-inline mb-0">
+					<li class="list-inline-item"><svg class="bi bi-facebook"
+							xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+							fill="currentColor" viewBox="0 0 16 16">
+                            <path
+								d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"></path>
+                        </svg></li>
+					<li class="list-inline-item"><svg class="bi bi-twitter"
+							xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+							fill="currentColor" viewBox="0 0 16 16">
+                            <path
+								d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"></path>
+                        </svg></li>
+					<li class="list-inline-item"><svg class="bi bi-instagram"
+							xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
+							fill="currentColor" viewBox="0 0 16 16">
+                            <path
+								d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"></path>
+                        </svg></li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+	<!-- End: Footer Multi Column -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="js/bs-init.js"></script>
+	<script src="js/theme-main.js"></script>
 </body>
 
 </html>
