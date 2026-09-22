@@ -42,6 +42,15 @@ function log_in_user($username, $password): bool {
 	return $is_user_logged_in;
 }
 
+/* Logs out the current user by removing all session vars and destroying the session. */
+function log_out_user() {
+	if (session_status() == PHP_SESSION_NONE) {
+		session_start ();
+	}
+	session_unset();
+	session_destroy();
+}
+
 /* Registers a new user always with a default role. */
 function register_user($user_data): array {
 	$result = array('result' => true, 'info' => "User registered successfully...");
