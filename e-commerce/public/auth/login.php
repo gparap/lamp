@@ -91,8 +91,7 @@ Copyright © 2026 gparap
 								// TODO: error msg
 							}
 							?>
-							<a href="#">Forgot your password?</a>
-							<a href="register.php">Not signed-up?</a>
+							<a href="#">Forgot your password?</a> <a href="#">Not signed-up?</a>
 						</div>
 					</div>
 				</div>
@@ -110,7 +109,7 @@ Copyright © 2026 gparap
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="js/bs-init.js"></script>
-	<script src="js/bold-and-bright.js"></script>
+	<script src="js/theme-main.js"></script>
 </body>
 
 </html>
