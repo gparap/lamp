@@ -1,3 +1,14 @@
+<?php 
+if (session_status() == PHP_SESSION_NONE) {
+	session_start ();
+}
+require_once('../../config/config.php');
+require_once(UTILS_PATH . 'functions.php');
+if (!is_user_authenticated()) {
+	$location = PUBLIC_URL . "auth/login.php";
+	header('Location: ' .  $location);
+}
+?>
 <!DOCTYPE html>
 <!--
 https://mit-license.org
@@ -11,124 +22,483 @@ Copyright © 2026 gparap
 	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <title>E-Commerce - ADMIN</title>
 <link rel="stylesheet" href="../css/bootstrap.min.css">
+<link rel="stylesheet" href="../css/bootstrap.min-admin.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.12.0/css/all.css">
 </head>
 
-<body>
-	<!-- Start: Navbar Centered Links -->
-	<nav class="navbar navbar-expand-md sticky-top py-3 navbar-shrink"
-		id="mainNav">
-		<div class="container">
-			<a class="navbar-brand d-flex align-items-center" href="index.php"><span
-				class="bs-icon-sm bs-icon-circle bs-icon-primary shadow d-flex justify-content-center align-items-center me-2 bs-icon">
-					<img src="../img/logo.png"
-					class="img-fluid rounded-0 shadow-lg" alt="">
+<body id="page-top">
 
-			</span><span>e-commerce</span></a>
-			<button class="navbar-toggler" data-bs-toggle="collapse"
-				data-bs-target="#navcol-1">
-				<span class="visually-hidden">Toggle navigation</span><span
-					class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navcol-1">
-				<ul class="navbar-nav mx-auto">
-					<li class="nav-item"><a class="nav-link active"
-						href="index.php">Home</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Collection</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-				</ul>
-				<a class="btn btn-primary shadow" role="button" href="auth/logout.php">TODO: Logout</a>
-			</div>
-		</div>
-	</nav>
-	<!-- End: Navbar Centered Links -->
+	<!-- Main Content -->
+	<div id="wrapper">
 
-	<?php echo "TODO: ADMIN VIEW"; ?>
-
-	<!-- Start: Footer Multi Column -->
-	<footer class="bg-primary-gradient">
-		<div class="container py-4 py-lg-5">
-			<div class="row justify-content-center">
-				<!-- Start: Services -->
-				<div
-					class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column">
-					<h3 class="fs-6 fw-bold">Get started</h3>
-					<ul class="list-unstyled">
-						<li><a href="#">Home</a></li>
-						<li><a href="#">Sign up</a></li>
-						<li><a href="#">Products</a></li>
-					</ul>
-				</div>
-				<!-- End: Services -->
-				<!-- Start: About -->
-				<div
-					class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column">
-					<h3 class="fs-6 fw-bold">About</h3>
-					<ul class="list-unstyled">
-						<li><a href="#">Company</a></li>
-						<li><a href="#">Contact us</a></li>
-						<li><a href="#">Reviews</a></li>
-					</ul>
-				</div>
-				<!-- End: About -->
-				<!-- Start: Careers -->
-				<div
-					class="col-sm-4 col-md-3 text-center text-lg-start d-flex flex-column">
-					<h3 class="fs-6 fw-bold">Support</h3>
-					<ul class="list-unstyled">
-						<li><a href="#">FAQ</a></li>
-						<li><a href="#">Terms</a></li>
-						<li><a href="#">Privacy Policy</a></li>
-					</ul>
-				</div>
-				<!-- End: Careers -->
-				<!-- Start: Social Icons -->
-				<div
-					class="col-lg-3 text-center text-lg-start d-flex flex-column align-items-center order-first align-items-lg-start order-lg-last">
-					<div class="fw-bold d-flex align-items-center mb-2">
-						<span
-							class="bs-icon-sm bs-icon-circle bs-icon-primary d-flex justify-content-center align-items-center me-2 bs-icon">
-							<img src="../img/logo.png"
-					class="img-fluid rounded-0 shadow-lg" alt=""></span><span>Brand</span>
+		<!-- Navigation -->
+		<nav
+			class="navbar align-items-start p-0 sidebar sidebar-dark accordion bg-gradient-primary navbar-dark">
+			<div class="container-fluid d-flex flex-column p-0">
+				<a
+					class="navbar-brand d-flex justify-content-center align-items-center m-0 sidebar-brand"
+					href="#"> <img src="../img/logo.png" width="32" height="32"
+					class="img-fluid rounded-0 shadow-lg sidebar-brand-icon" alt="">
+					<div class="mx-3 sidebar-brand-text">
+						<span>E-Commerce</span>
 					</div>
-					<p class="text-muted">Sem eleifend donec molestie, integer
-						quisque orci aliquam.</p>
-				</div>
-				<!-- End: Social Icons -->
-			</div>
-			<hr>
-			<div
-				class="text-muted d-flex justify-content-between align-items-center pt-3">
-				<p class="mb-0">Copyright © 2026 Brand</p>
-				<ul class="list-inline mb-0">
-					<li class="list-inline-item"><svg class="bi bi-facebook"
-							xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-							fill="currentColor" viewBox="0 0 16 16">
-                            <path
-								d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"></path>
-                        </svg></li>
-					<li class="list-inline-item"><svg class="bi bi-twitter"
-							xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-							fill="currentColor" viewBox="0 0 16 16">
-                            <path
-								d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334q.002-.211-.006-.422A6.7 6.7 0 0 0 16 3.542a6.7 6.7 0 0 1-1.889.518 3.3 3.3 0 0 0 1.447-1.817 6.5 6.5 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.32 9.32 0 0 1-6.767-3.429 3.29 3.29 0 0 0 1.018 4.382A3.3 3.3 0 0 1 .64 6.575v.045a3.29 3.29 0 0 0 2.632 3.218 3.2 3.2 0 0 1-.865.115 3 3 0 0 1-.614-.057 3.28 3.28 0 0 0 3.067 2.277A6.6 6.6 0 0 1 .78 13.58a6 6 0 0 1-.78-.045A9.34 9.34 0 0 0 5.026 15"></path>
-                        </svg></li>
-					<li class="list-inline-item"><svg class="bi bi-instagram"
-							xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
-							fill="currentColor" viewBox="0 0 16 16">
-                            <path
-								d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"></path>
-                        </svg></li>
+				</a>
+				<hr class="my-0 sidebar-divider">
+				<ul class="navbar-nav text-light" id="accordionSidebar">
+					<li class="nav-item"><a class="nav-link active" href="/index.html"><i
+							class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/profile.html"><i
+							class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/table.html"><i
+							class="fas fa-box-open"></i><span>Products</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/login.html"><i
+							class="far fa-user-circle"></i><span>Customers</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/register.html"><i
+							class="fas fa-warehouse"></i><span>Inventory</span></a></li>
+					<li class="nav-item"><a class="nav-link active" href="/index.html"><i
+							class="fas fa-chart-line"></i><span>Analytics</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/profile.html"><i
+							class="fas fa-star"></i><span>Reviews</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/table.html"><i
+							class="fas fa-tags"></i><span>Discounts</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/table.html"><i
+							class="fas fa-truck"></i><span>Shipping</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/table.html"><i
+							class="fas fa-cog"></i><span>Settings</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/login.html"><i
+							class="far fa-id-badge"></i><span>Profile</span></a></li>
+					<li class="nav-item"><a class="nav-link" href="/register.html"><i
+							class="fas fa-sign-out-alt"></i><span>Logout</span></a></li>
 				</ul>
+				<div class="text-center d-none d-md-inline">
+					<button class="btn rounded-circle border-0" id="sidebarToggle"
+						type="button"></button>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Dashboard Feed -->
+		<div class="d-flex flex-column" id="content-wrapper">
+			<div id="content">
+				<nav class="navbar navbar-expand bg-white shadow mb-4 topbar">
+					<div class="container-fluid">
+						<button class="btn btn-link d-md-none me-3 rounded-circle"
+							id="sidebarToggleTop" type="button">
+							<i class="fas fa-bars"></i>
+						</button>
+						<form
+							class="d-none d-sm-inline-block mw-100 ms-md-3 me-auto my-2 my-md-0 navbar-search">
+							<div class="input-group">
+								<input class="bg-light form-control border-0 small" type="text"
+									placeholder="Search for ...">
+								<button class="btn btn-primary py-0" type="button">
+									<i class="fas fa-search"></i>
+								</button>
+							</div>
+						</form>
+						<ul class="navbar-nav flex-nowrap ms-auto">
+							<li class="nav-item dropdown d-sm-none no-arrow"><a
+								class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+								aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
+								<div
+									class="dropdown-menu p-3 dropdown-menu-end animated--grow-in"
+									aria-labelledby="searchDropdown">
+									<form class="w-100 me-auto navbar-search">
+										<div class="input-group">
+											<input class="bg-light border-0 form-control small"
+												type="text" placeholder="Search for ...">
+											<button class="btn btn-primary" type="button">
+												<i class="fas fa-search"></i>
+											</button>
+										</div>
+									</form>
+								</div></li>
+							<li class="nav-item mx-1 dropdown no-arrow">
+								<div class="nav-item dropdown no-arrow">
+									<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+										aria-expanded="false" href="#"><span
+										class="badge bg-danger badge-counter">3+</span><i
+										class="fas fa-bell fa-fw"></i></a>
+									<div
+										class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+										<h6 class="dropdown-header">alerts center</h6>
+										<a class="dropdown-item d-flex align-items-center" href="#">
+											<div class="me-3">
+												<div class="bg-primary icon-circle">
+													<i class="fas fa-file-alt text-white"></i>
+												</div>
+											</div>
+											<div>
+												<span class="small text-gray-500">May 20, 2026</span>
+												<p>25 new orders are waiting for processing.</p>
+											</div>
+										</a><a class="dropdown-item d-flex align-items-center"
+											href="#">
+											<div class="me-3">
+												<div class="bg-success icon-circle">
+													<i class="fas fa-donate text-white"></i>
+												</div>
+											</div>
+											<div>
+												<span class="small text-gray-500">May 19, 2026</span>
+												<p>A customer requested a refund for Order #1042.</p>
+											</div>
+										</a><a class="dropdown-item d-flex align-items-center"
+											href="#">
+											<div class="me-3">
+												<div class="bg-warning icon-circle">
+													<i class="fas fa-exclamation-triangle text-white"></i>
+												</div>
+											</div>
+											<div>
+												<span class="small text-gray-500">May 18, 2026</span>
+												<p>Low stock alert: Wireless Headphones almost out of stock.</p>
+											</div>
+										</a><a class="dropdown-item text-center small text-gray-500"
+											href="#">Show All Alerts</a>
+									</div>
+								</div>
+							</li>
+							<li class="nav-item mx-1 dropdown no-arrow">
+								<div class="nav-item dropdown no-arrow">
+									<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+										aria-expanded="false" href="#"><span
+										class="badge bg-danger badge-counter">7</span><i
+										class="fas fa-envelope fa-fw"></i></a>
+									<div
+										class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
+										<h6 class="dropdown-header">alerts center</h6>
+										<a class="dropdown-item d-flex align-items-center" href="#">
+											<div class="me-3 dropdown-list-image">
+												<img class="rounded-circle"
+													src="assets/img/avatars/avatar4.jpeg">
+												<div class="bg-success status-indicator"></div>
+											</div>
+											<div class="fw-bold">
+												<div class="text-truncate">
+													<span>Hi, my order arrived damaged. Can you help me with a
+														replacement?</span>
+												</div>
+												<p class="mb-0 small text-gray-500">John Doe - 58m</p>
+											</div>
+										</a><a class="dropdown-item d-flex align-items-center"
+											href="#">
+											<div class="me-3 dropdown-list-image">
+												<img class="rounded-circle"
+													src="assets/img/avatars/avatar2.jpeg">
+												<div class="status-indicator"></div>
+											</div>
+											<div class="fw-bold">
+												<div class="text-truncate">
+													<span>Just checking if my package has been shipped yet.</span>
+												</div>
+												<p class="mb-0 small text-gray-500">Jane Doe - 1d</p>
+											</div>
+										</a><a class="dropdown-item d-flex align-items-center"
+											href="#">
+											<div class="me-3 dropdown-list-image">
+												<img class="rounded-circle"
+													src="assets/img/avatars/avatar3.jpeg">
+												<div class="bg-warning status-indicator"></div>
+											</div>
+											<div class="fw-bold">
+												<div class="text-truncate">
+													<span>I love the quality of the products, definitely
+														ordering again!</span>
+												</div>
+												<p class="mb-0 small text-gray-500">J. J. Doe - 2d</p>
+											</div>
+										</a><a class="dropdown-item d-flex align-items-center"
+											href="#">
+											<div class="me-3 dropdown-list-image">
+												<img class="rounded-circle"
+													src="assets/img/avatars/avatar5.jpeg">
+												<div class="bg-success status-indicator"></div>
+											</div>
+											<div class="fw-bold">
+												<div class="text-truncate">
+													<span>Do you have this item available in another color?</span>
+												</div>
+												<p class="mb-0 small text-gray-500">Jane D. Doe · 2w</p>
+											</div>
+										</a><a class="dropdown-item text-center small text-gray-500"
+											href="#">Show All Alerts</a>
+									</div>
+								</div>
+								<div
+									class="shadow dropdown-list dropdown-menu dropdown-menu-end"
+									aria-labelledby="alertsDropdown"></div>
+							</li>
+							<div class="d-none d-sm-block topbar-divider"></div>
+							<li class="nav-item dropdown no-arrow">
+								<div class="nav-item dropdown no-arrow">
+									<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+										aria-expanded="false" href="#"><span
+										class="d-none d-lg-inline me-2 text-gray-600 small">gparap
+											admin</span><img class="border rounded-circle img-profile"
+										src="../img/avatars/avatar-m-01.png"></a>
+									<div
+										class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
+										<a class="dropdown-item" href="#"><i
+											class="fas fa-user me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Profile</a><a
+											class="dropdown-item" href="#"><i
+											class="fas fa-cogs me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Settings</a><a
+											class="dropdown-item" href="#"><i
+											class="fas fa-list me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Activity
+											log</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item" href="#"><i
+											class="fas fa-sign-out-alt me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Logout</a>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+				<div class="container-fluid">
+					<div
+						class="d-sm-flex justify-content-between align-items-center mb-4">
+						<h3 class="text-dark mb-0">Dashboard</h3>
+						<a class="btn btn-primary btn-sm d-none d-sm-inline-block"
+							role="button" href="#"><i
+							class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate
+							Report</a>
+					</div>
+					<div class="row">
+						<div class="col-md-6 col-xl-3 mb-4">
+							<div class="card shadow py-2 border-left-primary">
+								<div class="card-body">
+									<div class="row g-0 align-items-center">
+										<div class="col me-2">
+											<div class="text-uppercase text-primary mb-1 fw-bold text-xs">
+												<span>Products Added (monthly)</span>
+											</div>
+											<div class="text-dark mb-0 fw-bold h5">
+												<span>1,240</span>
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-calendar fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-xl-3 mb-4">
+							<div class="card shadow py-2 border-left-success">
+								<div class="card-body">
+									<div class="row g-0 align-items-center">
+										<div class="col me-2">
+											<div class="text-uppercase text-success mb-1 fw-bold text-xs">
+												<span>Orders Fulfilled (annual)</span>
+											</div>
+											<div class="text-dark mb-0 fw-bold h5">
+												<span>18,500</span>
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-xl-3 mb-4">
+							<div class="card shadow py-2 border-left-info">
+								<div class="card-body">
+									<div class="row g-0 align-items-center">
+										<div class="col me-2">
+											<div class="text-uppercase text-info mb-1 fw-bold text-xs">
+												<span>Abandoned Carts</span>
+											</div>
+											<div class="row g-0 align-items-center">
+												<div class="col-auto">
+													<div class="text-dark me-3 mb-0 fw-bold h5">
+														<span>50%</span>
+													</div>
+												</div>
+												<div class="col">
+													<div class="progress progress-sm">
+														<div class="progress-bar bg-info" aria-valuenow="50"
+															aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
+															<span class="visually-hidden">50%</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-6 col-xl-3 mb-4">
+							<div class="card shadow py-2 border-left-warning">
+								<div class="card-body">
+									<div class="row g-0 align-items-center">
+										<div class="col me-2">
+											<div class="text-uppercase text-warning mb-1 fw-bold text-xs">
+												<span>Pending Shipments</span>
+											</div>
+											<div class="text-dark mb-0 fw-bold h5">
+												<span>24</span>
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-comments fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-lg-6 mb-4">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="text-primary m-0 fw-bold">Todo List</h6>
+								</div>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col me-2">
+												<h6 class="mb-0">
+													<strong>Supplier call</strong>
+												</h6>
+												<span class="text-xs">10:30 AM</span>
+											</div>
+											<div class="col-auto">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-1"><label class="form-check-label"
+														for="formCheck-1"></label>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col me-2">
+												<h6 class="mb-0">
+													<strong>Review pending orders</strong>
+												</h6>
+												<span class="text-xs">11:30 AM</span>
+											</div>
+											<div class="col-auto">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-2"><label class="form-check-label"
+														for="formCheck-2"></label>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col me-2">
+												<h6 class="mb-0">
+													<strong>Update product inventory</strong>
+												</h6>
+												<span class="text-xs">12:30 AM</span>
+											</div>
+											<div class="col-auto">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-3"><label class="form-check-label"
+														for="formCheck-3"></label>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+						<div class="col-lg-6 mb-4">
+							<div class="card shadow mb-4">
+								<div class="card-header py-3">
+									<h6 class="text-primary m-0 fw-bold">Recent Activity</h6>
+								</div>
+								<ul class="list-group list-group-flush">
+									<li class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col me-2">
+												<h6 class="mb-0">
+													<strong>New order received</strong>
+												</h6>
+												<span class="text-xs">10:30 AM</span>
+											</div>
+											<div class="col-auto">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-1"><label class="form-check-label"
+														for="formCheck-1"></label>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col me-2">
+												<h6 class="mb-0">
+													<strong>Inventory synced</strong>
+												</h6>
+												<span class="text-xs">11:30 AM</span>
+											</div>
+											<div class="col-auto">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-2"><label class="form-check-label"
+														for="formCheck-2"></label>
+												</div>
+											</div>
+										</div>
+									</li>
+									<li class="list-group-item">
+										<div class="row g-0 align-items-center">
+											<div class="col me-2">
+												<h6 class="mb-0">
+													<strong>Customer review posted</strong>
+												</h6>
+												<span class="text-xs">12:30 AM</span>
+											</div>
+											<div class="col-auto">
+												<div class="form-check">
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-3"><label class="form-check-label"
+														for="formCheck-3"></label>
+												</div>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+
+					</div>
+				</div>
 			</div>
 		</div>
-	</footer>
-	<!-- End: Footer Multi Column -->
+		<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
+			class="fas fa-angle-up"></i></a>
+	</div>
+
+	<!-- Footer -->
+	<?php require_once INCLUDES_PATH . 'footer.php'; ?>
+	
+	<!-- Scripts -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="js/bs-init.js"></script>
-	<script src="js/theme-main.js"></script>
+	<script src="../js/bs-init.js"></script>
+	<script src="../js/theme-main.js"></script>
+	<script src="../js/theme-admin.js"></script>
 </body>
 
 </html>
