@@ -3,13 +3,7 @@ require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--styles-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <title>Login</title>
-</head>
+<?php include_once('../utils/head.php'); ?>
 
 <body>
     <!-- Display alert messages to user -->
@@ -117,7 +111,8 @@ require_once($_SERVER['DOCUMENT_ROOT'] .'/blog/config/config.php'); ?>
         }
         ?>
     </div>
-	<script	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
+	<?php include_once '../utils/footer.php'; ?>
 </body>
 
 </html>
