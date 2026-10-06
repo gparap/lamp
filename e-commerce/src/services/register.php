@@ -2,7 +2,7 @@
 
 /*
  * https://mit-license.org
- * Copyright © 2023 gparap
+ * Copyright © 2023–2026 gparap
  * Register user into the database.
  */
 
@@ -18,9 +18,9 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['e
     $phone = $_POST['phone'];
 
     //register user unless they already exist in the database
-    require_once('../utils/connection.php');
+    require_once('../utils/functions.php');
     $query_email = "SELECT * FROM `users` WHERE email='$email'";
-    $query_email_result = mysqli_query($db_connection, $query_email);
+    $query_email_result = mysqli_query(get_db_connection(), $query_email);
     if (mysqli_num_rows($query_email_result) == 1) {
         //user already registered
         $json_response = array("status" => "0", "msg" => "User is already registered in the database.", "user" => $username);
@@ -29,7 +29,7 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['e
         //register user into the database
         $query = "INSERT INTO `users` (`email`, `username`, `password`, `address`, `postal_code`, `phone`) 
                         VALUES ('$email', '$username', '$password', '$address', '$postal_code', '$phone')";
-        $query_result = mysqli_query($db_connection, $query);
+        $query_result = mysqli_query(get_db_connection(), $query);
 
         if ($query_result == true) {
             //user registerd ok
@@ -43,4 +43,3 @@ if (!empty($_POST['username']) && !empty($_POST['password']) && !empty($_POST['e
     //generate json response
     echo json_encode($json_response);
 }
-
