@@ -17,7 +17,7 @@
 						echo '<li><a href="' . PUBLIC_URL . 'auth/login.php">Sign in</a></li>';
 					}
 					?>
-					<li><a href="#">Products</a></li>
+					<li><a href="<?= PUBLIC_URL ?>products.php">Products</a></li>
 				</ul>
 			</div>
 			<!-- About -->

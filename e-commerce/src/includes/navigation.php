@@ -15,7 +15,7 @@
 		<div class="collapse navbar-collapse" id="navcol-1">
 			<ul class="navbar-nav mx-auto">
 				<li class="nav-item"><a class="nav-link active" href="<?= PUBLIC_URL ?>index.php">Home</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">Collection</a></li>
+				<li class="nav-item"><a class="nav-link" href="<?= PUBLIC_URL ?>products.php"">Products</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
 			</ul>
 			<?php
