@@ -34,7 +34,7 @@
 					<li class="nav-item"><a class="nav-link disabled"
 						aria-disabled="true">Contact</a></li>
 					<li class="nav-item"><a class="nav-link disabled"
-						aria-disabled="true">Posts</a></li>
+						aria-disabled="true">Categories</a></li>
 				</ul>
 				<form class="d-flex" role="search">
 					<input class="form-control me-2" type="search" placeholder="Search"
