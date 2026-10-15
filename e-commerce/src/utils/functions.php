@@ -97,4 +97,47 @@ function register_user($user_data): array {
 	return $result;
 }
 
+/* Checks if user has successfully logged-in before accessing priviledged pages. */
+function is_user_authenticated(): bool {
+	if (isset($_SESSION['role'])) {
+		return TRUE;
+	}
+	return FALSE;
+}
+
+/* Renders a product category filter based on a database record. */
+function render_product_category_filter($row) {
+	$id = $row ['id'];
+	$name = $row ['name'];
+
+	return sprintf ( '<div class="form-check">
+			            <input class="form-check-input" type="checkbox" id="formCheck-%d">
+			            <label class="form-check-label" for="formCheck-%d">%s</label>
+		        	  </div>', $id, $id, $name );
+}
+
+/* Renders a product based on a database record. */
+function render_product($row) {
+	$id = $row ['id'];
+	$name = $row ['name'];
+	$desc_short = $row ['description_short'];
+	$price = $row['item_cost'];
+	//TODO: $img = $row ['image_url'];
+	
+	return sprintf ( '<div class="col-md-4">
+							<div class="card">
+								<img src="https://placehold.co/256x256" class="card-img-top" alt="">							
+								<div class="card-body">
+									<h5 class="card-title">%s</h5>
+									<p class="card-text">%s</p>
+									<p class="card-text"><i>price: &nbsp;&nbsp; %s</i></p>
+									<div class="d-flex gap-5 justify-content-start mb-5">
+										<a href="#pid=%d" class="btn btn-dark btn-sm px-4">View More</a>
+									</div>	
+								</div>
+							</div>
+							<input type="hidden" name="pid" value="%d">
+						</div>', $name, $desc_short, $price, $id, $id );
+}
+
 ?>

@@ -15,6 +15,20 @@ Copyright © 2026 gparap
 	href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
 </head>
 
+<?php
+require_once UTILS_PATH . 'functions.php';
+$connection = get_db_connection();
+
+//get product categories
+$query_cat = "SELECT * FROM `categories`";
+$query_cat_res_desktop = mysqli_query($connection, $query_cat);
+$query_cat_res_mobile = mysqli_query($connection, $query_cat);
+
+//get products
+$query_prod = "SELECT * FROM `products`";
+$query_prod_res = mysqli_query($connection, $query_prod);
+?>
+
 <body>
 	<!-- Navigation -->
 	<?php require_once INCLUDES_PATH . 'navigation.php'; ?>
@@ -40,18 +54,13 @@ Copyright © 2026 gparap
 						<div class="filters">
 							<div class="filter-item">
 								<h3>Categories</h3>
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Category 1</label>
-								</div>
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">Category 2</label>
-								</div>
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">Category ...</label>
-								</div>
-								<div class="form-check">
-									<input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">Category n</label>
-								</div>
+								<hr>
+								<?php 
+								//display product categories
+								while ($row = mysqli_fetch_assoc($query_cat_res_desktop)) {
+									echo render_product_category_filter($row);
+								}
+								?>
 							</div>
 						</div>
 					</div>
@@ -64,18 +73,13 @@ Copyright © 2026 gparap
 							<div class="filters">
 								<div class="filter-item">
 									<h3>Categories</h3>
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1">Category 1</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2">Category 2</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3">Category ...</label>
-									</div>
-									<div class="form-check">
-										<input class="form-check-input" type="checkbox" id="formCheck-4"><label class="form-check-label" for="formCheck-4">Category n</label>
-									</div>
+									<hr>
+									<?php 
+									//display product categories
+									while ($row = mysqli_fetch_assoc($query_cat_res_mobile)) {
+										echo render_product_category_filter($row);
+									}
+									?>
 								</div>
 							</div>
 						</div>
@@ -85,42 +89,12 @@ Copyright © 2026 gparap
 				<!-- Right column: Product list -->
 				<div class="col-md-9">
 					<div class="row">
-						<div class="col-md-4">
-							<div class="card">
-								<img src="https://placehold.co/256x256" class="card-img-top" alt="">
-								<div class="card-body">
-									<h5 class="card-title">Product 1</h5>
-									<p class="card-text">Test product description.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<img src="https://placehold.co/256x256" class="card-img-top" alt="">
-								<div class="card-body">
-									<h5 class="card-title">Product 2</h5>
-									<p class="card-text">Test product description.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<img src="https://placehold.co/256x256" class="card-img-top" alt="">
-								<div class="card-body">
-									<h5 class="card-title">Product ...</h5>
-									<p class="card-text">Test product description.</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-4">
-							<div class="card">
-								<img src="https://placehold.co/256x256" class="card-img-top" alt="">
-								<div class="card-body">
-									<h5 class="card-title">Product n</h5>
-									<p class="card-text">Test product description.</p>
-								</div>
-							</div>
-						</div>
+					<?php 
+					//display products TODO: fix missing images
+					while ($row = mysqli_fetch_assoc($query_prod_res)) {
+						echo render_product($row);
+					}
+					?>
 					</div>
 
 					<!-- Pagination -->
