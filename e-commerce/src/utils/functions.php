@@ -116,6 +116,35 @@ function render_product_category_filter($row) {
 		        	  </div>', $id, $id, $name );
 }
 
+/* Renders a product category card based on a database record. */
+function render_product_category_card($row) { //TODO: No. of products per category, etc
+	$id = $row ['id'];
+	$name = $row ['name'];
+	$items = $row['items_total'];
+	
+	//TODO: give proper icon based on name
+	
+	return sprintf ( '<div class="col-md-6 col-xl-3 mb-4">
+							<div class="card shadow py-2 border-left-primary">
+								<div class="card-body">
+									<div class="row g-0 align-items-center">
+										<div class="col me-2">
+											<div class="text-uppercase text-primary mb-1 fw-bold text-xs">
+												<span>%s</span>
+											</div>
+											<div class="text-dark mb-0 fw-bold h5">
+												<span>'.$items.' products</span>
+											</div>
+										</div>
+										<div class="col-auto">
+											<i class="fas fa-boxes fa-2x text-gray-300"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>', $name );
+}
+
 /* Renders a product based on a database record. */
 function render_product($row) {
 	$id = $row ['id'];
