@@ -168,5 +168,73 @@ function render_product($row) {
 							<input type="hidden" name="pid" value="%d">
 						</div>', $name, $desc_short, $price, $id, $id );
 }
+function add_category($name, $desc, $file, $keywords): bool|string { // TODO: Refactor
+    require_once (__DIR__ . '/../../config/config.php');
+    $msg = "";
+
+    // do a basic safe parameters cleanup
+    $name = trim($name ?? '');
+    $name = strip_tags($name);
+    $desc = trim($desc ?? '');
+    $desc = strip_tags($desc);
+    $keywords = trim($keywords ?? '');
+    $keywords = strip_tags($keywords);
+
+    // check if the file is a valid image file
+    $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $file_extension = strtolower($file_extension);
+    $allowed_file_exts = [
+        'gif',
+        'jpeg',
+        'jpg',
+        'png',
+        'webp'
+    ];
+    if (! (in_array($file_extension, $allowed_file_exts))) {
+        $msg = "File type not allowed.";
+        return $msg;
+    }
+
+    // generate a unique new name for the file
+    $file_name = uniqid('img_', true) . '.' . $file_extension;
+
+    // get uploaded file attributes
+    $file_temp_name = $file['tmp_name'];
+    $file_error = $file['error'];
+    $file_size = $file['size'];
+
+    // if we have file uploaded errors
+    if ($file_error !== UPLOAD_ERR_OK) {
+        $msg = "Error uploading file.";
+        return $msg;
+    }
+
+    // if file size is not allowed by the server configuration
+    if ($file_size >= 2097152) {
+        $msg = "File is too big.";
+        return $msg;
+    }
+
+    // move uploaded file to images folder
+    $destination = IMG_PATH . "/$file_name";
+    move_uploaded_file($file_temp_name, $destination);
+
+    // add category to database
+    $connection = get_db_connection();
+    $query = "INSERT INTO categories(name, description, image_url, keywords) VALUES (?, ?, ?, ?)";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "ssss", $name, $desc, $file_name, $keywords);
+    $query_result = mysqli_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+    // return with some feedback
+    if (! $query_result) {
+        $msg = mysqli_stmt_error($stmt);
+        error_log("E-Commerce: " . $msg);
+        return $msg;
+    }
+    $msg = "Category added successfully...";
+    return $msg;
+}
 
 ?>

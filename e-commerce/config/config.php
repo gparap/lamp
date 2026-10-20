@@ -16,6 +16,8 @@ define ( 'PASSWORD', '' );
 define ( 'ROOT_PATH', realpath ( __DIR__ . '/..' ) . '/' );
 define ( 'UTILS_PATH', ROOT_PATH . '/src/utils/' );
 define ( 'INCLUDES_PATH', ROOT_PATH . '/src/includes/' );
+define ( 'IMG_PATH', ROOT_PATH . '/public/img/' );
+
 
 /* URLs */
 define ( 'ADMIN_URL', 'https://localhost/e-commerce/public/admin/' );

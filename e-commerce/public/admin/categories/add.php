@@ -18,6 +18,22 @@ Copyright © 2026 gparap
 
 <?php require_once INCLUDES_PATH . 'admin/head.php'; ?>
 
+<?php 
+require_once UTILS_PATH .  'functions.php';
+if (isset($_POST['submit'])) {
+	//get the input fields
+	$category_name = $_POST['name'];
+	$category_description = $_POST['description'];
+	$image_file =  $_FILES['image_url'];
+	$keywords = $_POST['keywords'];
+	
+	//add category
+	$is_category_added = FALSE;
+	$is_category_added = add_category($category_name, $category_description, $image_file, $keywords);
+	echo "<script>alert('$is_category_added');</script>";
+}
+?>
+
 <body id="page-top">
 
 	<!-- Main Content -->
@@ -83,12 +99,12 @@ Copyright © 2026 gparap
 						<div class="col-md-6 col-xl-4">
 							<div class="card">
 								<div class="card-body text-center d-flex flex-column align-items-center my-4">
-									<form method="post" data-bs-theme="light">
+									<form method="post" data-bs-theme="light" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 										<div class="mb-3">
-											<input class="form-control" type="text" name="name" placeholder="name">
+											<input class="form-control" type="text" name="name" placeholder="name" value="<?php echo $category_name; ?>">
 										</div>
 										<div class="mb-3">
-											<input class="form-control" type="text" name="description" placeholder="description">
+											<input class="form-control" type="text" name="description" placeholder="description" <?php echo $category_description; ?>>
 										</div>
 										<div class="mb-3">
 											<input class="form-control" type="file" name="image_url" placeholder="image_url">
@@ -98,7 +114,7 @@ Copyright © 2026 gparap
 										</div>
 				
 										<div class="mb-3">
-											<button class="btn btn-primary shadow w-100 d-block" type="submit">Submit</button>
+											<button class="btn btn-primary shadow w-100 d-block" type="submit" name="submit">Submit</button>
 										</div>
 									</form>
 								</div>
@@ -117,6 +133,9 @@ Copyright © 2026 gparap
 	
 	<!-- Scripts -->
 	<?php require_once INCLUDES_PATH . 'admin/scripts.php'; ?>
+	<script>
+	//TODO: validate input fields
+	</script>
 </body>
 
 </html>
