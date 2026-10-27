@@ -55,5 +55,7 @@ e-commerce/public/css/bootstrap.min.css
 e-commerce/public/.buildpath
 e-commerce/public/.project
 e-commerce/public/css/bootstrap.min.css
+e-commerce/public/css/bootstrap.min-admin.css
 e-commerce/public/js/bs-init.js
 e-commerce/public/js/theme-main.js
+e-commerce/public/js/theme-admin.js
