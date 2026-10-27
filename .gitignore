@@ -51,6 +51,7 @@ e-commerce/public/css/bootstrap.min.css
 *.png
 *.svg
 *.jpg
+*.jpeg
 e-commerce/public/.buildpath
 e-commerce/public/.project
 e-commerce/public/css/bootstrap.min.css

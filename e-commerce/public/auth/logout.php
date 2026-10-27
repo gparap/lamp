@@ -8,5 +8,5 @@ log_out_user();
 
 //redirect to login page
 header('Location: ' . PUBLIC_URL . 'auth/login.php');
-exit;
+exit();
 ?>

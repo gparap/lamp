@@ -6,14 +6,7 @@ Copyright © 2026 gparap
 -->
 <html data-bs-theme="light" lang="en">
 
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>E-Commerce</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
-</head>
+<?php require_once INCLUDES_PATH . 'head.php'; ?>
 
 <body>
 	<!-- Navigation -->
@@ -28,7 +21,8 @@ Copyright © 2026 gparap
 				<div class="col-lg-6 text-center text-lg-start mb-5 mb-lg-0">
 					<p class="text-uppercase fw-bold text-warning mb-2">New Products 2026</p>
 					<h1 class="display-3 fw-bold mb-4">Premium Products For Everyday Life</h1>
-					<p class="lead text-light opacity-75 mb-4">Discover curated essentials with modern design, fast shipping, and unbeatable quality.</p>
+					<p class="lead text-light opacity-75 mb-4">Discover curated essentials with modern design, fast shipping, and
+						unbeatable quality.</p>
 					<div class="d-flex gap-3 justify-content-center justify-content-lg-start">
 						<a href="#" class="btn btn-warning btn-lg px-4">View Products</a>
 					</div>
@@ -59,9 +53,7 @@ Copyright © 2026 gparap
 	<?php require_once INCLUDES_PATH . 'footer.php'; ?>
 	
 	<!-- Scripts -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="js/bs-init.js"></script>
-	<script src="js/theme-main.js"></script>
+	<?php require_once INCLUDES_PATH . 'scripts.php'; ?>
 </body>
 
 </html>

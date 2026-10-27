@@ -18,7 +18,6 @@ define ( 'UTILS_PATH', ROOT_PATH . '/src/utils/' );
 define ( 'INCLUDES_PATH', ROOT_PATH . '/src/includes/' );
 define ( 'IMG_PATH', ROOT_PATH . '/public/img/' );
 
-
 /* URLs */
 define ( 'ADMIN_URL', 'https://localhost/e-commerce/public/admin/' );
 define ( 'USER_URL', 'https://localhost/e-commerce/public/user/' );
