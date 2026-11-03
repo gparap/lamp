@@ -172,6 +172,27 @@ function render_product($row) {
 						</div>', $name, $desc_short, $price, $id, $id);
 }
 
+/* Renders a product details table row based on a database record. */
+function render_product_details_table_row($row) {
+    $id = $row['id'];
+    $cid = $row['category_id'];
+    $name = $row['name'];
+    $desc = $row['description_short'];
+    $price = $row['item_cost'];
+    $disc = $row['item_discount'];
+    $stock = $row['items_left'];
+
+    return sprintf('<tr>
+						<td>%d</td>
+						<td>%d</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td>%.2f</td>
+						<td>%d</td>
+						<td>%d</td>
+					 </tr>', $id, $cid, $name, $desc, $price, $disc, $stock);
+}
+
 function add_category($name, $desc, $file, $keywords): bool|string { //TODO: Refactor
     require_once (__DIR__ . '/../../config/config.php');
     $msg = "";

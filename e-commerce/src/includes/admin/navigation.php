@@ -11,7 +11,7 @@
 			<li class="nav-item"><a class="nav-link active" href="<?= ADMIN_URL ?>"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="<?= ADMIN_URL ?>TODO"><i class="fas fa-shopping-bag"></i><span>Orders</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="<?= ADMIN_URL ?>categories/view.php"><i class="fas fa-box-open"></i><span>Categories</span></a></li>
-			<li class="nav-item"><a class="nav-link" href="<?= ADMIN_URL ?>TODO"><i class="fas fa-box-open"></i><span>Products</span></a></li>
+			<li class="nav-item"><a class="nav-link" href="<?= ADMIN_URL ?>products/view.php"><i class="fas fa-box-open"></i><span>Products</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="<?= ADMIN_URL ?>TODO"><i class="far fa-user-circle"></i><span>Customers</span></a></li>
 			<li class="nav-item"><a class="nav-link" href="<?= ADMIN_URL ?>TODO"><i class="fas fa-warehouse"></i><span>Inventory</span></a></li>
 			<li class="nav-item"><a class="nav-link active" href="<?= ADMIN_URL ?>TODO"><i class="fas fa-chart-line"></i><span>Analytics</span></a></li>
