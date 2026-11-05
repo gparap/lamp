@@ -18,6 +18,25 @@ Copyright © 2026 gparap
 
 <?php require_once INCLUDES_PATH . 'admin/head.php'; ?>
 
+<?php
+if (isset($_POST['submit'])) {
+    //get the input fields
+    $category_id = $_POST['category'];
+    $product_name = $_POST['name'];
+    $product_descr_long = $_POST['description'];
+    $product_descr_short = $_POST['description_short'];
+    $product_item_cost = $_POST['item_cost'];
+    $product_item_disc = $_POST['item_discount'];
+    $image_file = $_FILES['image_url'];
+    $keywords = $_POST['keywords'];
+
+    //add product
+    $is_product_added = FALSE;
+    $is_product_added = add_product($category_id, $product_name, $product_descr_long, $product_descr_short, $product_item_cost, $product_item_disc, $image_file, $keywords);
+    echo "<script>alert('$is_product_added');</script>";
+}
+?>
+
 <body id="page-top">
 
 	<!-- Main Content -->

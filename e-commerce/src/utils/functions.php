@@ -262,4 +262,84 @@ function add_category($name, $desc, $file, $keywords): bool|string { //TODO: Ref
     return $msg;
 }
 
+function add_product($category_id, $name, $desc_long, $desc_short, $item_cost, $item_disc, $file, $keywords): bool|string { //TODO: Refactor
+    require_once (__DIR__ . '/../../config/config.php');
+    $connection = get_db_connection();
+    $msg = "";
+    
+    //do a basic safe parameters cleanup
+    $name = trim($name ?? '');
+    $name = strip_tags($name);
+    $desc_long = trim($desc_long ?? '');
+    $desc_long = strip_tags($desc_long);
+    $desc_short = trim($desc_short ?? '');
+    $desc_short = strip_tags($desc_short);
+    $keywords = trim($keywords ?? '');
+    $keywords = strip_tags($keywords);
+    
+    //get category name from category id
+    $query = "SELECT * FROM `categories` WHERE `id` = '$category_id'";
+    $query_result = mysqli_query($connection, $query);
+    $category_name = "";
+    while ($row = mysqli_fetch_assoc($query_result)) {
+        $category_name = $row['name'];
+    }
+    
+    //check if the file is a valid image file
+    $file_extension = pathinfo($file['name'], PATHINFO_EXTENSION);
+    $file_extension = strtolower($file_extension);
+    $allowed_file_exts = [
+        'gif',
+        'jpeg',
+        'jpg',
+        'png',
+        'webp'
+    ];
+    if (! (in_array($file_extension, $allowed_file_exts))) {
+        $msg = "File type not allowed.";
+        return $msg;
+    }
+    
+    //generate a unique new name for the file
+    $file_name = uniqid('img_', false) . '.' . $file_extension;
+    
+    //get uploaded file attributes
+    $file_temp_name = $file['tmp_name'];
+    $file_error = $file['error'];
+    $file_size = $file['size'];
+    
+    //if we have file uploaded errors
+    if ($file_error !== UPLOAD_ERR_OK) {
+        $msg = "Error uploading file.";
+        return $msg;
+    }
+    
+    //if file size is not allowed by the server configuration
+    if ($file_size >= 2097152) {
+        $msg = "File is too big.";
+        return $msg;
+    }
+    
+    //move uploaded file to images folder
+    $destination = IMG_PATH . "products/" . $category_name . "/$file_name";
+    move_uploaded_file($file_temp_name, $destination);
+    
+    //add product to database
+    $query = "INSERT INTO products(category_id, name, description, description_short, item_cost, item_discount, image_url, keywords)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($stmt, "isssdiss", $category_id, $name, $desc_long, $desc_short, $item_cost, $item_disc, $file_name, $keywords);
+    $query_result = mysqli_execute($stmt);
+    mysqli_stmt_close($stmt);
+    
+    //return with some feedback
+    if (! $query_result) {
+        $msg = mysqli_stmt_error($stmt);
+        error_log("E-Commerce: " . $msg);
+        return $msg;
+    }
+    $msg = "Product added successfully...";
+    return $msg;
+}
+
 ?>
