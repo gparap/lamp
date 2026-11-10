@@ -25,6 +25,14 @@ $connection = get_db_connection();
 //get products
 $query_prod = "SELECT * FROM `products`";
 $query_prod_res = mysqli_query($connection, $query_prod);
+
+//delete product
+if (isset($_GET['action']) && isset($_GET['id'])) {
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+    if ($_GET['action'] === 'D') {
+        delete_product($id);
+    }
+}
 ?>
 
 <body id="page-top">

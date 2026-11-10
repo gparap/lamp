@@ -7,8 +7,7 @@
 
 /* Gets the database connection object. */
 function get_db_connection(): mysqli {
-    require_once (__DIR__ . '/connection.php');
-    return $db_connection;
+    return require __DIR__ . '/connection.php';
 }
 
 /* Logging users in & give them session vars. */
@@ -190,7 +189,13 @@ function render_product_details_table_row($row) {
 						<td>%.2f</td>
 						<td>%d</td>
 						<td>%d</td>
-					 </tr>', $id, $cid, $name, $desc, $price, $disc, $stock);
+						<!--Delete product action-->
+						<td>
+							<a href="?action=D&&id=%d" onclick="return confirm(\'Delete this product?\')">
+								<i class="bi bi-trash text-danger"></i>
+							</a>
+						</td>
+					 </tr>', $id, $cid, $name, $desc, $price, $disc, $stock, $id);
 }
 
 function add_category($name, $desc, $file, $keywords): bool|string { //TODO: Refactor
@@ -340,6 +345,18 @@ function add_product($category_id, $name, $desc_long, $desc_short, $item_cost, $
     }
     $msg = "Product added successfully...";
     return $msg;
+}
+
+function delete_product($id) {
+    //delete product
+    $connection = get_db_connection();
+    $query = "DELETE FROM products WHERE id='$id'";
+    mysqli_query($connection, $query);
+    echo "<script>alert('Product deleted successfully...')</script>";
+    
+    //redirect back to admin products page
+    $location = ADMIN_URL . "products/view.php";
+    echo '<script>window.location.href="' . $location . '"</script>';
 }
 
 ?>
