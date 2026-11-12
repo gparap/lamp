@@ -181,7 +181,7 @@ function render_product_details_table_row($row) {
     $disc = $row['item_discount'];
     $stock = $row['items_left'];
 
-    return sprintf('<tr>
+    return sprintf ( '<tr>
 						<td>%d</td>
 						<td>%d</td>
 						<td>%s</td>
@@ -189,13 +189,19 @@ function render_product_details_table_row($row) {
 						<td>%.2f</td>
 						<td>%d</td>
 						<td>%d</td>
-						<!--Delete product action-->
 						<td>
-							<a href="?action=D&&id=%d" onclick="return confirm(\'Delete this product?\')">
+							<!--Delete product action-->
+							<a href="?action=D&&id=%d" onclick="return confirm(\'Delete this product?\')"
+								style="text-decoration: none;">
 								<i class="bi bi-trash text-danger"></i>
 							</a>
+							&nbsp;
+							<!--Edit product action-->
+							<a href="update.php?id=%d">
+								<i class="bi bi-pencil text-warning"></i>
+							</a>
 						</td>
-					 </tr>', $id, $cid, $name, $desc, $price, $disc, $stock, $id);
+					 </tr>', $id, $cid, $name, $desc, $price, $disc, $stock, $id, $id );
 }
 
 function add_category($name, $desc, $file, $keywords): bool|string { //TODO: Refactor
