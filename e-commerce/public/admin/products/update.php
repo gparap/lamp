@@ -1,12 +1,12 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+	session_start ();
 }
-require_once ('../../../config/config.php');
-require_once (UTILS_PATH . 'functions.php');
-if (! is_user_authenticated()) {
-    $location = PUBLIC_URL . "auth/login.php";
-    header('Location: ' . $location);
+require_once('../../../config/config.php');
+require_once(UTILS_PATH . 'functions.php');
+if (!is_user_authenticated()) {
+	$location = PUBLIC_URL . "auth/login.php";
+	header('Location: ' .  $location);
 }
 ?>
 <!DOCTYPE html>
@@ -17,6 +17,32 @@ Copyright © 2026 gparap
 <html data-bs-theme="light" lang="en">
 
 <?php require_once INCLUDES_PATH . 'admin/head.php'; ?>
+
+<?php 
+require_once UTILS_PATH .  'functions.php';
+
+//get product data
+if (isset($_GET['id'])) {
+	$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+	$product_data = get_product_by_id($id);
+}
+
+//get product category name TODO: refactor with infinite categories, for now use the 6 default ones
+$category_name = "";
+$category_id = $product_data[0]['category_id'];
+for ($i = 0; $i < 6; $i++) {
+	switch ($category_id) {
+		case 1: $category_name = "autos"; break;
+		case 2: $category_name = "bikes"; break;
+		case 3: $category_name = "drinks"; break;
+		case 4: $category_name = "garden"; break;
+		case 5: $category_name = "gym"; break;
+		case 6: $category_name = "tech"; break;
+		default: break;
+	}
+}
+
+?>
 
 <body id="page-top">
 
@@ -31,28 +57,33 @@ Copyright © 2026 gparap
 			<div id="content">
 				<nav class="navbar navbar-expand bg-white shadow mb-4 topbar">
 					<div class="container-fluid">
-						<button class="btn btn-link d-md-none me-3 rounded-circle" id="sidebarToggleTop" type="button">
+						<button class="btn btn-link d-md-none me-3 rounded-circle"
+							id="sidebarToggleTop" type="button">
 							<i class="fas fa-bars"></i>
 						</button>
-
+						
 						<!-- Search form -->
 						<?php require_once INCLUDES_PATH . 'admin/search.php'; ?>
 						
 						<!-- Notifications -->
 						<ul class="navbar-nav flex-nowrap ms-auto">
-							<li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+							<li class="nav-item dropdown d-sm-none no-arrow"><a
+								class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
 								aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
-								<div class="dropdown-menu p-3 dropdown-menu-end animated--grow-in" aria-labelledby="searchDropdown">
+								<div
+									class="dropdown-menu p-3 dropdown-menu-end animated--grow-in"
+									aria-labelledby="searchDropdown">
 									<form class="w-100 me-auto navbar-search">
 										<div class="input-group">
-											<input class="bg-light border-0 form-control small" type="text" placeholder="Search for ...">
+											<input class="bg-light border-0 form-control small"
+												type="text" placeholder="Search for ...">
 											<button class="btn btn-primary" type="button">
 												<i class="fas fa-search"></i>
 											</button>
 										</div>
 									</form>
 								</div></li>
-
+								
 							<!-- Alerts center -->
 							<?php require_once INCLUDES_PATH . 'admin/alerts.php'; ?>
 							
@@ -61,13 +92,13 @@ Copyright © 2026 gparap
 							
 							<!-- divider -->
 							<div class="d-none d-sm-block topbar-divider"></div>
-
+							
 							<!-- Profile Dropdown -->
 							<?php require_once INCLUDES_PATH . 'admin/profile.php';?>
 						</ul>
 					</div>
 				</nav>
-
+				
 				<!-- Update Product -->
 				<div class="container-fluid">
 					<div class="d-sm-flex justify-content-between align-items-center mb-4">
@@ -78,40 +109,39 @@ Copyright © 2026 gparap
 						<div class="col-md-6 col-xl-4">
 							<div class="card">
 								<div class="card-body text-center d-flex flex-column align-items-center my-4">
-									<form method="post" data-bs-theme="light" enctype="multipart/form-data"
-										action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
+									<form method="post" data-bs-theme="light" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 										<div class="mb-3">
 											<select class="form-control" name="category">
-												<option value="" disabled selected>Select category</option>
+												<option value="<?php $category_id ?>" selected><?php echo $category_name; ?></option>
+												<?php display_product_category_options($category_id); ?>
 											</select>
 										</div>
 										<div class="mb-3">
-											<input class="form-control" type="text" name="name" placeholder="name">
+											<input class="form-control" type="text" name="name" placeholder="name" value="<?php echo $product_data[0]['name']; ?>">
 										</div>
 										<div class="mb-3">
-											<input class="form-control" type="text" name="description" placeholder="description">
+											<input class="form-control" type="text" name="description" placeholder="description" value="<?php echo $product_data[0]['description']; ?>">
 										</div>
 										<div class="mb-3">
-											<input class="form-control" type="text" name="description_short" placeholder="description_short">
+											<input class="form-control" type="text" name="description_short" placeholder="description_short" value="<?php echo $product_data[0]['description_short']; ?>">
 										</div>
 										<div class="mb-3">
-											<input class="form-control" type="number" min="0.01" step="0.01" name="item_cost" placeholder="item_cost">
+											<input class="form-control" type="number" min="0.01" step="0.01" name="item_cost" placeholder="item_cost" value="<?php echo $product_data[0]['item_cost']; ?>">
 										</div>
 										<div class="mb-3">
-											<input class="form-control" type="number" min="1" max="99" step="1" name="item_discount"
-												placeholder="item_discount">
+											<input class="form-control" type="number" min="1" max="99" step="1" name="item_discount" placeholder="item_discount" value="<?php echo $product_data[0]['item_discount']; ?>">
 										</div>
 										<div class="mb-3 d-flex flex-column align-items-start">
-											<input class="form-control" type="file" name="image_url" placeholder="image_url"> <img class="mt-1 mb-0"
-												alt="" src="https://placehold.co/128x128" width="128" height="128">
+											<input class="form-control" type="file" name="image_url" placeholder="image_url" accept="image/*" onchange="updateImagePreview(this);">
+											<img class="mt-1 mb-0" alt="" src="<?php echo IMG_URL . "products/" . $category_name . "/" . $product_data[0]['image_url']; ?>" width="128" height="128" id="image_url_preview">
 										</div>
 										<div class="mb-3">
 											<input class="form-control" type="file" name="thumbnail" placeholder="thumbnail" disabled>
 										</div>
 										<div class="mb-3">
-											<input class="form-control" type="text" name="keywords" placeholder="keywords">
+											<input class="form-control" type="text" name="keywords" placeholder="keywords" value="<?php echo $product_data[0]['keywords']; ?>">
 										</div>
-
+				
 										<div class="mb-3">
 											<button class="btn btn-primary shadow w-100 d-block" type="submit" name="submit">Update</button>
 										</div>
@@ -124,15 +154,29 @@ Copyright © 2026 gparap
 			</div>
 		</div>
 	</div>
-	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
+		class="fas fa-angle-up"></i></a>
 
 	<!-- Footer -->
 	<?php require_once INCLUDES_PATH . 'footer.php'; ?>
 	
 	<!-- Scripts -->
 	<?php require_once INCLUDES_PATH . 'admin/scripts.php'; ?>
-	<script>
+	<script type="text/javascript">
 	//TODO: validate input fields
+	
+	/* Update the image preview when the user selects a new image. */
+	function updateImagePreview(element) {
+	    if (element.files && element.files[0]) {//the user has selected an image file
+	        const reader = new FileReader();	//create a reader to read the file
+	        reader.onload = function(e) {
+	        	//replace the image preview source with the selected file
+	            document.getElementById('image_url_preview').src = e.target.result;
+	        };
+	        //read the image file as a temporary URL
+	        reader.readAsDataURL(element.files[0]);
+	    }
+	}
 	</script>
 </body>
 
