@@ -1,12 +1,12 @@
 <?php
 if (session_status() == PHP_SESSION_NONE) {
-    session_start();
+	session_start ();
 }
-require_once ('../../../config/config.php');
-require_once (UTILS_PATH . 'functions.php');
-if (! is_user_authenticated()) {
-    $location = PUBLIC_URL . "auth/login.php";
-    header('Location: ' . $location);
+require_once('../../../config/config.php');
+require_once(UTILS_PATH . 'functions.php');
+if (!is_user_authenticated()) {
+	$location = PUBLIC_URL . "auth/login.php";
+	header('Location: ' .  $location);
 }
 ?>
 <!DOCTYPE html>
@@ -28,10 +28,10 @@ $query_prod_res = mysqli_query($connection, $query_prod);
 
 //delete product
 if (isset($_GET['action']) && isset($_GET['id'])) {
-    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-    if ($_GET['action'] === 'D') {
-        delete_product($id);
-    }
+	$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+	if ($_GET['action'] === 'D') {
+		delete_product($id);	
+	}
 }
 ?>
 
@@ -48,28 +48,33 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 			<div id="content">
 				<nav class="navbar navbar-expand bg-white shadow mb-4 topbar">
 					<div class="container-fluid">
-						<button class="btn btn-link d-md-none me-3 rounded-circle" id="sidebarToggleTop" type="button">
+						<button class="btn btn-link d-md-none me-3 rounded-circle"
+							id="sidebarToggleTop" type="button">
 							<i class="fas fa-bars"></i>
 						</button>
-
+						
 						<!-- Search form -->
 						<?php require_once INCLUDES_PATH . 'admin/search.php'; ?>
 						
 						<!-- Notifications -->
 						<ul class="navbar-nav flex-nowrap ms-auto">
-							<li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+							<li class="nav-item dropdown d-sm-none no-arrow"><a
+								class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
 								aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
-								<div class="dropdown-menu p-3 dropdown-menu-end animated--grow-in" aria-labelledby="searchDropdown">
+								<div
+									class="dropdown-menu p-3 dropdown-menu-end animated--grow-in"
+									aria-labelledby="searchDropdown">
 									<form class="w-100 me-auto navbar-search">
 										<div class="input-group">
-											<input class="bg-light border-0 form-control small" type="text" placeholder="Search for ...">
+											<input class="bg-light border-0 form-control small"
+												type="text" placeholder="Search for ...">
 											<button class="btn btn-primary" type="button">
 												<i class="fas fa-search"></i>
 											</button>
 										</div>
 									</form>
 								</div></li>
-
+								
 							<!-- Alerts center -->
 							<?php require_once INCLUDES_PATH . 'admin/alerts.php'; ?>
 							
@@ -78,49 +83,44 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 							
 							<!-- divider -->
 							<div class="d-none d-sm-block topbar-divider"></div>
-
+							
 							<!-- Profile Dropdown -->
 							<?php require_once INCLUDES_PATH . 'admin/profile.php';?>
 						</ul>
 					</div>
 				</nav>
-
+				
 				<!-- Products -->
 				<div class="container-fluid">
-					<div class="d-sm-flex justify-content-between align-items-center mb-4">
+					<div
+						class="d-sm-flex justify-content-between align-items-center mb-4">
 						<h3 class="text-dark mb-0">Products</h3>
-						<a class="btn btn-primary btn-sm d-xs-inline-block" role="button" href="add.php"><i
+						<a class="btn btn-primary btn-sm d-xs-inline-block"
+							role="button" href="add.php"><i
 							class="fas fa-solid fa-plus fa-sm text-white-100"></i>&nbsp;Add Product</a>
 					</div>
 					<hr>
 					<div class="table-responsive small">
 						<table class="table table-striped table-sm">
 							<thead>
-								<tr>
-									<th>#</th>
-									<th>cid</th>
-									<th>name</th>
-									<th>desc</th>
-									<th>price</th>
-									<th>discount</th>
-									<th>stock</th>
-								</tr>
+								<tr><th>#</th><th>cid</th><th>name</th><th>desc</th><th>price</th><th>discount</th><th>stock</th><th>ACTIONS</th></tr>
 							</thead>
 							<tbody>
 							<?php
-                            //display products
-                            while ($row = mysqli_fetch_assoc($query_prod_res)) {
-                                echo render_product_details_table_row($row);
-                            }
-                            ?>
+							//display products
+							while ($row = mysqli_fetch_assoc($query_prod_res)) {
+								echo render_product_details_table_row($row);
+							}
+							?>
 							</tbody>
 						</table>
-					</div>
+					</div>				
 				</div>
 			</div>
 		</div>
 	</div>
-	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+	<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
+		class="fas fa-angle-up"></i></a>
 
 	<!-- Footer -->
 	<?php require_once INCLUDES_PATH . 'footer.php'; ?>

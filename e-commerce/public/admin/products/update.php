@@ -25,21 +25,32 @@ require_once UTILS_PATH .  'functions.php';
 if (isset($_GET['id'])) {
 	$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 	$product_data = get_product_by_id($id);
+	
+	//get product category name
+	$category_id = $product_data[0]['category_id'];
+	$category_name = get_category_name_by_id($category_id);
 }
 
-//get product category name TODO: refactor with infinite categories, for now use the 6 default ones
-$category_name = "";
-$category_id = $product_data[0]['category_id'];
-for ($i = 0; $i < 6; $i++) {
-	switch ($category_id) {
-		case 1: $category_name = "autos"; break;
-		case 2: $category_name = "bikes"; break;
-		case 3: $category_name = "drinks"; break;
-		case 4: $category_name = "garden"; break;
-		case 5: $category_name = "gym"; break;
-		case 6: $category_name = "tech"; break;
-		default: break;
-	}
+if (isset($_POST['submit'])) {
+	//update product data with the input fields
+	$product_data[0]['id'] = $_POST['id'];
+	$product_data[0]['category_id'] = $_POST['category'];
+	$product_data[0]['name'] = $_POST['name'];
+	$product_data[0]['description'] = $_POST['description'];
+	$product_data[0]['description_short'] = $_POST['description_short'];
+	$product_data[0]['item_cost'] = $_POST['item_cost'];
+	$product_data[0]['item_discount'] = $_POST['item_discount'];
+	$product_data[0]['image_url'] = $_FILES['image_url'];
+	$product_data[0]['keywords'] = $_POST['keywords'];
+	
+	//update product in the database
+	$is_product_updated = FALSE;
+	$is_product_updated = update_product($product_data);
+	echo "<script>alert('$is_product_updated');</script>";
+	
+	//get product category name (simulate $_GET['id'])
+	$category_id = $product_data[0]['category_id'];
+	$category_name = get_category_name_by_id($category_id);
 }
 
 ?>
@@ -112,7 +123,7 @@ for ($i = 0; $i < 6; $i++) {
 									<form method="post" data-bs-theme="light" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>">
 										<div class="mb-3">
 											<select class="form-control" name="category">
-												<option value="<?php $category_id ?>" selected><?php echo $category_name; ?></option>
+												<option value="<?php echo $category_id; ?>" selected><?php echo $category_name; ?></option>
 												<?php display_product_category_options($category_id); ?>
 											</select>
 										</div>
@@ -141,6 +152,7 @@ for ($i = 0; $i < 6; $i++) {
 										<div class="mb-3">
 											<input class="form-control" type="text" name="keywords" placeholder="keywords" value="<?php echo $product_data[0]['keywords']; ?>">
 										</div>
+										<input type="hidden" name="id" value="<?php echo $product_data[0]['id']; ?>">
 				
 										<div class="mb-3">
 											<button class="btn btn-primary shadow w-100 d-block" type="submit" name="submit">Update</button>
@@ -177,6 +189,7 @@ for ($i = 0; $i < 6; $i++) {
 	        reader.readAsDataURL(element.files[0]);
 	    }
 	}
+	
 	</script>
 </body>
 

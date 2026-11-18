@@ -104,6 +104,23 @@ function is_user_authenticated(): bool {
 	return FALSE;
 }
 
+//TODO: refactor with infinite categories, for now use the 6 default ones
+function get_category_name_by_id($id): string{
+	$category_name = "";
+	for ($i = 0; $i < 6; $i++) {
+		switch ($id) {
+			case 1: $category_name = "autos"; break;
+			case 2: $category_name = "bikes"; break;
+			case 3: $category_name = "drinks"; break;
+			case 4: $category_name = "garden"; break;
+			case 5: $category_name = "gym"; break;
+			case 6: $category_name = "tech"; break;
+			default: break;
+		}
+	}
+	return $category_name;
+}
+
 /* Gets the product details by its id and return them as an array. */
 function get_product_by_id($id) : array {
 	$product = [];
@@ -364,6 +381,89 @@ function add_product($category_id, $name, $desc_long, $desc_short, $item_cost, $
 		return  $msg;
 	}
 	$msg = "Product added successfully...";
+	return $msg;
+}
+
+function update_product($product_data) : bool|string {	//TODO: Refactor
+	require_once (__DIR__ . '/../../config/config.php');
+	$connection = get_db_connection();
+	$msg = "";
+	
+	//do a basic safe input cleanup
+	$name = trim($product_data[0]['name'] ?? '');
+	$name = strip_tags($product_data[0]['name']);
+	$desc_long = trim($product_data[0]['description'] ?? '');
+	$desc_long = strip_tags($product_data[0]['description']);
+	$desc_short = trim($product_data[0]['description_short'] ?? '');
+	$desc_short = strip_tags($product_data[0]['description_short']);
+	$keywords = trim($product_data[0]['keywords'] ?? '');
+	$keywords = strip_tags($product_data[0]['keywords']);
+	
+	//get the rest of the array elements into vars
+	$id = $product_data[0]['id'];
+	$category_id = $product_data[0]['category_id'];
+	$item_cost = $product_data[0]['item_cost'];
+	$item_disc = $product_data[0]['item_discount'];
+	
+	//get category name from category id
+	$query = "SELECT * FROM `categories` WHERE `id` = '$category_id'";
+	$query_result = mysqli_query($connection, $query);
+ 	$category_name = "";
+ 	while ($row = mysqli_fetch_assoc($query_result)) {
+ 		$category_name = $row['name'];
+ 	}
+	
+	//TODO: refactor to not upload the same image
+	
+	//check if the file is a valid image file
+	$file_extension = pathinfo($product_data[0]['image_url']['name'], PATHINFO_EXTENSION);
+	$file_extension = strtolower($file_extension);
+	$allowed_file_exts =  ['gif', 'jpeg', 'jpg', 'png', 'webp'];
+	if (!(in_array($file_extension, $allowed_file_exts))) {
+		$msg = "File type not allowed.";
+		return $msg;
+	}
+	
+	//generate a unique new name for the file
+	$file_name = uniqid('img_', false). '.' . $file_extension;
+	
+	//get the uploaded file attributes
+	$file_temp_name = $product_data[0]['image_url']['tmp_name'];
+	$file_error = $product_data[0]['image_url']['error'];
+	$file_size = $product_data[0]['image_url']['size'];
+	
+	//if we have file uploaded errors
+	if ($file_error !== UPLOAD_ERR_OK) {
+		$msg = "Error uploading file.";
+		return $msg;
+	}
+	
+	//if file size is not allowed by the server configuration
+	if ($file_size >= 2097152) {
+		$msg = "File is too big.";
+		return $msg;
+	}
+	
+	//move uploaded file to images folder
+	$destination = IMG_PATH . "products/" . $category_name ."/$file_name";
+	move_uploaded_file($file_temp_name, $destination);
+	
+	//update product in database
+	$query = "UPDATE products
+				SET category_id=?,name=?,description=?,description_short=?,item_cost=?,item_discount=?,image_url=?,keywords=?
+				WHERE id = ?";
+	$stmt = mysqli_prepare($connection, $query);
+	mysqli_stmt_bind_param($stmt, "isssdissi", $category_id, $name, $desc_long, $desc_short, $item_cost, $item_disc, $file_name, $keywords, $id);
+	$query_result =  mysqli_execute($stmt);
+	mysqli_stmt_close($stmt);
+	
+	//return with some feedback
+	if (!$query_result) {
+		$msg = mysqli_stmt_error($stmt);
+		error_log("E-Commerce: " . $msg);
+		return  $msg;
+	}
+	$msg = "Product updated successfully...";
 	return $msg;
 }
 
