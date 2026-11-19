@@ -37,142 +37,51 @@ Copyright © 2026 gparap
 						<form class="d-none d-sm-inline-block mw-100 ms-md-3 me-auto my-2 my-md-0 navbar-search">
 							<div class="input-group">
 								<input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
-								<button class="btn btn-primary py-0" type="button">
-									<i class="fas fa-search"></i>
-								</button>
-							</div>
-						</form>
+						
+						<!-- Search form -->
+						<?php require_once INCLUDES_PATH . 'admin/search.php'; ?>
+						
+						<!-- Notifications -->
 						<ul class="navbar-nav flex-nowrap ms-auto">
-							<li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
+							<li class="nav-item dropdown d-sm-none no-arrow"><a
+								class="dropdown-toggle nav-link" data-bs-toggle="dropdown"
 								aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
-								<div class="dropdown-menu p-3 dropdown-menu-end animated--grow-in" aria-labelledby="searchDropdown">
+								<div
+									class="dropdown-menu p-3 dropdown-menu-end animated--grow-in"
+									aria-labelledby="searchDropdown">
 									<form class="w-100 me-auto navbar-search">
 										<div class="input-group">
-											<input class="bg-light border-0 form-control small" type="text" placeholder="Search for ...">
+											<input class="bg-light border-0 form-control small"
+												type="text" placeholder="Search for ...">
 											<button class="btn btn-primary" type="button">
 												<i class="fas fa-search"></i>
 											</button>
 										</div>
 									</form>
 								</div></li>
-							<li class="nav-item mx-1 dropdown no-arrow">
-								<div class="nav-item dropdown no-arrow">
-									<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#"><span
-										class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
-									<div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-										<h6 class="dropdown-header">alerts center</h6>
-										<a class="dropdown-item d-flex align-items-center" href="#">
-											<div class="me-3">
-												<div class="bg-primary icon-circle">
-													<i class="fas fa-file-alt text-white"></i>
-												</div>
-											</div>
-											<div>
-												<span class="small text-gray-500">May 20, 2026</span>
-												<p>25 new orders are waiting for processing.</p>
-											</div>
-										</a><a class="dropdown-item d-flex align-items-center" href="#">
-											<div class="me-3">
-												<div class="bg-success icon-circle">
-													<i class="fas fa-donate text-white"></i>
-												</div>
-											</div>
-											<div>
-												<span class="small text-gray-500">May 19, 2026</span>
-												<p>A customer requested a refund for Order #1042.</p>
-											</div>
-										</a><a class="dropdown-item d-flex align-items-center" href="#">
-											<div class="me-3">
-												<div class="bg-warning icon-circle">
-													<i class="fas fa-exclamation-triangle text-white"></i>
-												</div>
-											</div>
-											<div>
-												<span class="small text-gray-500">May 18, 2026</span>
-												<p>Low stock alert: Wireless Headphones almost out of stock.</p>
-											</div>
-										</a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-									</div>
-								</div>
-							</li>
-							<li class="nav-item mx-1 dropdown no-arrow">
-								<div class="nav-item dropdown no-arrow">
-									<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#"><span
-										class="badge bg-danger badge-counter">7</span><i class="fas fa-envelope fa-fw"></i></a>
-									<div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
-										<h6 class="dropdown-header">alerts center</h6>
-										<a class="dropdown-item d-flex align-items-center" href="#">
-											<div class="me-3 dropdown-list-image">
-												<img class="rounded-circle" src="<?php IMG_URL . 'img/avatars/avatar4.jpeg'; ?>">
-												<div class="bg-success status-indicator"></div>
-											</div>
-											<div class="fw-bold">
-												<div class="text-truncate">
-													<span>Hi, my order arrived damaged. Can you help me with a replacement?</span>
-												</div>
-												<p class="mb-0 small text-gray-500">John Doe - 58m</p>
-											</div>
-										</a><a class="dropdown-item d-flex align-items-center" href="#">
-											<div class="me-3 dropdown-list-image">
-												<img class="rounded-circle" src="<?php IMG_URL . 'img/avatars/avatar2.jpeg'; ?>">
-												<div class="status-indicator"></div>
-											</div>
-											<div class="fw-bold">
-												<div class="text-truncate">
-													<span>Just checking if my package has been shipped yet.</span>
-												</div>
-												<p class="mb-0 small text-gray-500">Jane Doe - 1d</p>
-											</div>
-										</a><a class="dropdown-item d-flex align-items-center" href="#">
-											<div class="me-3 dropdown-list-image">
-												<img class="rounded-circle" src="<?php IMG_URL . 'img/avatars/avatar3.jpeg'; ?>">
-												<div class="bg-warning status-indicator"></div>
-											</div>
-											<div class="fw-bold">
-												<div class="text-truncate">
-													<span>I love the quality of the products, definitely ordering again!</span>
-												</div>
-												<p class="mb-0 small text-gray-500">J. J. Doe - 2d</p>
-											</div>
-										</a><a class="dropdown-item d-flex align-items-center" href="#">
-											<div class="me-3 dropdown-list-image">
-												<img class="rounded-circle" src="<?php IMG_URL . 'img/avatars/avatar5.jpeg'; ?>">
-												<div class="bg-success status-indicator"></div>
-											</div>
-											<div class="fw-bold">
-												<div class="text-truncate">
-													<span>Do you have this item available in another color?</span>
-												</div>
-												<p class="mb-0 small text-gray-500">Jane D. Doe · 2w</p>
-											</div>
-										</a><a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
-									</div>
-								</div>
-								<div class="shadow dropdown-list dropdown-menu dropdown-menu-end" aria-labelledby="alertsDropdown"></div>
-							</li>
+								
+							<!-- Alerts center -->
+							<?php require_once INCLUDES_PATH . 'admin/alerts.php'; ?>
+							
+							<!-- Messages center -->
+							<?php require_once INCLUDES_PATH . 'admin/messages.php'; ?>
+							
+							<!-- divider -->
 							<div class="d-none d-sm-block topbar-divider"></div>
-							<li class="nav-item dropdown no-arrow">
-								<div class="nav-item dropdown no-arrow">
-									<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#"><span
-										class="d-none d-lg-inline me-2 text-gray-600 small">gparap admin</span><img
-										class="border rounded-circle img-profile" src="../img/avatars/avatar-m-01.png"></a>
-									<div class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
-										<a class="dropdown-item" href="#"><i class="fas fa-user me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Profile</a><a
-											class="dropdown-item" href="#"><i class="fas fa-cogs me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Settings</a><a
-											class="dropdown-item" href="#"><i class="fas fa-list me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Activity log</a>
-										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2 fa-sm fa-fw text-gray-400"></i>&nbsp;Logout</a>
-									</div>
-								</div>
-							</li>
+							
+							<!-- Profile Dropdown -->
+							<?php require_once INCLUDES_PATH . 'admin/profile.php';?>
 						</ul>
 					</div>
 				</nav>
 				<div class="container-fluid">
-					<div class="d-sm-flex justify-content-between align-items-center mb-4">
+					<div
+						class="d-sm-flex justify-content-between align-items-center mb-4">
 						<h3 class="text-dark mb-0">Dashboard</h3>
-						<a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i
-							class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+						<a class="btn btn-primary btn-sm d-xs-inline-block"
+							role="button" href="#"><i
+							class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate
+							Report</a>
 					</div>
 					<div class="row">
 						<div class="col-md-6 col-xl-3 mb-4">
@@ -229,8 +138,8 @@ Copyright © 2026 gparap
 												</div>
 												<div class="col">
 													<div class="progress progress-sm">
-														<div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
-															style="width: 50%;">
+														<div class="progress-bar bg-info" aria-valuenow="50"
+															aria-valuemin="0" aria-valuemax="100" style="width: 50%;">
 															<span class="visually-hidden">50%</span>
 														</div>
 													</div>
@@ -281,7 +190,8 @@ Copyright © 2026 gparap
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label"
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-1"><label class="form-check-label"
 														for="formCheck-1"></label>
 												</div>
 											</div>
@@ -297,7 +207,8 @@ Copyright © 2026 gparap
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label"
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-2"><label class="form-check-label"
 														for="formCheck-2"></label>
 												</div>
 											</div>
@@ -313,7 +224,8 @@ Copyright © 2026 gparap
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label"
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-3"><label class="form-check-label"
 														for="formCheck-3"></label>
 												</div>
 											</div>
@@ -339,7 +251,8 @@ Copyright © 2026 gparap
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label"
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-1"><label class="form-check-label"
 														for="formCheck-1"></label>
 												</div>
 											</div>
@@ -355,7 +268,8 @@ Copyright © 2026 gparap
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label"
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-2"><label class="form-check-label"
 														for="formCheck-2"></label>
 												</div>
 											</div>
@@ -371,7 +285,8 @@ Copyright © 2026 gparap
 											</div>
 											<div class="col-auto">
 												<div class="form-check">
-													<input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label"
+													<input class="form-check-input" type="checkbox"
+														id="formCheck-3"><label class="form-check-label"
 														for="formCheck-3"></label>
 												</div>
 											</div>
@@ -385,7 +300,8 @@ Copyright © 2026 gparap
 				</div>
 			</div>
 		</div>
-		<a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+		<a class="border rounded d-inline scroll-to-top" href="#page-top"><i
+			class="fas fa-angle-up"></i></a>
 	</div>
 
 	<!-- Footer -->

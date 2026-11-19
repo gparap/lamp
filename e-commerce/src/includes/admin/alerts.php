@@ -1,7 +1,7 @@
 <li class="nav-item mx-1 dropdown no-arrow">
 	<div class="nav-item dropdown no-arrow">
-		<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#"><span
-			class="badge bg-danger badge-counter">3+</span><i class="fas fa-bell fa-fw"></i></a>
+		<a class="dropdown-toggle nav-link" data-bs-toggle="dropdown" aria-expanded="false" href="#"><span class="badge bg-danger badge-counter">3+</span><i
+			class="fas fa-bell fa-fw"></i></a>
 		<div class="dropdown-menu dropdown-menu-end dropdown-list animated--grow-in">
 			<h6 class="dropdown-header">alerts center</h6>
 			<a class="dropdown-item d-flex align-items-center" href="#">

@@ -1,7 +1,7 @@
 <nav class="navbar align-items-start p-0 sidebar sidebar-dark accordion bg-gradient-primary navbar-dark">
 	<div class="container-fluid d-flex flex-column p-0">
-		<a class="navbar-brand d-flex justify-content-center align-items-center m-0 sidebar-brand" href="#"> <img
-			src="<?= IMG_URL ?>logo.png" width="32" height="32" class="img-fluid rounded-0 shadow-lg sidebar-brand-icon" alt="">
+		<a class="navbar-brand d-flex justify-content-center align-items-center m-0 sidebar-brand" href="#"> <img src="<?= IMG_URL ?>logo.png" width="32"
+			height="32" class="img-fluid rounded-0 shadow-lg sidebar-brand-icon" alt="">
 			<div class="mx-3 sidebar-brand-text">
 				<span>E-Commerce</span>
 			</div>
