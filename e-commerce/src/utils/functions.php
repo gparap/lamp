@@ -104,6 +104,32 @@ function is_user_authenticated(): bool {
 	return FALSE;
 }
 
+function get_category_names() {
+    $category_names = [];
+    
+    $connection = get_db_connection();
+    $query = "SELECT * FROM categories";
+    $query_result = mysqli_query($connection, $query);
+    while ($row = mysqli_fetch_assoc($query_result)) {
+        $category_names[] = $row['name'];
+    }
+    
+    return $category_names;
+}
+
+function get_category_id_by_name($category_name) {
+    $category_id = NULL;
+    
+    $connection = get_db_connection();
+    $query = "SELECT * FROM categories WHERE name='$category_name'";
+    $query_result = mysqli_query($connection, $query);
+    while ($row = mysqli_fetch_assoc($query_result)) {
+        $category_id = $row['id'];
+    }
+    
+    return $category_id;
+}
+
 //TODO: refactor with infinite categories, for now use the 6 default ones
 function get_category_name_by_id($id): string{
 	$category_name = "";

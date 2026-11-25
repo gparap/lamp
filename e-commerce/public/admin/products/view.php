@@ -22,16 +22,26 @@ Copyright © 2026 gparap
 require_once UTILS_PATH . 'functions.php';
 $connection = get_db_connection();
 
+//get the product's category id as filter, if any
+$category_id = NULL;
+if (isset($_GET['fcid'])) {
+    $category_id = $_GET['fcid'];
+    $category_id = filter_input(INPUT_GET, 'fcid', FILTER_SANITIZE_NUMBER_INT);
+}
+
 //get products
 $query_prod = "SELECT * FROM `products`";
+if ($category_id != NULL) {
+    $query_prod .= "WHERE category_id='$category_id'";
+}
 $query_prod_res = mysqli_query($connection, $query_prod);
 
 //delete product
 if (isset($_GET['action']) && isset($_GET['id'])) {
-	$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
-	if ($_GET['action'] === 'D') {
-		delete_product($id);	
-	}
+    $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+    if ($_GET['action'] === 'D') {
+        delete_product($id);
+    }
 }
 ?>
 
@@ -93,17 +103,31 @@ if (isset($_GET['action']) && isset($_GET['id'])) {
 				<!-- Products -->
 				<div class="container-fluid">
 					<div
-						class="d-sm-flex justify-content-between align-items-center mb-4">
+						class="d-flex justify-content-between align-items-center mb-4 gap-2">
 						<h3 class="text-dark mb-0">Products</h3>
-						<a class="btn btn-primary btn-sm d-xs-inline-block"
-							role="button" href="add.php"><i
-							class="fas fa-solid fa-plus fa-sm text-white-100"></i>&nbsp;Add Product</a>
+						<div>
+							<select	onchange="if(this.value) window.location.href='?fcid=' + this.value">
+								<option selected style="display: none">Filter By Category</option>
+                              	<?php
+                                // display category names to filter products
+                                $category_names = get_category_names();
+                                foreach ($category_names as $category_name) {
+                                    $category_id = get_category_id_by_name($category_name);
+                                    echo '<option value="' . $category_id . '"> ' . $category_name . ' </option>';
+                                }
+                                ?>
+    							<option value="NULL">**Clear Filter**</option>
+							</select> 
+							<a class="btn btn-primary btn-sm" href="add.php"> 
+								<i class="fas fa-plus fa-sm text-white-100"></i> &nbsp;Add Product
+							</a>
+						</div>
 					</div>
 					<hr>
 					<div class="table-responsive small">
 						<table class="table table-striped table-sm">
 							<thead>
-								<tr><th>#</th><th>cid</th><th>name</th><th>desc</th><th>price</th><th>discount</th><th>stock</th><th>ACTIONS</th></tr>
+								<tr><th>#</th><th>cid</th><th>name</th><th>desc</th><th>price</th><th>discount</th><th>stock</th></tr>
 							</thead>
 							<tbody>
 							<?php
