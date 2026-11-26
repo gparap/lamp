@@ -217,7 +217,7 @@ function render_product($row) {
 									<p class="card-text">%s</p>
 									<p class="card-text"><i>price: &nbsp;&nbsp; %s</i></p>
 									<div class="d-flex gap-5 justify-content-start mb-5">
-										<a href="#pid=%d" class="btn btn-dark btn-sm px-4">View More</a>
+										<a href="product.php?pid=%d" class="btn btn-dark btn-sm px-4">View More</a>
 									</div>	
 								</div>
 							</div>

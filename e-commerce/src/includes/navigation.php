@@ -15,15 +15,15 @@
 				<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
 			</ul>
 			<?php
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
-            if (isset($_SESSION['role'])) {
-                echo '<a class="btn btn-primary shadow" role="button" href="' . PUBLIC_URL . 'auth/logout.php">Sign out</a>';
-            } else {
-                echo '<a class="btn btn-primary shadow" role="button" href="' . PUBLIC_URL . 'auth/login.php">Sign in</a>';
-            }
-            ?>
+			if (session_status() == PHP_SESSION_NONE){
+				session_start();			
+			}
+			if (isset ( $_SESSION ['role'] )) {
+				echo '<a class="btn btn-primary shadow" role="button" href="'.PUBLIC_URL.'auth/logout.php">Sign out</a>';
+			} else {
+				echo '<a class="btn btn-primary shadow" role="button" href="' . PUBLIC_URL . 'auth/login.php">Sign in</a>';
+			}
+			?>
 		</div>
 	</div>
 </nav>

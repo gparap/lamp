@@ -32,7 +32,7 @@ $query_prod_res = mysqli_query($connection, $query_prod);
 
 <body>
 	<!-- Navigation -->
-	<?php require_once INCLUDES_PATH . 'navigation.php'; ?>
+	<?php require_once INCLUDES_PATH . 'navigation.php'; ?>	
 
 	<!-- Products section -->
 	<section>
@@ -56,31 +56,31 @@ $query_prod_res = mysqli_query($connection, $query_prod);
 							<div class="filter-item">
 								<h3>Categories</h3>
 								<hr>
-								<?php
-                                //display product categories
-                                while ($row = mysqli_fetch_assoc($query_cat_res_desktop)) {
-                                    echo render_product_category_filter($row);
-                                }
-                                ?>
+								<?php 
+								//display product categories
+								while ($row = mysqli_fetch_assoc($query_cat_res_desktop)) {
+									echo render_product_category_filter($row);
+								}
+								?>
 							</div>
 						</div>
 					</div>
 
 					<!-- Left column: Filters - Mobile version -->
 					<div class="d-md-none">
-						<a class="btn btn-link d-md-none filter-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false"
-							aria-controls="filters" href="#filters">Filters<i class="icon-arrow-down filter-caret"></i></a>
+						<a class="btn btn-link d-md-none filter-collapse" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="filters"
+							href="#filters">Filters<i class="icon-arrow-down filter-caret"></i></a>
 						<div class="collapse" id="filters">
 							<div class="filters">
 								<div class="filter-item">
 									<h3>Categories</h3>
 									<hr>
-									<?php
-                                    //display product categories
-                                    while ($row = mysqli_fetch_assoc($query_cat_res_mobile)) {
-                                        echo render_product_category_filter($row);
-                                    }
-                                    ?>
+									<?php 
+									//display product categories
+									while ($row = mysqli_fetch_assoc($query_cat_res_mobile)) {
+										echo render_product_category_filter($row);
+									}
+									?>
 								</div>
 							</div>
 						</div>
@@ -90,12 +90,12 @@ $query_prod_res = mysqli_query($connection, $query_prod);
 				<!-- Right column: Product list -->
 				<div class="col-md-9">
 					<div class="row">
-					<?php
-                    //display products TODO: fix missing images
-                    while ($row = mysqli_fetch_assoc($query_prod_res)) {
-                        echo render_product($row);
-                    }
-                    ?>
+					<?php 
+					//display products TODO: fix missing images
+					while ($row = mysqli_fetch_assoc($query_prod_res)) {
+						echo render_product($row);
+					}
+					?>
 					</div>
 
 					<!-- Pagination -->
